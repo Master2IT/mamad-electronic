@@ -1,3 +1,3 @@
 <template>
-  <AuthLoginForm />
+    Home page
 </template>
