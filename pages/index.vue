@@ -1,3 +1,5 @@
 <template>
-    Home page
+    <div>
+        <ShopAmazingProducts />
+    </div>
 </template>
