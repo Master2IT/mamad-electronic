@@ -9,7 +9,7 @@
   --color-secondary: hsl(306, 94%, 33%);
 }
 * {
-  direction: rtl;
+  /* direction: rtl; */
   font-family: 'Vazir', sans-serif;
 }
 
