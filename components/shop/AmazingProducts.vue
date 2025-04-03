@@ -128,10 +128,3 @@ onUnmounted(() => {
     clearInterval(interval)
 })
 </script>
-
-<style scoped>
-/* For RTL support */
-html {
-    direction: rtl;
-}
-</style>
