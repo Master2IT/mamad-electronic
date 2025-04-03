@@ -10,13 +10,14 @@
 
     <div class="form-group">
       <label for="password">Password</label>
-      <input v-model="form.password" type="password" id="password" required minlength="6" @blur="v$.password.$touch">
+      <input class="input" v-model="form.password" type="password" id="password" required minlength="6"
+        @blur="v$.password.$touch">
       <span class="error" v-if="v$.password.$error">
         {{ v$.password.$errors[0].$message }}
       </span>
     </div>
 
-    <button type="submit" :disabled="loading">
+    <button type="submit" class="btn btn-primary" :disabled="loading">
       {{ loading ? 'Logging in...' : 'Login' }}
     </button>
 
