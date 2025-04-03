@@ -2,7 +2,7 @@
   <div class="bg-base-100 shadow-sm h-[174px] px-24 justify-between">
     <div class="navbar flex justify-between">
       <div class="flex">
-        <img src="/logo.svg" alt="logo" />
+        <img src="../public/logo.svg" alt="logo" />
         <div>
           <p class="text-primary font-bold text-4xl">محمد</p>
           <span>الکترونیک</span>
