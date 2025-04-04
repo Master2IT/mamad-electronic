@@ -1,2 +1,18 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
 @plugin "daisyui";
+
+@plugin "daisyui/theme" {
+  name: 'light';
+  default: true;
+  --color-primary: hsl(318, 70%, 86%);
+  --color-secondary: hsl(306, 94%, 33%);
+}
+* {
+  direction: rtl;
+  font-family: 'Vazir', sans-serif;
+}
+
+body {
+  font-family: 'Vazir', sans-serif;
+}

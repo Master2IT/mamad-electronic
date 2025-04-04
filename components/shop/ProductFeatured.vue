@@ -22,7 +22,7 @@ const props = defineProps({
   }
 })
 
-const formatPrice = (price) => `$${price.toFixed(2)}`
+const formatPrice = (price) => `$${price?.toFixed(2)}`
 const addToCart = () => {
   // Cart logic here
 }
