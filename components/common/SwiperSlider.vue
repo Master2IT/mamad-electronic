@@ -1,21 +1,26 @@
 <template>
     <swiper :modules="modules" :slides-per-view="slidesPerView" :space-between="spaceBetween" :navigation="navigation"
-        :pagination="pagination" :autoplay="autoplay" :breakpoints="breakpoints" :loop="loop" class="custom-swiper">
+        :pagination="pagination" :autoplay="autoplay" :scrollbar="{ draggable: true }" :breakpoints="breakpoints"
+        :loop="loop">
         <slot></slot>
     </swiper>
 </template>
 
 <script setup>
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import { Swiper } from 'swiper/vue';
-import { Navigation, Pagination, Autoplay, A11y } from 'swiper/modules';
-import 'swiper/css';
+
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import 'swiper/css';
 
-const props = defineProps({
+const modules = [Navigation, Pagination, A11y, Scrollbar];
+
+const { autoplay, breakpoints, loop, navigation, pagination, slidesPerView, spaceBetween } = defineProps({
     slidesPerView: {
         type: [Number, String],
-        default: 1
+        default: 5
     },
     spaceBetween: {
         type: Number,
@@ -57,13 +62,4 @@ const props = defineProps({
         })
     }
 });
-
-const modules = [Navigation, Pagination, Autoplay, A11y];
 </script>
-
-<style>
-.custom-swiper {
-    width: 100%;
-    height: 100%;
-}
-</style>

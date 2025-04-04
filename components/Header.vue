@@ -9,11 +9,7 @@
         </div>
       </div>
       <div class="flex gap-2">
-        <input
-            type="search"
-            placeholder="جستجو"
-            class="input input-bordered w-24 md:w-[500px] rounded-md"
-        />
+        <input type="search" placeholder="جستجو" class="input input-bordered w-24 md:w-[500px] rounded-md" />
       </div>
       <div class="space-y-4">
         <div class="flex items-center justify-between">
@@ -64,13 +60,13 @@
       </li>
       <li><a href="">تخفیفات</a></li>
       <li><a href="" class="text-[#009951] font-bold text-xl">
-
-        پیشنهاد ویژه</a></li>
-      <img src="../../public/moon.svg" alt="">
+          پیشنهاد ویژه</a></li>
+      <Icon name="moon" class="size-6" />
     </ul>
   </div>
 </template>
 <script setup lang="ts">
 import { LogIn } from 'lucide-vue-next'
 import { ShoppingCart } from 'lucide-vue-next'
+import Icon from '@/components/common/Icon.vue'
 </script>
