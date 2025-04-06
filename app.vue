@@ -1,6 +1,7 @@
 <script setup>
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
+
 useHead({
   title: 'Mamad Electronic Shop',
   meta: [
@@ -15,9 +16,13 @@ useHead({
 </script>
 
 <template>
-  <div data-theme="light" class="h-screen">
-    <Header/>
-    <NuxtPage />
-    <Footer/>
+  <!-- <UApp> -->
+  <div data-theme="light">
+    <Header />
+    <main>
+      <NuxtPage />
+    </main>
+    <Footer />
   </div>
+  <!-- </UApp> -->
 </template>
