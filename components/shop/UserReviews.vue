@@ -1,5 +1,5 @@
 <template>
-  <div class="container space-y-8">
+  <div class="container space-y-8 hidden">
     <!-- Header Section -->
     <div class="flex flex-col">
       <h2 class="text-3xl font-bold text-purple-800 text-right ">نظرات کاربران</h2>
@@ -24,36 +24,72 @@
     </div>
     <!-- Review Section -->
      <div class="h-[300px] overflow-y-auto">
-       <div  v-for="(item) in items" :key="item.id"  class="pb-6 border-b">
-         <div class="flex items-center justify-between mb-1">
-           <div class="flex flex-col ">
-             <span class="mr-2 text-gray-700">{{ item.userName }}</span>
-             <div class="flex">
-<span v-for="n in 5" :key="n" class="text-yellow-400">
-  <span v-if="n <= item.rating">★</span>
-  <span v-else>☆</span>
-</span>
+       <div v-for="(item) in items" :key="item.id" class="pb-6 border-b p-4">
+         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-3">
+           <div class="flex flex-col">
+             <span class="text-gray-700 font-medium">{{ item.userName }}</span>
+             <div class="flex my-1">
+               <span v-for="n in 5" :key="n" class="text-yellow-400">
+                 <span v-if="n <= item.rating">★</span>
+                 <span v-else>☆</span>
+               </span>
              </div>
-             <span class="text-gray-500 text-sm mr-2">{{item.date}}</span>
+             <span class="text-gray-500 text-sm">{{item.date}}</span>
            </div>
-           <span class="text-gray-600 mr-1">آیا این نظر مفید بود؟</span>
-           <div class="flex gap-3 items-center">
-             <button class="flex items-center mx-2 text-gray-500 hover:text-gray-700">
-               <span>۰</span>
-               <ThumbsUp class="size-4"/>
-             </button>
-             <button class="flex items-center mx-2 text-gray-500 hover:text-gray-700">
-               <span>۰</span>
-               <ThumbsDown class="size-4"/>
-             </button>
+           <div class="flex flex-row  items-center gap-2 md:gap-4 ">
+             <span class="text-gray-600 text-sm">آیا این نظر مفید بود؟</span>
+             <div class="flex gap-3 items-center">
+               <button class="flex items-center gap-1 text-gray-500 hover:text-gray-700">
+                 <span>۰</span>
+                 <ThumbsUp class="size-4"/>
+               </button>
+               <button class="flex items-center gap-1 text-gray-500 hover:text-gray-700">
+                 <span>۰</span>
+                 <ThumbsDown class="size-4"/>
+               </button>
+             </div>
+             <button class="text-purple-800 font-medium">پاسخ</button>
            </div>
-           <button class="text-purple-800 font-medium">پاسخ</button>
          </div>
-         <p class="text-right text-gray-800 mt-5">{{item.comment}}</p>
+         <p class="text-right text-gray-800">{{item.comment}}</p>
        </div>
      </div>
-
   </div>
+
+<!--  isMobile-->
+  <div class="grid">
+    <div v-for="(item) in items" :key="item.id" class="pb-6 p-4 border m-2 ">
+      <div class="flex  gap-3 mb-3">
+        <div class="flex flex-col">
+          <span class="text-gray-700 font-medium">{{ item.userName }}</span>
+          <div class="flex my-1">
+               <span v-for="n in 5" :key="n" class="text-yellow-400">
+                 <span v-if="n <= item.rating">★</span>
+                 <span v-else>☆</span>
+               </span>
+          </div>
+          <span class="text-gray-500 text-sm">{{item.date}}</span>
+        </div>
+        <div class="flex flex-row  items-center gap-2">
+          <span class="text-gray-600 text-sm">آیا این نظر مفید بود؟</span>
+          <div class="flex gap-3 items-center">
+            <button class="flex items-center gap-1 text-gray-500 hover:text-gray-700">
+              <span>۰</span>
+              <ThumbsUp class="size-4"/>
+            </button>
+            <button class="flex items-center gap-1 text-gray-500 hover:text-gray-700">
+              <span>۰</span>
+              <ThumbsDown class="size-4"/>
+            </button>
+          </div>
+          <button class="text-purple-800 font-medium">پاسخ</button>
+        </div>
+      </div>
+      <p class="text-right text-gray-800">{{item.comment}}</p>
+    </div>
+  </div>
+
+
 
 
 </template>

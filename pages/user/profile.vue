@@ -1,7 +1,9 @@
 <template>
-  <ProfileForm />
+<NuxtLayout name="panel">
+  <UserProfileForm />
+</NuxtLayout >
 </template>
 
 <script setup>
-// Profile editing logic
+
 </script>

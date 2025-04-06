@@ -1,6 +1,8 @@
 <template>
-  <UserDashboardStats />
-  <RecentOrders />
+  <NuxtLayout name="panel">
+    <UserDashboardStats />
+    <RecentOrders />
+  </NuxtLayout>
 </template>
 
 <script setup>
