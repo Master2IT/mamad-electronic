@@ -5,8 +5,8 @@ export const PRODUCTS = [
     image:
       "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
     discount: 15,
-    price: "۲,۰۰۰,۰۰۰",
-    discountedPrice: "۱,۷۰۰,۰۰۰",
+    price: "2000000",
+    discountedPrice: "1700000",
     favorite: false,
   },
   {
@@ -15,8 +15,8 @@ export const PRODUCTS = [
     image:
       "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-02.jpg",
     discount: 20,
-    price: "۱,۵۰۰,۰۰۰",
-    discountedPrice: "۱,۲۰۰,۰۰۰",
+    price: "1500000",
+    discountedPrice: "1200000",
     favorite: false,
   },
   {
@@ -25,8 +25,8 @@ export const PRODUCTS = [
     image:
       "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-03.jpg",
     discount: 10,
-    price: "۵۰۰,۰۰۰",
-    discountedPrice: "۴۵۰,۰۰۰",
+    price: "500000",
+    discountedPrice: "450000",
     favorite: false,
   },
   {
@@ -35,8 +35,8 @@ export const PRODUCTS = [
     image:
       "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-04.jpg",
     discount: 25,
-    price: "۸۰۰,۰۰۰",
-    discountedPrice: "۶۰۰,۰۰۰",
+    price: "800000",
+    discountedPrice: "600000",
     favorite: false,
   },
   {
@@ -45,8 +45,8 @@ export const PRODUCTS = [
     image:
       "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-03.jpg",
     discount: 15,
-    price: "۹۰۰,۰۰۰",
-    discountedPrice: "۷۶۵,۰۰۰",
+    price: "900000",
+    discountedPrice: "765000",
     favorite: false,
   },
   {
@@ -55,8 +55,8 @@ export const PRODUCTS = [
     image:
       "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-02.jpg",
     discount: 30,
-    price: "۴۵۰,۰۰۰",
-    discountedPrice: "۳۱۵,۰۰۰",
+    price: "450000",
+    discountedPrice: "315000",
     favorite: false,
   },
   {
@@ -65,8 +65,8 @@ export const PRODUCTS = [
     image:
       "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-04.jpg",
     discount: 18,
-    price: "۳۵۰,۰۰۰",
-    discountedPrice: "۲۸۷,۰۰۰",
+    price: "350000",
+    discountedPrice: "287000",
     favorite: false,
   },
   {
@@ -75,8 +75,8 @@ export const PRODUCTS = [
     image:
       "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
     discount: 12,
-    price: "۲۸۰,۰۰۰",
-    discountedPrice: "۲۴۶,۴۰۰",
+    price: "280000",
+    discountedPrice: "246400",
     favorite: false,
   },
   {
@@ -85,8 +85,8 @@ export const PRODUCTS = [
     image:
       "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-05.jpg",
     discount: 8,
-    price: "۳,۵۰۰,۰۰۰",
-    discountedPrice: "۳,۲۲۰,۰۰۰",
+    price: "3500000",
+    discountedPrice: "3220000",
     favorite: false,
   },
   {
@@ -95,12 +95,11 @@ export const PRODUCTS = [
     image:
       "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-03.jpg0",
     discount: 22,
-    price: "۴۲۰,۰۰۰",
-    discountedPrice: "۳۲۷,۶۰۰",
+    price: "420000",
+    discountedPrice: "327600",
     favorite: false,
   },
 ];
-
 export const FAQS = [
   {
     id: 1,
@@ -267,5 +266,43 @@ export const SPECIFICATIONS = [
     id: 1,
     name: "توضیحات:",
     detail: "این یک تسته",
+  },
+];
+export const CATEGORIES = [
+  {
+    id: 1,
+    name: "میکروکنترلرها",
+    image:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
+  },
+  {
+    id: 2,
+    name: "سنسورها",
+    image:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
+  },
+  {
+    id: 3,
+    name: "بردهای توسعه",
+    image:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
+  },
+  {
+    id: 4,
+    name: "قطعات الکترونیکی",
+    image:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
+  },
+  {
+    id: 5,
+    name: "ماژول‌های ارتباطی",
+    image:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
+  },
+  {
+    id: 6,
+    name: "رباتیک و موتورها",
+    image:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
   },
 ];

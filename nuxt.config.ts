@@ -4,14 +4,14 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineNuxtConfig({
   modules: [
     "@pinia/nuxt",
-    // "@nuxt/ui",
+    "@nuxt/ui",
     "@nuxt/eslint",
     "@nuxt/content",
     "@nuxt/fonts",
     "@nuxt/icon",
     "@nuxt/image",
     "@nuxt/scripts",
-    "vue3-carousel-nuxt",
+    // "vue3-carousel-nuxt",
   ],
 
   devtools: { enabled: true },
@@ -23,19 +23,19 @@ export default defineNuxtConfig({
     compatibilityVersion: 4,
   },
   css: ["~/assets/app.css"],
-  // ui: {
-  //   colorMode: true,
-  //   theme: {
-  //     colors: [
-  //       "primary",
-  //       "secondary",
-  //       "tertiary",
-  //       "info",
-  //       "success",
-  //       "warning",
-  //       "error",
-  //       "neutral",
-  //     ],
-  //   },
-  // },
+  ui: {
+    colorMode: true,
+    theme: {
+      colors: [
+        "primary",
+        "secondary",
+        "tertiary",
+        "info",
+        "success",
+        "warning",
+        "error",
+        "neutral",
+      ],
+    },
+  },
 });

@@ -2,7 +2,7 @@
   <div class="profile-form">
     <h2 class="form-title">اطلاعات فردی</h2>
     <p class="form-subtitle">هویت خود را تأیید کنید</p>
-    
+
     <div class="form-grid">
       <!-- Name Field -->
       <div class="form-group">
@@ -14,7 +14,7 @@
           </button>
         </div>
       </div>
-      
+
       <!-- Email Field -->
       <div class="form-group">
         <label>ایمیل</label>
@@ -25,7 +25,7 @@
           </button>
         </div>
       </div>
-      
+
       <!-- Password Field -->
       <div class="form-group">
         <label>پسوورد</label>
@@ -36,7 +36,7 @@
           </button>
         </div>
       </div>
-      
+
       <!-- Phone Number Field -->
       <div class="form-group">
         <label>شماره همراه</label>
@@ -47,7 +47,7 @@
           </button>
         </div>
       </div>
-      
+
       <!-- Address Field -->
       <div class="form-group">
         <label>آدرس</label>
@@ -58,7 +58,7 @@
           </button>
         </div>
       </div>
-      
+
       <!-- Postal Code Field -->
       <div class="form-group">
         <label>کد پستی</label>
@@ -70,7 +70,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="form-actions">
       <button class="submit-button" @click="saveProfile">ذخیره تغییرات</button>
     </div>
@@ -100,7 +100,6 @@ const saveProfile = () => {
   margin: 0 auto;
   padding: 20px;
   direction: rtl;
-  font-family: 'Vazirmatn', sans-serif;
 }
 
 .form-title {
@@ -151,14 +150,16 @@ label {
   direction: rtl;
 }
 
-.edit-button, .view-password {
+.edit-button,
+.view-password {
   background: none;
   border: none;
   cursor: pointer;
   color: #6b46c1;
 }
 
-.edit-icon, .view-icon {
+.edit-icon,
+.view-icon {
   width: 20px;
   height: 20px;
 }

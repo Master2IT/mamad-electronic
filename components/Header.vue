@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-base-100 shadow-sm min-h-[174px] px-4 md:px-8 lg:px-24 justify-between">
+  <div class="bg-base-100 border-b min-h-[174px] px-4 justify-between">
     <div class="navbar flex flex-col md:flex-row justify-between gap-4">
       <div class="flex items-center">
         <img src="../public/logo.svg" alt="logo" class="w-16 md:w-auto" />
@@ -65,7 +65,7 @@
     </ul>
   </div>
 </template>
-<script setup lang="ts">
+<script setup>
 import { LogIn } from 'lucide-vue-next'
 import { ShoppingCart } from 'lucide-vue-next'
 import Icon from '@/components/common/Icon.vue'

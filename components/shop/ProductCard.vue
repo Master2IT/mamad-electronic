@@ -1,9 +1,10 @@
 <template>
-  <div class="relative rounded-md w-full shadow-sm bg-[#F7F7F7]">
+  <div class="relative rounded-md w-full shadow-sm bg-[#F7F7F7] select-none">
     <div class="relative p-5">
-      <NuxtImg :src="product.image" :alt="product.name" class="h-[200px] w-[250px] object-cover rounded-md" />
-      <span v-if="product.discount" class="absolute top-2.5 left-2.5 badge-error text-white badge font-bold badge-sm">
-        -{{ product.discount }}%
+      <NuxtImg :src="product.image" :alt="product.name" class="h-[150px] w-[200px] object-cover rounded-md" />
+      <span v-if="product.discount"
+        class="absolute top-2.5 left-2.5 bg-red-500 rounded-full text-white pt-0.5 px-3 text-xs">
+        {{ product.discount }}%
       </span>
       <button class="absolute top-2.5 right-2.5 bg-transparent border-none cursor-pointer"
         @click="$emit('toggle-favorite', product)">
@@ -12,11 +13,11 @@
     </div>
     <div class="px-5 py-2">
       <h3 class="text-md font-semibold text-center">{{ product.name }}</h3>
-      <div class="flex flex-col items-end mt-5">
-        <p class="font-bold text-gray-600">{{ product.discountedPrice }} تومان</p>
-        <button v-if="product.discount" class="btn btn-primary mt-1">
-          {{ product.price }} تومان
-        </button>
+      <div class="flex flex-col items-end  mt-5">
+        <p class="text-gray-500 text-sm line-through">{{ Number(product.discountedPrice).toLocaleString('fa-IR') }}</p>
+        <UButton v-if="product.discount">
+          {{ Number(product.price).toLocaleString('fa-IR') }} تومان
+        </UButton>
       </div>
     </div>
   </div>

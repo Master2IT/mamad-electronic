@@ -19,8 +19,10 @@
     <slot />
   </div>
 </template>
-<script setup lang="ts">
+<script setup>
 import { Bell, CircleDollarSign, Gift, Heart, MessageCircle, ShoppingBasket, UserPenIcon } from "lucide-vue-next";
+import Header from "@/components/Header.vue";
+import Footer from "@/components/Footer.vue";
 
 const items = ref([
   {
@@ -53,6 +55,4 @@ const items = ref([
     icon: MessageCircle,
   },
 ]);
-
-
 </script>
