@@ -7,20 +7,18 @@
                 <ChevronLeft class="w-4 h-4" />
             </UButton>
         </div>
-        <UCarousel v-slot="{ item }" align="start" skipSnaps :items="products" autoHeight class="w-full" arrows loop
-            :autoplay="{ delay: 2000 }"
-            :ui="{ item: 'basis-1/6', prev: 'left-0 right-auto', next: 'right-0 left-auto' }">
-            <div class="py-1">
-                <ShopProductCard showReview :type="2" :product="item" />
-            </div>
-        </UCarousel>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-5 place-items-center">
+            <NuxtImg v-for="(item, index) in items.slice(0, 6)" :key="item.id || index"
+                class="w-[150px] h-[150px] object-contain" :src="item.image" loading="lazy"
+                :alt="item.name || 'Brand logo'" />
+        </div>
     </div>
 </template>
 <script setup>
 import { ChevronLeft } from 'lucide-vue-next'
 
 defineProps({
-    products: {
+    items: {
         type: Array,
         required: true
     },

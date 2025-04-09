@@ -1,21 +1,39 @@
 <template>
-<div class="join join-vertical bg-base-100 w-full">
-  <div v-for="(item) in items" :key="item.id" class="collapse collapse-arrow join-item border-base-300 border">
-    <input type="radio" name="my-accordion-4" :checked="true" />
-    <div class="collapse-title font-semibold">{{ item.question }}</div>
-    <div class="collapse-content text-sm">{{ item.answer }}</div>
+  <div class="my-10 h-auto">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-2xl text-primary-700 font-black">{{ title }}</h2>
+      <UButton variant="link" :href="link" class="flex items-center gap-1">
+        مشاهده همه
+        <ChevronLeft class="w-4 h-4" />
+      </UButton>
+    </div>
+    <UAccordion :items="items" :ui="{
+      item: 'bg-white rounded-md shadow-xs p-2 px-5 mb-2',
+    }" />
   </div>
-</div>
 </template>
 
 <script setup lang="ts">
+import { ChevronLeft } from 'lucide-vue-next'
+
 interface FAQItem {
   id: number | string;
   question: string;
   answer: string;
 }
 
-defineProps<{
-  items: FAQItem[]
-}>();
+defineProps({
+  items: {
+    type: Array as PropType<FAQItem[]>,
+    required: true
+  },
+  title: {
+    type: String,
+    required: true
+  },
+  link: {
+    type: String,
+    required: true
+  }
+})
 </script>

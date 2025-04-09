@@ -27,7 +27,7 @@
       </Carousel> -->
       <UCarousel v-slot="{ item }" align="start" skipSnaps :items="products" autoHeight class="w-full" arrows loop
         :autoplay="{ delay: 2000 }" :ui="{ item: 'basis-1/5', prev: 'left-0 right-auto', next: 'right-0 left-auto' }">
-        <ShopProductCard :product="item" />
+        <ShopProductCard :type="1" :product="item" />
       </UCarousel>
     </div>
   </div>
