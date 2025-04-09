@@ -22,7 +22,9 @@
     </div>
     <ShopAmazingProducts />
     <ShopProductsCategory link="#" title="جدید ترین محصولات" :products="PRODUCTS" />
-    <!-- <ShopFAQ :items="FAQS" /> -->
+    <ShopProductsCategory link="#" title="پیشنهادات" :products="PRODUCTS" />
+    <ShopBrands link="#" title="محبوب ترین برند ها" :items="BRANDS" />
+    <ShopFAQ link="#" title="سوالات متداول" :items="FAQS" />
     <!-- <ShopProductCard :product="PRODUCTS" /> -->
     <!-- <ShopReviews :items="REVIEWS" /> -->
     <!-- <ShopUserReviews :items="USER_REVIEWS" /> -->
@@ -31,5 +33,5 @@
 </template>
 
 <script setup>
-import { CATEGORIES } from '@/constant'
+import { CATEGORIES, PRODUCTS, BRANDS, FAQS } from '@/constant'
 </script>

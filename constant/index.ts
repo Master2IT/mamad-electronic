@@ -103,50 +103,50 @@ export const PRODUCTS = [
 export const FAQS = [
   {
     id: 1,
-    question: "آیا ارسال به تمام نقاط ایران انجام می‌شود؟",
-    answer:
+    label: "آیا ارسال به تمام نقاط ایران انجام می‌شود؟",
+    content:
       "بله، ما به تمام نقاط ایران با استفاده از پست پیشتاز و تیپاکس ارسال انجام می‌دهیم. هزینه ارسال بر اساس وزن و مقصد محاسبه می‌شود.",
   },
   {
     id: 2,
-    question: "مدت زمان گارانتی محصولات چقدر است؟",
-    answer:
+    label: "مدت زمان گارانتی محصولات چقدر است؟",
+    content:
       "تمامی محصولات ما دارای ۶ ماه گارانتی تعویض هستند. برخی از محصولات خاص مانند بردهای آردوینو اصل و رزبری پای دارای ۱۲ ماه گارانتی می‌باشند.",
   },
   {
     id: 3,
-    question: "آیا امکان مرجوع کردن کالا وجود دارد؟",
-    answer:
+    label: "آیا امکان مرجوع کردن کالا وجود دارد؟",
+    content:
       "بله، تا ۷ روز پس از دریافت کالا، در صورت عدم استفاده و سالم بودن بسته‌بندی، می‌توانید کالا را مرجوع کنید. هزینه ارسال مرجوعی بر عهده مشتری است.",
   },
   {
     id: 4,
-    question: "آیا راهنمای استفاده از قطعات را ارائه می‌دهید؟",
-    answer:
+    label: "آیا راهنمای استفاده از قطعات را ارائه می‌دهید؟",
+    content:
       "بله، برای اکثر محصولات، دیتاشیت و راهنمای استفاده به صورت PDF در بخش دانلود سایت قرار داده شده است. همچنین برای برخی محصولات، ویدیوهای آموزشی نیز موجود است.",
   },
   {
     id: 5,
-    question: "آیا امکان خرید عمده وجود دارد؟",
-    answer:
+    label: "آیا امکان خرید عمده وجود دارد؟",
+    content:
       "بله، برای خریدهای بالای ۵ میلیون تومان، تخفیف ویژه در نظر گرفته می‌شود. برای اطلاع از قیمت‌های عمده با بخش فروش تماس بگیرید.",
   },
   {
     id: 6,
-    question: "روش‌های پرداخت چیست؟",
-    answer:
+    label: "روش‌های پرداخت چیست؟",
+    content:
       "پرداخت آنلاین از طریق درگاه بانکی، کارت به کارت و پرداخت در محل (برای تهران) امکان‌پذیر است.",
   },
   {
     id: 7,
-    question: "آیا قطعات شما اورجینال هستند؟",
-    answer:
+    label: "آیا قطعات شما اورجینال هستند؟",
+    content:
       "بله، تمامی قطعات ما اصل و با کیفیت هستند. ما تضمین اصالت کالا را به مشتریان خود ارائه می‌دهیم و در صورت مغایرت، کالا را تعویض می‌کنیم.",
   },
   {
     id: 8,
-    question: "مدت زمان ارسال سفارش چقدر است؟",
-    answer:
+    label: "مدت زمان ارسال سفارش چقدر است؟",
+    content:
       "سفارشات در روزهای کاری، در صورت تایید تا ساعت ۱۴، همان روز ارسال می‌شوند. زمان تحویل برای تهران ۱ تا ۲ روز کاری و برای شهرستان‌ها ۲ تا ۴ روز کاری است.",
   },
 ];
@@ -304,5 +304,67 @@ export const CATEGORIES = [
     name: "رباتیک و موتورها",
     image:
       "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
+  },
+];
+export const BRANDS = [
+  {
+    id: 1,
+    name: "Arduino",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Arduino_Logo.svg/2560px-Arduino_Logo.png",
+  },
+  {
+    id: 2,
+    name: "Raspberry Pi",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Nvidia_logo.svg/2560px-Nvidia_logo.png",
+  },
+  {
+    id: 3,
+    name: "Texas Instruments",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Arduino_Logo.svg/2560px-Arduino_Logo.png",
+  },
+  {
+    id: 4,
+    name: "STMicroelectronics",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Nvidia_logo.svg/2560px-Nvidia_logo.png",
+  },
+  {
+    id: 5,
+    name: "Microchip",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Intel_logo_%282006-2020%29.svg/1200px-Intel_logo_%282006-2020%29.png",
+  },
+  {
+    id: 6,
+    name: "Atmel",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Samsung_Logo.svg/2560px-Samsung_Logo.png",
+  },
+  {
+    id: 7,
+    name: "Intel",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Intel_logo_%282006-2020%29.svg/1200px-Intel_logo_%282006-2020%29.png",
+  },
+  {
+    id: 8,
+    name: "Nvidia",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Nvidia_logo.svg/2560px-Nvidia_logo.png",
+  },
+  {
+    id: 9,
+    name: "Samsung Electronics",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Samsung_Logo.svg/2560px-Samsung_Logo.png",
+  },
+  {
+    id: 10,
+    name: "Qualcomm",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Nvidia_logo.svg/2560px-Nvidia_logo.png",
   },
 ];

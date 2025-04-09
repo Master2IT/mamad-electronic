@@ -1,7 +1,7 @@
 <template>
-  <div class="relative rounded-md w-full shadow-sm bg-[#F7F7F7] select-none">
-    <div class="relative p-5">
-      <NuxtImg :src="product.image" :alt="product.name" class="h-[150px] w-[200px] object-cover rounded-md" />
+  <div class="relative rounded-md w-full shadow-sm border-0 bg-[#F7F7F7] select-none">
+    <div class="relative p-0 flex justify-center items-center">
+      <NuxtImg :src="product.image" :alt="product.name" class="h-[200px] w-[200px] object-contain rounded-md" />
       <span v-if="product.discount"
         class="absolute top-2.5 left-2.5 bg-red-500 rounded-full text-white pt-0.5 px-3 text-xs">
         {{ product.discount }}%
@@ -11,12 +11,21 @@
         <Heart :class="{ 'text-red-500': product.favorite, 'text-gray-300': !product.favorite }" size="24" />
       </button>
     </div>
-    <div class="px-5 py-2">
+    <div class="px-5 pb-2">
       <h3 class="text-md font-semibold text-center">{{ product.name }}</h3>
-      <div class="flex flex-col items-end  mt-5">
+      <div v-if="showReview" class="flex gap-1 items-center justify-end my-3 text-sm">
+        <span class="text-neutral-400 mt-0.5">(43 نظر)</span>
+        <div class="text-yellow-500 flex items-center font-medium">
+          <span class="mt-0.5">4.4</span>
+          <Icon name="medal-star" size="18" />
+        </div>
+      </div>
+      <div :class="['flex items-end mt-3', { 'flex-col': type == 1 }, { 'justify-between gap-2': type == 2 }]">
         <p class="text-gray-500 text-sm line-through">{{ Number(product.discountedPrice).toLocaleString('fa-IR') }}</p>
-        <UButton v-if="product.discount">
-          {{ Number(product.price).toLocaleString('fa-IR') }} تومان
+        <UButton v-if="product.discount" class="!gap-1" size="sm" :block="type == 2">
+          <span class="!font-bold text-[14px]">
+            {{ Number(product.price).toLocaleString('fa-IR') }}
+          </span>تومان
         </UButton>
       </div>
     </div>
@@ -25,11 +34,20 @@
 
 <script setup>
 import { Heart } from 'lucide-vue-next'
+import Icon from '../common/Icon.vue';
 
-const { product } = defineProps({
+defineProps({
   product: {
     type: Object,
     required: true
+  },
+  type: {
+    type: Number,
+    default: 1
+  },
+  showReview: {
+    type: Boolean,
+    default: false
   }
 })
 </script>

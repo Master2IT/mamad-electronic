@@ -1,11 +1,13 @@
 <template>
-    <UContainer>
-        <Header />
-        <div>
-            <slot />
-        </div>
+    <div>
+        <UContainer>
+            <Header />
+            <div>
+                <slot />
+            </div>
+        </UContainer>
         <Footer />
-    </UContainer>
+    </div>
 </template>
 <script setup>
 import Header from "@/components/Header.vue";

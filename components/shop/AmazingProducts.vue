@@ -1,9 +1,9 @@
 <template>
-  <div class="bg-primary-700 rounded-lg p-4 my-6 grid grid-cols-4 gap-2">
+  <div class="bg-primary-700 rounded-lg p-4 my-6 grid grid-cols-4 gap-2 items-center">
     <div class="flex justify-center items-center gap-10 flex-col relative mt-10">
       <h2 class="text-4xl text-center text-white mt-5 font-black w-[200px] wrap-normal">تخفیف های شگفت انگیز</h2>
       <UButtonGroup orientation="horizontal">
-        <UButton v-for="(time, i) in times" :key="i" color="neutral" class="flex flex-col px-5">
+        <UButton v-for="(time, i) in times" :key="i" class="flex flex-col px-5 bg-white hover:bg-white">
           <p class="text-2xl font-bold text-primary-700 leading-3 mt-2">{{ time.value }}</p>
           <span class="text-primary-700 text-xs">{{ time.label }}</span>
         </UButton>
@@ -27,7 +27,7 @@
       </Carousel> -->
       <UCarousel v-slot="{ item }" align="start" skipSnaps :items="products" autoHeight class="w-full" arrows loop
         :autoplay="{ delay: 2000 }" :ui="{ item: 'basis-1/5', prev: 'left-0 right-auto', next: 'right-0 left-auto' }">
-        <ShopProductCard :product="item" />
+        <ShopProductCard :type="1" :product="item" />
       </UCarousel>
     </div>
   </div>
