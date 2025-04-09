@@ -1,6 +1,6 @@
 <template>
 <NuxtLayout name="panel">
-  <UserCardForm />
+  <PanelProfileForm />
 </NuxtLayout >
 </template>
 

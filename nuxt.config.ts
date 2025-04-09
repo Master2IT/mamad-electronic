@@ -24,18 +24,9 @@ export default defineNuxtConfig({
   },
   css: ["~/assets/app.css"],
   ui: {
-    colorMode: true,
+    colorMode: false,
     theme: {
-      colors: [
-        "primary",
-        "secondary",
-        "tertiary",
-        "info",
-        "success",
-        "warning",
-        "error",
-        "neutral",
-      ],
+      colors: ['primary', 'secondary', 'tertiary', 'info', 'success', 'warning', 'error']
     },
   },
 });

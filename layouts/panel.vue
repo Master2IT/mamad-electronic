@@ -1,58 +1,61 @@
 <template>
-  <div class="flex gap-3">
-    <ul class="menu bg-base-200 rounded-box w-56 space-y-5 p-4">
-      <div class="flex items-center gap-4">
-        <div class="avatar">
-          <div class="w-8 h-8 rounded-full">
-            <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-          </div>
+  <div>
+    <Header />
+    <div class="flex gap-3">
+      <UCard class="w-56">
+        <div class="flex items-center gap-4 mb-4">
+          <UAvatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" size="sm" />
+          <p>mehran</p>
         </div>
-        <p>mehran</p>
-      </div>
-      <li v-for="(item, i) in items" :key="i">
-        <NuxtLink :href="item.link">
-          <component size="20" :is="item.icon" v-if="item.icon" />
-          {{ item.name }}
-        </NuxtLink>
-      </li>
-    </ul>
-    <slot />
+        <UNavigationMenu orientation="vertical" :items="items" class="data-[orientation=vertical]:w-48" />
+      </UCard>
+      <slot />
+    </div>
+    <Footer />
   </div>
 </template>
 <script setup>
-import { Bell, CircleDollarSign, Gift, Heart, MessageCircle, ShoppingBasket, UserPenIcon } from "lucide-vue-next";
+import { ref } from 'vue';
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 
 const items = ref([
+[
   {
-    name: "اطلاعات فردی",
-    link: "user/profile",
-    icon: UserPenIcon,
-  }, {
-    name: "پرداخت و اقساط",
-    link: "/card",
-    icon: CircleDollarSign,
-  }, {
-    name: "سفارش ها",
-    link: "",
-    icon: ShoppingBasket,
-  }, {
-    name: "لیست های من",
-    link: "",
-    icon: Heart,
-  }, {
-    name: "کارت های هدیه",
-    link: "",
-    icon: Gift,
-  }, {
-    name: "پیغام ها",
-    link: "",
-    icon: Bell,
-  }, {
-    name: "تماس با ما",
-    link: "",
-    icon: MessageCircle,
+    label: "اطلاعات فردی",
+    to: "/panel/profile",
+    icon: "i-heroicons-user",
   },
+  {
+    label: "پرداخت و اقساط", 
+    to: "/panel/card",
+    icon: "i-heroicons-currency-dollar-20-solid",
+  },
+  {
+    label: "سفارش ها",
+    to: "/panel/orders", 
+    icon: "i-heroicons-shopping-bag",
+  },
+  {
+    label: "لیست های من",
+    to: "/panel/wishlist",
+    icon: "i-heroicons-heart",
+  },
+  {
+    label: "کارت های هدیه",
+    to: "/panel/gift-cards",
+    icon: "i-heroicons-gift",
+  },
+  {
+    label: "پیغام ها",
+    to: "/panel/notifications",
+    icon: "i-heroicons-bell",
+  },
+  {
+    label: "تماس با ما",
+    to: "/panel/contact",
+    icon: "i-heroicons-chat-bubble-oval-left",
+  }
+]
 ]);
 </script>

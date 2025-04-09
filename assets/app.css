@@ -9,10 +9,10 @@
 :root {
   --ui-primary: var(--ui-color-primary-600);
   --ui-secondary: var(--ui-color-secondary-600);
-  --ui-success: var(--ui-color-success);
-  --ui-info: var(--ui-color-info);
-  --ui-warning: var(--ui-color-warning);
-  --ui-error: var(--ui-color-error);
+  --ui-success: var(--ui-color-success-500);
+  --ui-info: var(--ui-color-info-500);
+  --ui-warning: var(--ui-color-warning-500);
+  --ui-error: var(--ui-color-error-500);
   --ui-radius: var(--radius-sm);
   --ui-container: 90rem;
   --ui-bg: var(--ui-color-neutral-50);
