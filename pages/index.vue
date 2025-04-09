@@ -22,6 +22,7 @@
     </div>
     <ShopAmazingProducts />
     <ShopProductsCategory link="#" title="جدید ترین محصولات" :products="PRODUCTS" />
+    <ShopProductsCategory link="#" title="پیشنهادات" :products="PRODUCTS" />
     <!-- <ShopFAQ :items="FAQS" /> -->
     <!-- <ShopProductCard :product="PRODUCTS" /> -->
     <!-- <ShopReviews :items="REVIEWS" /> -->
@@ -31,5 +32,5 @@
 </template>
 
 <script setup>
-import { CATEGORIES } from '@/constant'
+import { CATEGORIES, PRODUCTS } from '@/constant'
 </script>
