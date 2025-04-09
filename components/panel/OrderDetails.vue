@@ -1,30 +1,30 @@
 <template>
-  <UCard class="my-4">
-    
-
+  <UCard class="my-4 ">
     <div class="space-y-4">
       <h2 class="text-xl font-bold">جزئیات سفارش</h2>
-      <div class="flex space-x-4">
-        <div class="flex justify-between">
+      <div class="flex space-x-2">
+        <div class="flex justify-between items-center gap-1">
           <span class="font-medium">کد سفارش:</span>
-          <span>{{ order.code }}</span>
+          <span class="text-neutral-600 text-sm">{{ order.code }}</span>
         </div>
-        <div class="flex justify-between">
+        <span>•</span>
+        <div class="flex justify-between items-center gap-1">
           <span class="font-medium">تاریخ سفارش:</span>
-          <span>{{ order.date }}</span>
+          <span class="text-neutral-600 text-sm">{{ order.date }}</span>
         </div>
-        <div class="flex justify-between">
+        <span>•</span>
+        <div class="flex justify-between items-center gap-1">
           <span class="font-medium">مبلغ سفارش:</span>
-          <span>{{ order.amount }} تومان</span>
+          <span class="text-neutral-600 text-sm">{{ order.amount }} تومان</span>
+          
         </div>
-        <div class="flex justify-between">
+        <span>•</span>
+        <div class="flex justify-between items-center gap-1">
           <span class="font-medium">تخفیف:</span>
-          <span>{{ order.discount }} تومان</span>
+          <span class="text-neutral-600 text-sm">{{ order.discount }} تومان</span>
         </div>
       
       </div>
-
-      
     </div>
 
     <template #footer>
