@@ -27,11 +27,11 @@ import Footer from "@/components/Footer.vue";
 const items = ref([
   {
     name: "اطلاعات فردی",
-    link: "/profile",
+    link: "user/profile",
     icon: UserPenIcon,
   }, {
     name: "پرداخت و اقساط",
-    link: "",
+    link: "/card",
     icon: CircleDollarSign,
   }, {
     name: "سفارش ها",
