@@ -7,7 +7,9 @@
           <UAvatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" size="sm" />
           <p>mehran</p>
         </div>
-        <UNavigationMenu orientation="vertical" :items="items" class="data-[orientation=vertical]:w-48" />
+        <UNavigationMenu orientation="vertical" :items="items" class="data-[orientation=vertical]:w-48" :ui="{
+          item: 'mb-3',
+        }" />
       </UCard>
       <slot />
     </div>
@@ -43,7 +45,7 @@ const items = ref([
   },
   {
     label: "کارت های هدیه",
-    to: "/panel/gift-cards",
+    to: "/panel/gifts",
     icon: "i-heroicons-gift",
   },
   {

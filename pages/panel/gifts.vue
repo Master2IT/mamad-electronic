@@ -1,6 +1,8 @@
 <template>
-  <AddressBook />
-  <AddAddressForm />
+ <NuxtLayout name="panel">
+
+     <PanelGiftList />
+ </NuxtLayout>
 </template>
 
 <script setup>

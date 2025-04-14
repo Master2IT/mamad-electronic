@@ -4,20 +4,19 @@
       <p class="font-bold text-2xl mb-5">تاریخچه سفارشات</p>
       <UTabs :items="items" variant="link" class="gap-4 w-full" :ui="{ trigger: 'flex-1' }">
       <template #current="{ item }">
-        <PanelOrderDetails />
+        <PanelOrderCurrent />
       </template>
       <template #delivered="{ item }">
-        salam
+        <PanelOrderDelivered />
       </template> 
       <template #returned="{ item }">
-        salam
+      <PanelOrderReturned />
       </template>
        <template #cancelled="{ item }">
-        salam
+        <PanelOrderCancelled />
       </template>
     </UTabs>
     </UCard>
-   
   </NuxtLayout>
 </template>
 

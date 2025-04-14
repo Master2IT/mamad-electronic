@@ -20,12 +20,14 @@
       <ShopCategoryCard v-for="category in CATEGORIES" :key="category.id" :image="category.image"
         :name="category.name" />
     </div>
+  
     <ShopAmazingProducts />
     <ShopProductsCategory link="#" title="جدید ترین محصولات" :products="PRODUCTS" />
     <ShopProductsCategory link="#" title="پیشنهادات" :products="PRODUCTS" />
     <ShopBrands link="#" title="محبوب ترین برند ها" :items="BRANDS" />
     <ShopFAQ link="#" title="سوالات متداول" :items="FAQS" />
-    <!-- <ShopProductCard :product="PRODUCTS" /> -->
+
+    <!-- <CommonProductCard :product="PRODUCTS" /> -->
     <!-- <ShopReviews :items="REVIEWS" /> -->
     <!-- <ShopUserReviews :items="USER_REVIEWS" /> -->
     <!-- <ShopSpecificationsProduct :items="SPECIFICATIONS" /> -->

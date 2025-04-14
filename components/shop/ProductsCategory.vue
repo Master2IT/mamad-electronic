@@ -11,7 +11,7 @@
             :autoplay="{ delay: 2000 }"
             :ui="{ item: 'basis-1/6', prev: 'left-0 right-auto', next: 'right-0 left-auto' }">
             <div class="py-1">
-                <ShopProductCard showReview :type="2" :product="item" />
+                <CommonProductCard showReview :type="2" :product="item" />
             </div>
         </UCarousel>
     </div>

@@ -22,12 +22,12 @@
     <div class="w-full col-span-3">
       <!-- <Carousel>
         <CarouselSlide v-for="product in products" :key="product.id">
-          <ShopProductCard :product="product" />
+          <CommonProductCard :product="product" />
         </CarouselSlide>
       </Carousel> -->
       <UCarousel v-slot="{ item }" align="start" skipSnaps :items="products" autoHeight class="w-full" arrows loop
         :autoplay="{ delay: 2000 }" :ui="{ item: 'basis-1/5', prev: 'left-0 right-auto', next: 'right-0 left-auto' }">
-        <ShopProductCard :type="1" :product="item" />
+        <CommonProductCard :type="1" :product="item" />
       </UCarousel>
     </div>
   </div>
