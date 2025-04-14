@@ -144,7 +144,7 @@
 
           <div class="col-span-1 md:col-span-2 lg:col-span-3">
             <div class="flex items-center justify-center">
-              <img src="../public/logo.svg" alt="logo" class="w-16 md:w-auto" />
+              <NuxtImg src="logo.svg" alt="logo" class="w-16 md:w-auto" />
               <div>
                 <p class="text-primary font-bold text-2xl md:text-4xl">محمد</p>
                 <span>الکترونیک</span>
