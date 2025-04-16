@@ -12,7 +12,7 @@
       </button>
     </div>
     <div class="px-5 pb-2">
-      <h3 class="text-md font-semibold text-center">{{ product.name }}</h3>
+      <h3 class="text-[14px] md:text-md font-semibold text-center line-clamp-1">{{ product.name }}</h3>
       <div v-if="showReview" class="flex gap-1 items-center justify-end my-3 text-sm">
         <span class="text-neutral-400 mt-0.5">(43 نظر)</span>
         <div class="text-yellow-500 flex items-center font-medium">
@@ -21,7 +21,8 @@
         </div>
       </div>
       <div :class="['flex items-end mt-3', { 'flex-col': type == 1 }, { 'justify-between gap-2': type == 2 }]">
-        <p class="text-gray-500 text-sm line-through">{{ Number(product.discountedPrice).toLocaleString('fa-IR') }}</p>
+        <p class="text-gray-500 hidden md:block text-sm line-through">{{
+          Number(product.discountedPrice).toLocaleString('fa-IR') }}</p>
         <UButton v-if="product.discount" class="!gap-1" size="sm" :block="type == 2">
           <span class="!font-bold text-[14px]">
             {{ Number(product.price).toLocaleString('fa-IR') }}

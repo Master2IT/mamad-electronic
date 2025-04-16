@@ -1,7 +1,7 @@
 <template>
   <div class="my-10 h-auto">
     <div class="flex items-center justify-between mb-3">
-      <h2 class="text-2xl text-primary-700 font-black">{{ title }}</h2>
+      <h2 class="text-xl md:text-2xl text-primary-700 font-black">{{ title }}</h2>
       <UButton variant="link" :href="link" class="flex items-center gap-1">
         مشاهده همه
         <ChevronLeft class="w-4 h-4" />

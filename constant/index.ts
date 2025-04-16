@@ -368,3 +368,29 @@ export const BRANDS = [
       "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Nvidia_logo.svg/2560px-Nvidia_logo.png",
   },
 ];
+export const ARTICLES = [
+  {
+    id: 1,
+    name: "راهنمای جامع برنامه‌نویسی آردوینو برای مبتدیان",
+    image:
+      "https://www.digikala.com/mag/wp-content/uploads/2025/04/marinated-fish.jpg",
+  },
+  {
+    id: 2,
+    name: "آشنایی با سنسورهای پرکاربرد در پروژه‌های الکترونیکی",
+    image:
+      "https://www.digikala.com/mag/wp-content/uploads/2025/04/the-myth.jpg",
+  },
+  {
+    id: 3,
+    name: "مقایسه میکروکنترلرهای محبوب در بازار",
+    image:
+      "https://www.digikala.com/mag/wp-content/uploads/2025/04/facial-redness-home-remedies-1.jpg",
+  },
+  {
+    id: 4,
+    name: "آموزش راه‌اندازی پروژه خانه هوشمند با ESP8266",
+    image:
+      "https://www.digikala.com/mag/wp-content/uploads/2025/04/iphone-x-on-black-desk-2.jpg",
+  },
+];
