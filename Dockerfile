@@ -14,11 +14,12 @@ WORKDIR /app
 # RUN npm install -g pnpm && pnpm install
 
 # Rebuild native modules
-RUN npm install
 # RUN pnpm rebuild better-sqlite3
 
 # Copy the rest of the application
 COPY . .
+
+RUN npm install
 
 # Build the application
 # RUN pnpm run build
