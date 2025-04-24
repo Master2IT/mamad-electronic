@@ -2,7 +2,7 @@
 FROM node:20-alpine
 
 # Install build tools
-RUN apk add --no-cache python3 make g++
+# RUN apk add --no-cache python3 make g++
 
 # Set working directory
 WORKDIR /app
@@ -14,13 +14,13 @@ COPY package.json pnpm-lock.yaml* ./
 RUN npm install -g pnpm && pnpm install
 
 # Rebuild native modules
-RUN pnpm rebuild better-sqlite3
+# RUN pnpm rebuild better-sqlite3
 
 # Copy the rest of the application
 COPY . .
 
 # Build the application
-RUN pnpm run build
+# RUN pnpm run build
 
 # Expose port 3000
 EXPOSE 3000
