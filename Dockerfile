@@ -19,13 +19,13 @@ WORKDIR /app
 # Copy the rest of the application
 COPY . .
 
-RUN npm install
+RUN npm install --force
 
 # Build the application
-# RUN pnpm run build
+# RUN npm run build
 
 # Expose port 3000
 EXPOSE 3000
 
 # Start the application
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "preview"]
