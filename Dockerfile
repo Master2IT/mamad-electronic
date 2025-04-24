@@ -8,7 +8,7 @@ FROM node:20-alpine
 WORKDIR /app
 
 # Copy package.json and pnpm-lock.yaml
-COPY package.json pnpm-lock.yaml* ./
+# COPY package.json pnpm-lock.yaml* ./
 
 # Install pnpm and dependencies
 # RUN npm install -g pnpm && pnpm install
@@ -26,4 +26,4 @@ COPY . .
 EXPOSE 3000
 
 # Start the application
-CMD ["pnpm", "run", "dev"]
+CMD ["npm", "run", "dev"]
