@@ -1,0 +1,1 @@
+import{aJ as u,F as r,f as s,aK as o}from"./Dct8iALT.js";function f(e){const t=u({dir:r("ltr")});return s(()=>{var n;return(e==null?void 0:e.value)||((n=t.dir)==null?void 0:n.value)||"ltr"})}let a=0;function i(e,t="reka"){if(e)return e;const n=u({useId:void 0});return o?`${t}-${o()}`:n.useId?`${t}-${n.useId()}`:`${t}-${++a}`}export{i as a,f as u};

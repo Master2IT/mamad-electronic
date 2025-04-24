@@ -1,0 +1,1 @@
+import{_ as o,a as n,b as s}from"./1Ty4vnBV.js";import{c as r,o as _,b as e,w as c,a as m,m as l}from"./Dct8iALT.js";import"./CGu9zMyG.js";import"./BfyjiiM-.js";import"./Cp4hMb88.js";const B={__name:"shop",setup(p){return(t,i)=>{const a=n;return _(),r("div",null,[e(a,null,{default:c(()=>[e(o),m("div",null,[l(t.$slots,"default")])]),_:3}),e(s)])}}};export{B as default};
