@@ -11,7 +11,7 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml* ./
 
 # Install pnpm and dependencies
-RUN npm install -g pnpm && pnpm install
+# RUN npm install -g pnpm && pnpm install
 
 # Rebuild native modules
 # RUN pnpm rebuild better-sqlite3
@@ -26,4 +26,4 @@ COPY . .
 EXPOSE 3000
 
 # Start the application
-CMD ["pnpm", "dev"]
+CMD ["pnpm", "run", "dev"]
