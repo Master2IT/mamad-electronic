@@ -1,72 +1,96 @@
 <template>
-  <div class="bg-base-100 shadow-sm h-[174px] px-24 justify-between">
-    <div class="navbar flex justify-between">
-      <div class="flex">
-        <img src="../public/logo.svg" alt="logo" />
-        <div>
-          <p class="text-primary font-bold text-4xl">محمد</p>
-          <span>الکترونیک</span>
+  <header class="border-b min-h-[174px] px-4">
+    <UContainer>
+      <div class="flex flex-col md:flex-row justify-between gap-4 py-4">
+        <!-- Logo and Brand -->
+        <div class="flex items-center justify-center md:justify-start">
+          <NuxtImg src="logo.svg" alt="logo" class="w-[60px] md:w-[81px] ml-2" />
+          <div>
+            <p class="text-secondary-300 leading-6 font-bold text-xl md:text-2xl lg:text-4xl">محمد</p>
+            <span class="text-sm md:text-base">الکترونیک</span>
+          </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="flex gap-2 w-full md:w-auto order-3 md:order-2">
+          <UInput placeholder="جستجو" icon="i-heroicons-magnifying-glass" class="w-full md:w-[300px] lg:w-[500px]"
+            size="lg" />
+        </div>
+
+        <!-- User Actions -->
+        <div class="hidden md:block md:space-y-4 w-full md:w-auto order-2 md:order-3">
+          <div class="flex md:hidden items-center justify-end gap-4">
+            <UButton variant="ghost" icon="i-lucide-shopping-cart" class="size-8 md:size-10" />
+            <UButton color="primary" icon="i-lucide-log-in" size="sm" class="text-sm">
+              ورود
+            </UButton>
+          </div>
+          <div class="hidden md:flex items-center justify-between gap-4">
+            <UButton color="primary" icon="i-lucide-log-in" size="lg" class="text-sm md:text-base">
+              ورود / ثبت نام
+            </UButton>
+            <UDivider vertical />
+            <UButton variant="ghost" icon="i-lucide-shopping-cart" class="size-10" />
+          </div>
+          <div class="flex justify-between text-xs sm:text-sm md:text-base">
+            <p>پشتیبانی</p>
+            <p class="text-secondary">۰۳۱-۳۲۳۷۲۷۶۷</p>
+          </div>
         </div>
       </div>
-      <div class="flex gap-2">
-        <input type="search" placeholder="جستجو" class="input input-bordered w-24 md:w-[500px] rounded-md" />
-      </div>
-      <div class="space-y-4">
-        <div class="flex items-center justify-between">
-          <button class="btn bg-primary text-white">
-            <LogIn class="size-5" />
-            ورود / ثبت نام
-          </button>
-          <div class="divider lg:divider-horizontal"></div>
-          <button class="">
-            <ShoppingCart class="size-8" />
-          </button>
-        </div>
-        <div class="flex justify-between">
-          <p>پشتیبانی</p>
-          <p class="text-secondary">۰۳۱-۳۲۳۷۲۷۶۷</p>
-        </div>
-      </div>
-    </div>
-    <ul class="menu menu-horizontal px-1 flex items-center justify-between">
-      <li>
-        <details>
-          <summary>دسته بندی کالا ها</summary>
-          <ul class="p-2 bg-base-100 shadow-lg rounded-md w-[calc(100vw-200px)]">
-            <div class="grid grid-cols-3 gap-0">
-              <div class="border-l border-pink-200">
-                <li><a class="hover:bg-pink-100">آی سی</a></li>
-                <li><a class="hover:bg-pink-100">خازن</a></li>
-                <li><a class="hover:bg-pink-100">مقاومت</a></li>
-                <li><a class="hover:bg-pink-100">پتانسیومتر</a></li>
-                <li><a class="hover:bg-pink-100">قطعات ربات پروازی</a></li>
-                <li><a class="hover:bg-pink-100">دیود</a></li>
-                <li><a class="hover:bg-pink-100">سلف</a></li>
-                <li><a class="hover:bg-pink-100">اینترنت</a></li>
-                <li><a class="hover:bg-pink-100">تجهیزات جانبی</a></li>
-              </div>
-              <div class="border-l border-pink-200">
-                <li><a class="hover:bg-pink-100 bg-pink-200">آی سی یک</a></li>
-                <li><a class="hover:bg-pink-100">آی سی دو</a></li>
-                <li><a class="hover:bg-pink-100">همه محصولات آی سی</a></li>
-              </div>
-              <div>
-                <li><a class="hover:bg-pink-100">آی سی یک</a></li>
-                <li><a class="hover:bg-pink-100">آی سی دو</a></li>
-              </div>
-            </div>
-          </ul>
-        </details>
-      </li>
-      <li><a href="">تخفیفات</a></li>
-      <li><a href="" class="text-[#009951] font-bold text-xl">
-          پیشنهاد ویژه</a></li>
-      <Icon name="moon" class="size-6" />
-    </ul>
-  </div>
+
+      <!-- Navigation Menu -->
+    </UContainer>
+    <nav class="mt-3">
+      <UNavigationMenu :items="items" class="w-full" />
+    </nav>
+  </header>
 </template>
-<script setup lang="ts">
-import { LogIn } from 'lucide-vue-next'
-import { ShoppingCart } from 'lucide-vue-next'
-import Icon from '@/components/common/Icon.vue'
+
+<script setup>
+
+const items = ref([
+  {
+    label: 'دسته‌بندی محصولات',
+    icon: 'i-lucide-layers',
+    to: '/categories',
+    children: [
+      {
+        label: 'قطعات الکترونیکی',
+        description: 'انواع قطعات و کامپوننت‌های الکترونیکی',
+        icon: 'i-lucide-cpu'
+      },
+      {
+        label: 'ابزار و تجهیزات',
+        description: 'ابزارهای تخصصی تعمیرات و مونتاژ',
+        icon: 'i-lucide-wrench'
+      },
+      {
+        label: 'بردهای توسعه',
+        description: 'انواع آردوینو، رزبری‌پای و بردهای توسعه',
+        icon: 'i-lucide-circuit-board'
+      },
+      {
+        label: 'سنسورها و ماژول‌ها',
+        description: 'تجهیزات اندازه‌گیری و کنترل',
+        icon: 'i-lucide-radio-tower'
+      },
+      {
+        label: 'لوازم جانبی',
+        description: 'کابل، کانکتور و سایر لوازم جانبی',
+        icon: 'i-lucide-plug'
+      }
+    ]
+  },
+  {
+    label: 'تخفیفات',
+    icon: 'i-lucide-percent',
+    to: '/discounts'
+  },
+  {
+    label: 'پیشنهاد ویژه',
+    icon: 'i-lucide-gift',
+    to: '/special-offers'
+  },
+])
 </script>

@@ -1,18 +1,43 @@
-@import 'tailwindcss';
+@import "tailwindcss";
+@import "./font.css";
+@import "@nuxt/ui";
 
-@plugin "daisyui";
+/* @plugin "daisyui" {
+  themes: light --default;
+} */
 
-@plugin "daisyui/theme" {
-  name: 'light';
-  default: true;
-  --color-primary: hsl(318, 70%, 86%);
-  --color-secondary: hsl(306, 94%, 33%);
+:root {
+  --ui-primary: var(--ui-color-primary-900);
+  --ui-secondary: var(--ui-color-secondary-600);
+  --ui-success: var(--ui-color-success-500);
+  --ui-info: var(--ui-color-info-500);
+  --ui-warning: var(--ui-color-warning-500);
+  --ui-error: var(--ui-color-error-500);
+  --ui-radius: var(--radius-sm);
+  --ui-container: 90rem;
+  --ui-bg: var(--ui-color-neutral-50);
+  --ui-text: var(--ui-color-neutral-800);
 }
+
+/* @plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-primary: #a20592;
+  --color-secondary: #f4c1e5;
+} */
+
 * {
   direction: rtl;
-  font-family: 'Vazir', sans-serif;
 }
 
 body {
-  font-family: 'Vazir', sans-serif;
+  @apply bg-slate-50;
+}
+
+.rtl {
+  direction: rtl;
+}
+
+.ltr {
+  direction: ltr;
 }

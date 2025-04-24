@@ -1,85 +1,64 @@
 <template>
-  <div class="bg-purple-800 rounded-lg p-4 my-6 h-[324px] flex">
-    <div class="flex justify-between items-center mb-4 flex-col">
-      <div class="text-white text-right">
-        <h2 class="text-2xl font-bold">تخفیف های شگفت انگیز</h2>
-      </div>
-      <div class="text-center flex gap-2 justify-center items-center">
-        <div class="text-white text-center mb-4">
-          <div class="text-4xl font-bold">{{ timer.hours }}</div>
-          <div>ساعت</div>
+  <div class="bg-primary-700 rounded-lg p-4 my-6 grid grid-cols-4 gap-2 items-center">
+    <div class="flex justify-center items-center gap-10 flex-col relative mt-10 col-span-2 md:col-span-1">
+      <h2 class="text-3xl md:text-4xl text-center text-white mt-5 font-black w-[150px] md:w-[200px] wrap-normal">تخفیف
+        های شگفت انگیز
+      </h2>
+      <UButtonGroup orientation="horizontal">
+        <UButton v-for="(time, i) in times" :key="i" class="flex flex-col px-3 md:px-5 bg-white hover:bg-white">
+          <p class="text-xl md:text-2xl font-bold text-primary-700 leading-3 mt-2">{{ time.value }}</p>
+          <span class="text-primary-700 text-xs">{{ time.label }}</span>
+        </UButton>
+      </UButtonGroup>
+      <!-- <div class="join">
+        <div v-for="(time, i) in times" :key="i" class="btn btn-xl join-item flex flex-col justify-center items-center">
+          <p class="text-2xl font-bold text-primary leading-3 mt-2">{{ time.value }}</p>
+          <span class="text-primary text-xs">{{ time.label }}</span>
         </div>
-        <div class="text-white text-center mb-4">
-          <div class="text-4xl font-bold">{{ timer.minutes }}</div>
-          <div>دقیقه</div>
-        </div>
-        <div class="text-white text-center">
-          <div class="text-4xl font-bold">{{ timer.seconds }}</div>
-          <div>ثانیه</div>
-        </div>
-      </div>
-      <button class="text-white flex items-center">
+      </div> -->
+      <NuxtLink href="#"
+        class="text-white flex gap-1 mt-auto self-start w-full justify-center md:w-auto md:mr-10 items-center">
         <span>مشاهده همه</span>
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd"
-                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                clip-rule="evenodd"/>
-        </svg>
-      </button>
+        <ChevronLeft :size="18" />
+      </NuxtLink>
     </div>
-    <div class="w-full">
-      <ClientOnly>
-        <swiper-container ref="containerRef">
-          <swiper-slide v-for="product in products" :key="product.id">
-            <ShopProductCard :product="product"/>
-          </swiper-slide>
-        </swiper-container>
-      </ClientOnly>
+    <div class="w-full col-span-2 md:col-span-3">
+      <!-- <Carousel>
+        <CarouselSlide v-for="product in products" :key="product.id">
+          <CommonProductCard :product="product" />
+        </CarouselSlide>
+      </Carousel> -->
+      <UCarousel v-slot="{ item }" align="start" skipSnaps :items="products" autoHeight class="w-full" arrows loop
+        :autoplay="{ delay: 2000 }"
+        :ui="{ item: 'basis-full md:basis-1/5', prev: 'left-0 right-auto', next: 'right-0 left-auto' }">
+        <CommonProductCard :type="1" :product="item" />
+      </UCarousel>
     </div>
   </div>
 </template>
 
 <script setup>
-import {ref, onMounted, onUnmounted} from 'vue'
-import {PRODUCTS} from '@/constant'
-import {convertToPersianNumber} from '@/utils'
-// import SwiperSlider from '@/components/common/SwiperSlider.vue'
-// import SwiperSlide from '@/components/common/SwiperSlide.vue'
-
-const containerRef = ref(null)
-const swiper = useSwiper(containerRef)
-
-const breakpoints = {
-  320: {
-    slidesPerView: 1,
-    spaceBetween: 10
-  },
-  640: {
-    slidesPerView: 2,
-    spaceBetween: 10
-  },
-  768: {
-    slidesPerView: 3,
-    spaceBetween: 15
-  },
-  1024: {
-    slidesPerView: 4,
-    spaceBetween: 15
-  },
-  1280: {
-    slidesPerView: 5,
-    spaceBetween: 10
-  }
-}
+import { ref, onMounted, onUnmounted } from 'vue'
+import { PRODUCTS } from '@/constant'
+import { convertToPersianNumber } from '@/utils'
+// import Carousel from '@/components/common/Carousel/Carousel.vue'
+// import CarouselSlide from '@/components/common/Carousel/CarouselSlide.vue'
+import { ChevronLeft } from 'lucide-vue-next'
 
 const products = ref(PRODUCTS)
 
 const timer = ref({
-  hours: '۲',
-  minutes: '۳۳',
-  seconds: '۴۵'
+  hours: '2',
+  minutes: '33',
+  seconds: '45'
 })
 
+
+const times = ref([
+  { label: 'ساعت', value: timer.value.hours },
+  { label: 'دقیقه', value: timer.value.minutes },
+  { label: 'ثانیه', value: timer.value.seconds }
+])
 let interval
 
 onMounted(() => {
