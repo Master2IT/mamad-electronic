@@ -1,6 +1,9 @@
 # Use Node.js 20 as base image
 FROM node:20-alpine
 
+# Install build tools
+RUN apk add --no-cache python3 make g++
+
 # Set working directory
 WORKDIR /app
 
@@ -9,8 +12,9 @@ COPY package.json pnpm-lock.yaml* ./
 
 # Install pnpm and dependencies
 RUN npm install -g pnpm && pnpm install
+
+# Rebuild native modules
 RUN pnpm rebuild better-sqlite3
-RUN apk add --no-cache python3 make g++
 
 # Copy the rest of the application
 COPY . .
