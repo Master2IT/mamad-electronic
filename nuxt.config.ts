@@ -26,7 +26,18 @@ export default defineNuxtConfig({
   ui: {
     colorMode: false,
     theme: {
-      colors: ['primary', 'secondary', 'tertiary', 'info', 'success', 'warning', 'error']
+      colors: [
+        "primary",
+        "secondary",
+        "tertiary",
+        "info",
+        "success",
+        "warning",
+        "error",
+      ],
     },
+  },
+  nitro: {
+    preset: "netlify",
   },
 });
