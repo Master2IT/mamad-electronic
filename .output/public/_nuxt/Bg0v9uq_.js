@@ -1,1 +1,0 @@
-import{_ as o}from"./DlAUqK2U.js";import{e as r,r as t,o as s}from"./Dct8iALT.js";const c={};function n(_,a){const e=t("RegisterForm");return s(),r(e)}const i=o(c,[["render",n]]);export{i as default};

@@ -1,1 +1,0 @@
-import{c as n,b as e,r as t,o as c}from"./Dct8iALT.js";const u={__name:"index",setup(a){return(s,_)=>{const o=t("ProductFeatured"),r=t("CategoryList");return c(),n("div",null,[e(o),e(r)])}}};export{u as default};

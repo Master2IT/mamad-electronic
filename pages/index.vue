@@ -14,13 +14,12 @@
 
     <ShopArticles :articles="ARTICLES" />
 
-    <!-- <CommonProductCard :product="PRODUCTS" /> -->
-    <!-- <ShopReviews :items="REVIEWS" /> -->
-    <!-- <ShopUserReviews :items="USER_REVIEWS" /> -->
-    <!-- <ShopSpecificationsProduct :items="SPECIFICATIONS" /> -->
+    <!-- <ShopReviews :items="REVIEWS" />
+    <ShopUserReviews :items="USER_REVIEWS" />
+    <ShopSpecificationsProduct :items="SPECIFICATIONS" /> -->
   </NuxtLayout>
 </template>
 
 <script setup>
-import { CATEGORIES, PRODUCTS, BRANDS, FAQS, ARTICLES } from '@/constant'
+import { CATEGORIES, PRODUCTS, BRANDS, FAQS, ARTICLES, REVIEWS, USER_REVIEWS, SPECIFICATIONS } from '@/constant'
 </script>

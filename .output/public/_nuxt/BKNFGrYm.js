@@ -1,1 +1,0 @@
-import{W as s,X as c,e as n,n as u,r as p,o as _}from"./Dct8iALT.js";import{u as m}from"./Z8vK0hQX.js";const x={__name:"_id",async setup(d){let t,o;const e=s(),{data:r}=([t,o]=c(()=>m(`/api/products/${e.params.id}`,"$vD0j326B8m")),t=await t,o(),t);return(i,l)=>{const a=p("ProductDetail");return _(),n(a,{product:u(r)},null,8,["product"])}}};export{x as default};

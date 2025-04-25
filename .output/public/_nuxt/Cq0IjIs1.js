@@ -1,1 +1,0 @@
-import{_ as s}from"./QnlHzB37.js";import{e as r,w as _,r as e,o as c,b as t}from"./Dct8iALT.js";const x={__name:"index",setup(p){return(m,d)=>{const o=e("UserDashboardStats"),n=e("RecentOrders"),a=s;return c(),r(a,{name:"panel"},{default:_(()=>[t(o),t(n)]),_:1})}}};export{x as default};

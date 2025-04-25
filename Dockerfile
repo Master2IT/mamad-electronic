@@ -22,7 +22,7 @@ COPY . .
 RUN npm install --force
 
 # Build the application
-# RUN npm run build
+RUN npm run build
 
 # Expose port 3000
 EXPOSE 3000

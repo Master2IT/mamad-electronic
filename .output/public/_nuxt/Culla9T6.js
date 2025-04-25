@@ -1,1 +1,0 @@
-import{W as r,X as a,e as c,r as n,o as _}from"./Dct8iALT.js";import{u}from"./Z8vK0hQX.js";const w={__name:"search",async setup(p){let e,t;const s=r(),{data:m}=([e,t]=a(()=>u(`/api/search?q=${s.query.q}`,"$rNwwtZtOjy")),e=await e,t(),e);return(l,h)=>{const o=n("SearchResults");return _(),c(o)}}};export{w as default};

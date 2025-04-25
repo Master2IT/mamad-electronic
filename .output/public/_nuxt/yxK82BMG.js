@@ -1,1 +1,0 @@
-import{u as a}from"./Z8vK0hQX.js";import{X as u,c as d,b as e,n as p,r,o as _}from"./Dct8iALT.js";const P={__name:"index",async setup(i){let t,o;const{data:c}=([t,o]=u(()=>a("/api/products","$jkfID01dY2")),t=await t,o(),t);return(l,m)=>{const s=r("ProductFilters"),n=r("ProductGrid");return _(),d("div",null,[e(s),e(n,{products:p(c)},null,8,["products"])])}}};export{P as default};

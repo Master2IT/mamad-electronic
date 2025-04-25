@@ -1,1 +1,0 @@
-import{_ as e}from"./DlAUqK2U.js";import{e as n,r as s,o as t}from"./Dct8iALT.js";const r={};function c(_,a){const o=s("NotFoundMessage");return t(),n(o)}const p=e(r,[["render",c]]);export{p as default};
