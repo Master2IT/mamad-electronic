@@ -1,12 +1,10 @@
 <template>
   <div class="bg-primary-700 rounded-lg p-4 my-6 grid grid-cols-4 gap-2 items-center">
-    <div class="flex justify-center items-center gap-10 flex-col relative mt-10 col-span-2 md:col-span-1">
-      <h2 class="text-3xl md:text-4xl text-center text-white mt-5 font-black w-[150px] md:w-[200px] wrap-normal">تخفیف
-        های شگفت انگیز
-      </h2>
+    <div class="flex justify-center items-center gap-10 flex-col relative mt-10">
+      <h2 class="text-4xl text-center text-white mt-5 font-black w-[200px] wrap-normal">تخفیف های شگفت انگیز</h2>
       <UButtonGroup orientation="horizontal">
-        <UButton v-for="(time, i) in times" :key="i" class="flex flex-col px-3 md:px-5 bg-white hover:bg-white">
-          <p class="text-xl md:text-2xl font-bold text-primary-700 leading-3 mt-2">{{ time.value }}</p>
+        <UButton v-for="(time, i) in times" :key="i" class="flex flex-col px-5 bg-white hover:bg-white">
+          <p class="text-2xl font-bold text-primary-700 leading-3 mt-2">{{ time.value }}</p>
           <span class="text-primary-700 text-xs">{{ time.label }}</span>
         </UButton>
       </UButtonGroup>
@@ -16,8 +14,7 @@
           <span class="text-primary text-xs">{{ time.label }}</span>
         </div>
       </div> -->
-      <NuxtLink href="#"
-        class="text-white flex gap-1 mt-auto self-start w-full justify-center md:w-auto md:mr-10 items-center">
+      <NuxtLink href="#" class="text-white flex gap-1 mt-auto self-start mr-10 items-center">
         <span>مشاهده همه</span>
         <ChevronLeft :size="18" />
       </NuxtLink>

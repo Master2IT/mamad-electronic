@@ -1,24 +1,25 @@
 <template>
-  <div dir="rtl" class="container mx-auto py-8">
+  <div class="container space-y-8 hidden">
     <!-- Header Section -->
-    <div class="flex flex-col mb-6">
-      <h2 class="text-3xl font-bold text-purple-800 text-right">نظرات کاربران</h2>
-      <div class="flex flex-col md:flex-row items-start md:items-center justify-between mt-4 gap-4">
-        <div class="flex flex-col md:flex-row items-start md:items-center gap-4">
+    <div class="flex flex-col">
+      <h2 class="text-3xl font-bold text-purple-800 text-right ">نظرات کاربران</h2>
+      <div class="flex items-center justify-between">
+        <div class="flex items-center ">
           <div class="flex items-center gap-2">
-            <UIcon name="i-lucide-rows-3" class="size-4" />
-            <span class="font-bold">مرتب سازی: </span>
+            <Icon name="lucide:rows-3" class="size-4"/>
+            <Rows3 class="size-4"/>
+            <span class="ml-2 font-bold">مرتب سازی: </span>
           </div>
-          <UTabs variant="link" v-model="sortBy" :items="[
-            { label: 'جدیدترین', value: 'newest' },
-            { label: 'قدیمی ترین', value: 'oldest' },
-            { label: 'بیشترین امتیاز', value: 'highest' },
-            { label: 'کمترین امتیاز', value: 'lowest' }
-          ]" class="w-fit" />
+          <div class="flex space-x-4 rtl:space-x-reverse">
+            <button class="text-purple-800 font-medium border-b-2 border-purple-800">جدیدترین</button>
+            <button class="text-gray-600 hover:text-purple-800">قدیمی ترین</button>
+            <button class="text-gray-600 hover:text-purple-800">بیشترین امتیاز</button>
+            <button class="text-gray-600 hover:text-purple-800">کمترین امتیاز</button>
+          </div>
         </div>
-        <UButton color="primary" icon="i-lucide-message-square" @click="showAddReviewModal = true">
+        <button class="bg-purple-800 text-white py-2 px-4 rounded-md hover:bg-purple-900 transition">
           نظر خود را ثبت کنید
-        </UButton>
+        </button>
       </div>
     </div>
 
@@ -127,130 +128,87 @@
     <URating v-model="newReview.rating" :length="5" />
   </div>
 
-  <UFormGroup label="نظر شما">
-    <UTextarea v-model="newReview.comment" rows="4" placeholder="نظر خود را بنویسید..." />
-  </UFormGroup>
-
-  <UFormGroup label="تصاویر (اختیاری)">
-    <UUpload v-model="newReview.images" :multiple="true" :max-files="3" :max-file-size="5000000" accept="image/*" />
-  </UFormGroup>
-</div>
-
-<template #footer>
-          <div class="flex justify-end gap-2">
-            <UButton color="gray" variant="ghost" @click="showAddReviewModal = false">انصراف</UButton>
-            <UButton color="primary" @click="submitReview">ثبت نظر</UButton>
+<!--  isMobile-->
+  <div class="grid">
+    <div v-for="(item) in items" :key="item.id" class="pb-6 p-4 border m-2 ">
+      <div class="flex  gap-3 mb-3">
+        <div class="flex flex-col">
+          <span class="text-gray-700 font-medium">{{ item.userName }}</span>
+          <div class="flex my-1">
+               <span v-for="n in 5" :key="n" class="text-yellow-400">
+                 <span v-if="n <= item.rating">★</span>
+                 <span v-else>☆</span>
+               </span>
           </div>
-        </template>
-</UCard>
-</UModal> -->
-
-    <!-- Image Preview Modal -->
-    <!-- <UModal v-model="showImagePreviewModal">
-      <UCard>
-        <template #header>
-          <div class="flex justify-between items-center">
-            <h3 class="text-lg font-bold">تصویر</h3>
-            <UButton color="gray" variant="ghost" icon="i-lucide-x" @click="showImagePreviewModal = false" />
-          </div>
-        </template>
-
-        <div class="flex justify-center">
-          <UImage :src="previewImage" alt="Preview image" class="max-h-[80vh] max-w-full object-contain" />
+          <span class="text-gray-500 text-sm">{{item.date}}</span>
         </div>
-      </UCard>
-    </UModal> -->
+        <div class="flex flex-row  items-center gap-2">
+          <span class="text-gray-600 text-sm">آیا این نظر مفید بود؟</span>
+          <div class="flex gap-3 items-center">
+            <button class="flex items-center gap-1 text-gray-500 hover:text-gray-700">
+              <span>۰</span>
+              <ThumbsUp class="size-4"/>
+            </button>
+            <button class="flex items-center gap-1 text-gray-500 hover:text-gray-700">
+              <span>۰</span>
+              <ThumbsDown class="size-4"/>
+            </button>
+          </div>
+          <button class="text-purple-800 font-medium">پاسخ</button>
+        </div>
+      </div>
+      <p class="text-right text-gray-800">{{item.comment}}</p>
+    </div>
   </div>
+
+
+
+
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-
-interface ReviewUserItem {
-  id: number | string
-  date: string
-  rating: number
-  userName: string
-  productId: number | string
-  comment: string
-  verified: boolean
-  userAvatar?: string
-  images?: string[]
-  upVotes?: number
-  downVotes?: number
+import {Rows3} from "lucide-vue-next"
+import {ThumbsUp } from "lucide-vue-next"
+import {ThumbsDown  } from "lucide-vue-next"
+import Icon from '@/components/common/Icon.vue'
+interface ReviewUserItem{
+  id: number | string,
+  date: string,
+  rating: number,
+  userName: string,
+  productId: number |string,
+  comment: string,
+  verified: true
 }
-
-const props = defineProps<{
-  items: ReviewUserItem[]
-}>()
-
-// State
+// State can be defined directly in setup script
+const reviews = ref([])
 const sortBy = ref('newest')
-const showAddReviewModal = ref(false)
-const showImagePreviewModal = ref(false)
-const previewImage = ref('')
 
-const newReview = ref({
-  rating: 0,
-  comment: '',
-  images: []
-})
-
-// Computed
-const sortedReviews = computed(() => {
-  if (!props.items) return []
-
-  const reviews = [...props.items]
-
-  switch (sortBy.value) {
-    case 'newest':
-      return reviews.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    case 'oldest':
-      return reviews.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-    case 'highest':
-      return reviews.sort((a, b) => b.rating - a.rating)
-    case 'lowest':
-      return reviews.sort((a, b) => a.rating - b.rating)
-    default:
-      return reviews
-  }
-})
-
-// Methods
+// Methods can be defined as regular functions
 const sortReviews = (type: string) => {
   sortBy.value = type
+  // Add sorting logic here
 }
 
-const handleVote = (reviewId: number | string, voteType: 'up' | 'down') => {
-  // Add voting logic here
-  console.log(`Vote ${voteType} for review ${reviewId}`)
-}
-
-const replyToReview = (reviewId: number | string) => {
-  // Add reply logic here
-  console.log(`Reply to review ${reviewId}`)
-}
-
-const submitReview = () => {
+const addReview = () => {
   // Add review submission logic here
-  console.log('Submitting review:', newReview.value)
-
-  // Reset form and close modal
-  newReview.value = {
-    rating: 0,
-    comment: '',
-    images: []
-  }
-  showAddReviewModal.value = false
 }
 
-const openImagePreview = (image: string) => {
-  previewImage.value = image
-  showImagePreviewModal.value = true
+const handleVote = (reviewId: number, voteType: 'up' | 'down') => {
+  // Add voting logic here
 }
+
+const replyToReview = (reviewId: number) => {
+  // Add reply logic here
+}
+
+defineProps<{
+  items: ReviewUserItem[]
+}>();
 </script>
 
 <style scoped>
+/* Add any additional custom styles here */
 /* For RTL support */
 .rtl\:space-x-reverse {
   --tw-space-x-reverse: 1;

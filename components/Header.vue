@@ -58,7 +58,6 @@
     </nav>
   </header>
 </template>
-
 <script setup>
 import { ref } from 'vue';
 import MegaMenu from './common/MegaMenu.vue';
