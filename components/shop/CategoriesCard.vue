@@ -1,18 +1,19 @@
 <template>
     <div class="my-10 h-auto">
-        <UCarousel v-slot="{ item }" align="start" skipSnaps :items="items" autoHeight class="w-full" arrows loop
-            :autoplay="{ delay: 2000 }" :ui="{
-                item: 'basis-full md:basis-1/6',
-                prev: 'left-0 right-auto',
-                next: 'right-0 left-auto'
-            }">
-            <div class="py-1">
+        <Carousel :items="items" :breakpoints="{
+            1280: {
+                slidesPerView: 6,
+                spaceBetween: 5,
+            },
+        }">
+            <template #default="{ item }">
                 <ShopCategoryCard :image="item.image" :name="item.name" />
-            </div>
-        </UCarousel>
+            </template>
+        </Carousel>
     </div>
 </template>
 <script setup>
+import Carousel from '@/components/common/Carousel/Carousel.vue'
 
 defineProps({
     items: {

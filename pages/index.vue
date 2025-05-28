@@ -14,10 +14,9 @@
 
     <ShopArticles :articles="ARTICLES" />
 
-    <!-- <CommonProductCard :product="PRODUCTS" /> -->
-    <!-- <ShopReviews :items="REVIEWS" /> -->
-    <!-- <ShopUserReviews :items="USER_REVIEWS" /> -->
-    <!-- <ShopSpecificationsProduct :items="SPECIFICATIONS" /> -->
+    <!-- <ShopReviews :items="REVIEWS" />
+    <ShopUserReviews :items="USER_REVIEWS" />
+    <ShopSpecificationsProduct :items="SPECIFICATIONS" /> -->
   </NuxtLayout>
 </template>
 

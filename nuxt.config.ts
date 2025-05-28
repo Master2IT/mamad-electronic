@@ -10,8 +10,9 @@ export default defineNuxtConfig({
     "@nuxt/fonts",
     "@nuxt/icon",
     "@nuxt/image",
-    "@nuxt/scripts",
     // "vue3-carousel-nuxt",
+    "@nuxt/scripts",
+    "nuxt-swiper",
   ],
 
   devtools: { enabled: true },
@@ -26,7 +27,15 @@ export default defineNuxtConfig({
   ui: {
     colorMode: false,
     theme: {
-      colors: ['primary', 'secondary', 'tertiary', 'info', 'success', 'warning', 'error']
+      colors: [
+        "primary",
+        "secondary",
+        "tertiary",
+        "info",
+        "success",
+        "warning",
+        "error",
+      ],
     },
   },
 });
