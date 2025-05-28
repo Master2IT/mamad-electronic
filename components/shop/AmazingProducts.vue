@@ -23,16 +23,11 @@
       </NuxtLink>
     </div>
     <div class="w-full col-span-2 md:col-span-3">
-      <!-- <Carousel>
-        <CarouselSlide v-for="product in products" :key="product.id">
-          <CommonProductCard :product="product" />
-        </CarouselSlide>
-      </Carousel> -->
-      <UCarousel v-slot="{ item }" align="start" skipSnaps :items="products" autoHeight class="w-full" arrows loop
-        :autoplay="{ delay: 2000 }"
-        :ui="{ item: 'basis-full md:basis-1/5', prev: 'left-0 right-auto', next: 'right-0 left-auto' }">
-        <CommonProductCard :type="1" :product="item" />
-      </UCarousel>
+      <Carousel :items="products">
+        <template #default="{ item }">
+          <CommonProductCard :type="1" :product="item" />
+        </template>
+      </Carousel>
     </div>
   </div>
 </template>
@@ -41,8 +36,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { PRODUCTS } from '@/constant'
 import { convertToPersianNumber } from '@/utils'
-// import Carousel from '@/components/common/Carousel/Carousel.vue'
-// import CarouselSlide from '@/components/common/Carousel/CarouselSlide.vue'
+import Carousel from '@/components/common/Carousel/Carousel.vue'
 import { ChevronLeft } from 'lucide-vue-next'
 
 const products = ref(PRODUCTS)

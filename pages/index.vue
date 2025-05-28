@@ -21,5 +21,5 @@
 </template>
 
 <script setup>
-import { CATEGORIES, PRODUCTS, BRANDS, FAQS, ARTICLES, REVIEWS, USER_REVIEWS, SPECIFICATIONS } from '@/constant'
+import { CATEGORIES, PRODUCTS, BRANDS, FAQS, ARTICLES } from '@/constant'
 </script>

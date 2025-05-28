@@ -29,7 +29,7 @@
             <UButton color="primary" icon="i-lucide-log-in" size="lg" class="text-sm md:text-base">
               ورود / ثبت نام
             </UButton>
-            <UDivider vertical />
+
             <UButton variant="ghost" icon="i-lucide-shopping-cart" class="size-10" />
           </div>
           <div class="flex justify-between text-xs sm:text-sm md:text-base">
@@ -42,46 +42,28 @@
       <!-- Navigation Menu -->
     </UContainer>
     <nav class="mt-3">
-      <UNavigationMenu :items="items" class="w-full" />
+      <UContainer>
+        <div class="flex items-center gap-8">
+          <MegaMenu />
+
+          <div class="flex items-center gap-4">
+            <NuxtLink v-for="item in items.slice(1)" :key="item.label" :to="item.to"
+              class="flex items-center gap-2 text-gray-700 hover:text-primary-500 transition-colors">
+              <UIcon :name="item.icon" class="size-5" />
+              <span>{{ item.label }}</span>
+            </NuxtLink>
+          </div>
+        </div>
+      </UContainer>
     </nav>
   </header>
 </template>
 
 <script setup>
+import { ref } from 'vue';
+import MegaMenu from './common/MegaMenu.vue';
 
 const items = ref([
-  {
-    label: 'دسته‌بندی محصولات',
-    icon: 'i-lucide-layers',
-    to: '/categories',
-    children: [
-      {
-        label: 'قطعات الکترونیکی',
-        description: 'انواع قطعات و کامپوننت‌های الکترونیکی',
-        icon: 'i-lucide-cpu'
-      },
-      {
-        label: 'ابزار و تجهیزات',
-        description: 'ابزارهای تخصصی تعمیرات و مونتاژ',
-        icon: 'i-lucide-wrench'
-      },
-      {
-        label: 'بردهای توسعه',
-        description: 'انواع آردوینو، رزبری‌پای و بردهای توسعه',
-        icon: 'i-lucide-circuit-board'
-      },
-      {
-        label: 'سنسورها و ماژول‌ها',
-        description: 'تجهیزات اندازه‌گیری و کنترل',
-        icon: 'i-lucide-radio-tower'
-      },
-      {
-        label: 'لوازم جانبی',
-        description: 'کابل، کانکتور و سایر لوازم جانبی',
-        icon: 'i-lucide-plug'
-      }
-    ]
-  },
   {
     label: 'تخفیفات',
     icon: 'i-lucide-percent',
@@ -91,6 +73,6 @@ const items = ref([
     label: 'پیشنهاد ویژه',
     icon: 'i-lucide-gift',
     to: '/special-offers'
-  },
+  }
 ])
 </script>

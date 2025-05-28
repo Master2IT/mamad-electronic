@@ -77,7 +77,7 @@
               size="md" alt="User avatar" />
             <div class="flex flex-col">
               <span class="text-gray-700 font-medium">{{ item.userName }}</span>
-              <URating v-model="item.rating" :length="5" readonly class="my-1" />
+              <!-- <URating v-model="item.rating" :length="5" readonly class="my-1" /> -->
               <span class="text-gray-500 text-sm">{{ item.date }}</span>
             </div>
           </div>

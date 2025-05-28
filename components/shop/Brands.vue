@@ -7,19 +7,20 @@
                 <ChevronLeft class="w-4 h-4" />
             </UButton>
         </div>
-        <UCarousel v-slot="{ item }" align="start" skipSnaps :items="items" autoHeight class="w-full" arrows loop
-            :autoplay="{ delay: 2000 }"
-            :ui="{ item: 'basis-1/2 md:basis-1/6', prev: 'left-0 right-auto', next: 'right-0 left-auto' }">
-            <div class="py-1">
-                <NuxtImg :key="item.id || index" class="w-full h-[100px] sm:h-[120px] md:h-[150px] object-contain"
-                    :src="item.image" :sizes="'sm:50vw md:33vw lg:16.67vw'" loading="lazy"
-                    :alt="item.name || 'Brand logo'" />
-            </div>
-        </UCarousel>
+        <Carousel :items="items">
+            <template #default="{ item }">
+                <div class="py-1">
+                    <NuxtImg :key="item.id || index" class="w-full h-[100px] sm:h-[120px] md:h-[150px] object-contain"
+                        :src="item.image" :sizes="'sm:50vw md:33vw lg:16.67vw'" loading="lazy"
+                        :alt="item.name || 'Brand logo'" />
+                </div>
+            </template>
+        </Carousel>
     </div>
 </template>
 <script setup>
 import { ChevronLeft } from 'lucide-vue-next'
+import Carousel from '@/components/common/Carousel/Carousel.vue'
 
 defineProps({
     items: {
