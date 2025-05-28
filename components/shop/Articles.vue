@@ -1,5 +1,5 @@
 <template>
-    <div class="block md:hidden grid gap-2">
+    <div class="md:hidden grid gap-2">
         <div class="my-10 h-auto">
             <div class="flex items-center justify-between mb-2">
                 <h2 class="text-xl md:text-2xl text-primary-700 font-black">مقالات</h2>

@@ -8,6 +8,7 @@ export const PRODUCTS = [
     price: "2000000",
     discountedPrice: "1700000",
     favorite: false,
+    rating: 4.5,
   },
   {
     id: 2,
@@ -18,6 +19,7 @@ export const PRODUCTS = [
     price: "1500000",
     discountedPrice: "1200000",
     favorite: false,
+    rating: 4.8,
   },
   {
     id: 3,
@@ -28,6 +30,7 @@ export const PRODUCTS = [
     price: "500000",
     discountedPrice: "450000",
     favorite: false,
+    rating: 4.2,
   },
   {
     id: 4,
@@ -38,6 +41,7 @@ export const PRODUCTS = [
     price: "800000",
     discountedPrice: "600000",
     favorite: false,
+    rating: 4.7,
   },
   {
     id: 5,
@@ -48,6 +52,7 @@ export const PRODUCTS = [
     price: "900000",
     discountedPrice: "765000",
     favorite: false,
+    rating: 4.4,
   },
   {
     id: 6,
@@ -58,6 +63,7 @@ export const PRODUCTS = [
     price: "450000",
     discountedPrice: "315000",
     favorite: false,
+    rating: 4.3,
   },
   {
     id: 7,
@@ -68,6 +74,7 @@ export const PRODUCTS = [
     price: "350000",
     discountedPrice: "287000",
     favorite: false,
+    rating: 4.6,
   },
   {
     id: 8,
@@ -78,6 +85,7 @@ export const PRODUCTS = [
     price: "280000",
     discountedPrice: "246400",
     favorite: false,
+    rating: 4.1,
   },
   {
     id: 9,
@@ -88,6 +96,7 @@ export const PRODUCTS = [
     price: "3500000",
     discountedPrice: "3220000",
     favorite: false,
+    rating: 4.9,
   },
   {
     id: 10,
@@ -98,6 +107,7 @@ export const PRODUCTS = [
     price: "420000",
     discountedPrice: "327600",
     favorite: false,
+    rating: 4.4,
   },
 ];
 export const FAQS = [
