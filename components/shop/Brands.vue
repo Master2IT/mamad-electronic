@@ -7,10 +7,15 @@
                 <ChevronLeft class="w-4 h-4" />
             </UButton>
         </div>
-        <Carousel :items="items">
+        <Carousel :items="items" :breakpoints="{
+            1280: {
+                slidesPerView: 6,
+                spaceBetween: 20,
+            },
+        }">
             <template #default="{ item }">
                 <div class="py-1">
-                    <NuxtImg :key="item.id || index" class="w-full h-[100px] sm:h-[120px] md:h-[150px] object-contain"
+                    <NuxtImg :key="item.id || index" class="w-full h-[100px] sm:h-[120px] md:h-[100px] object-contain"
                         :src="item.image" :sizes="'sm:50vw md:33vw lg:16.67vw'" loading="lazy"
                         :alt="item.name || 'Brand logo'" />
                 </div>

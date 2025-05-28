@@ -12,7 +12,9 @@
       </button>
     </div>
     <div class="px-5 pb-2">
-      <h3 class="text-md font-semibold text-center">{{ product.name }}</h3>
+      <UTooltip :text="product.name" :content="{ side: 'top' }">
+        <h3 class="text-md font-semibold text-center line-clamp-1">{{ product.name }}</h3>
+      </UTooltip>
       <div v-if="showReview" class="flex gap-1 items-center justify-end my-3 text-sm">
         <span class="text-neutral-400 mt-0.5">(43 نظر)</span>
         <div class="text-yellow-500 flex items-center font-medium">
