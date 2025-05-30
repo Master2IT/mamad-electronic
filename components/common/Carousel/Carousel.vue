@@ -1,11 +1,11 @@
 <template>
-    <client-only>
+
         <swiper-container ref="containerRef" :init="false">
             <swiper-slide v-for="item in items" :key="item.id" class="py-1">
-                <slot :item="item" />
+                <slot :item="item" ></slot>
             </swiper-slide>
         </swiper-container>
-    </client-only>
+    
 </template>
 <script setup>
 const containerRef = ref(null)

@@ -20,7 +20,7 @@
       </NuxtLink>
     </div>
     <div class="w-full col-span-2 md:col-span-3">
-      <Carousel :items="products">
+      <Carousel :items="data.items">
         <template #default="{ item }">
           <CommonProductCard :type="1" :product="item" />
         </template>
@@ -30,13 +30,16 @@
 </template>
 
 <script setup>
+import { getProducts } from '~/api/product-api'
 import { ref, onMounted, onUnmounted } from 'vue'
-import { PRODUCTS } from '@/constant'
 import { convertToPersianNumber } from '@/utils'
 import Carousel from '@/components/common/Carousel/Carousel.vue'
 import { ChevronLeft } from 'lucide-vue-next'
 
-const products = ref(PRODUCTS)
+const { data } = await useAsyncData('produts', () => getProducts())
+
+console.log(data.value.items);
+
 
 const timer = ref({
   hours: '2',
