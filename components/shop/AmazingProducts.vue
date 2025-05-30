@@ -38,8 +38,6 @@ import { ChevronLeft } from 'lucide-vue-next'
 
 const { data } = await useAsyncData('produts', () => getProducts())
 
-console.log(data.value.items);
-
 
 const timer = ref({
   hours: '2',
