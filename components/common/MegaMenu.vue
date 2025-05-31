@@ -2,7 +2,7 @@
     <client-only>
         <div class="relative" @mouseenter="openMenu" @mouseleave="closeMenu">
             <UButton variant="ghost" class="flex items-center gap-2">
-                <span>دسته‌بندی محصولات</span>
+                <span>دسته‌ بندی محصولات</span>
                 <UIcon name="i-lucide-chevron-down" class="size-5" />
             </UButton>
 
@@ -37,6 +37,8 @@
 </template>
 
 <script setup>
+import { getCategories } from '~/api/category-api'
+
 const isOpen = ref(false)
 const activeCategory = ref(null)
 let closeTimeout = null
@@ -56,7 +58,7 @@ const closeMenu = () => {
 
 const categories = [
     {
-        label: 'دسته‌بندی محصولات',
+        label: '‌دسته بندی محصولات',
         children: [
             {
                 label: 'قطعات الکترونیکی',

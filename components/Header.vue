@@ -47,10 +47,10 @@
           <MegaMenu />
 
           <div class="flex items-center gap-4">
-            <NuxtLink v-for="item in items.slice(1)" :key="item.label" :to="item.to"
+            <NuxtLink v-for="category in categories" :key="category.label" :to="category.to"
               class="flex items-center gap-2 text-gray-700 hover:text-primary-500 transition-colors">
-              <UIcon :name="item.icon" class="size-5" />
-              <span>{{ item.label }}</span>
+              <!-- <UIcon :name="category.icon" class="size-5" /> -->
+              <span>{{ category.label }}</span>
             </NuxtLink>
           </div>
         </div>
@@ -61,17 +61,26 @@
 <script setup>
 import { ref } from 'vue';
 import MegaMenu from './common/MegaMenu.vue';
+import { getCategories } from '~/api/category-api';
+
+const { data: categories } = await useAsyncData('categories', async () => {
+  const categories = await getCategories()
+  return categories.map(category => ({
+    label: category.title,
+    to: `/category/${category.id}`
+  }))
+})
 
 const items = ref([
-  {
-    label: 'تخفیفات',
-    icon: 'i-lucide-percent',
-    to: '/discounts'
-  },
-  {
-    label: 'پیشنهاد ویژه',
-    icon: 'i-lucide-gift',
-    to: '/special-offers'
-  }
+  // {
+  //   label: 'دسته‌بندی‌ها',
+  //   icon: 'i-lucide-grid',
+  //   to: '/categories'
+  // },
+  // ...data?.value?.data?.map(category => ({
+  //   label: category.title,
+  //   to: `/category/${category.id}`,
+  //   // icon: 'i-lucide-chevron-left'
+  // }))
 ])
 </script>

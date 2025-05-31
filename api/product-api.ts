@@ -17,7 +17,6 @@ interface ProductsParams {
 export const getProducts = async (params?: ProductsParams) => {
     const { $axios } = useNuxtApp();
     const res = await $axios.get('/general/products', { params });
-    console.log(res.data.data[0]);
-    
+
     return res.data.data[0];
 }
