@@ -1,13 +1,14 @@
 <template>
   <div class="relative rounded-md w-full shadow-sm border-0 bg-[#F7F7F7] select-none">
     <div class="relative p-0 flex justify-center items-center">
-      <NuxtImg :src="product?.file?.path" :alt="product.title_fa" class="h-[200px] w-[200px] object-contain rounded-md" />
-      <span v-if="product.discount"
+      <NuxtImg :src="`${BASE_URL}${product?.file?.path}`" :alt="product.title_fa"
+        class="h-[200px] w-[200px] object-contain rounded-md" />
+      <span v-if="product?.final_price?.discount_price"
         class="absolute top-2.5 left-2.5 bg-red-500 rounded-full text-white pt-0.5 px-3 text-xs">
-        {{ product.discount }}%
+        {{ product?.final_price?.discount_value }} {{ product?.final_price?.discount_type?.toLowerCase() ==
+          'percent' ? '%' : 'تومان' }}
       </span>
-      <button class="absolute top-2.5 right-2.5 bg-transparent border-none cursor-pointer"
-        @click="$emit('toggle-favorite', product)">
+      <button class="absolute top-2.5 right-2.5 bg-transparent border-none cursor-pointer" @click="toggleFavorite">
         <Heart :class="{ 'text-red-500': product.favorite, 'text-gray-300': !product.favorite }" size="24" />
       </button>
     </div>
@@ -23,8 +24,9 @@
         </div>
       </div>
       <div :class="['flex items-end mt-3', { 'flex-col': type == 1 }, { 'justify-between gap-2': type == 2 }]">
-        <p class="text-gray-500 text-sm line-through">{{ Number(product?.final_price?.discount_price).toLocaleString('fa-IR') }}</p>
-        <UButton v-if="product.discount" class="!gap-1" size="sm" :block="type == 2">
+        <p class="text-gray-500 text-sm line-through">{{
+          Number(product?.final_price?.discount_price).toLocaleString('fa-IR') }}</p>
+        <UButton v-if="product.final_price?.discount_price" class="!gap-1" size="sm" :block="type == 2">
           <span class="!font-bold text-[14px]">
             {{ Number(product?.final_price?.price).toLocaleString('fa-IR') }}
           </span>تومان
@@ -37,6 +39,8 @@
 <script setup>
 import { Heart } from 'lucide-vue-next'
 import Icon from '../common/Icon.vue';
+
+const BASE_URL = "https://api.merqc.com/v1";
 
 defineProps({
   product: {
@@ -52,4 +56,8 @@ defineProps({
     default: false
   }
 })
+
+const toggleFavorite = async () => {
+  await createFavorite('product', props.product.id)
+}
 </script>

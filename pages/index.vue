@@ -7,8 +7,8 @@
     <ShopCategoriesCard :items="CATEGORIES" />
 
     <ShopAmazingProducts />
-    <ShopProductsCategory link="#" title="جدید ترین محصولات" :products="PRODUCTS" />
-    <ShopProductsCategory link="#" title="پیشنهادات" :products="PRODUCTS" />
+    <ShopProductsCategory link="#" title="جدیدترین محصولات" :products="PRODUCTS" type="newest" />
+    <ShopProductsCategory link="#" title="پیشنهادات" :products="PRODUCTS" type="chosen" />
     <ShopBrands link="#" title="محبوب ترین برند ها" :items="BRANDS" />
     <ShopFAQ link="#" title="سوالات متداول" :items="FAQS" />
 

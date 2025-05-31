@@ -8,19 +8,13 @@
           <span class="text-primary-700 text-xs">{{ time.label }}</span>
         </UButton>
       </UButtonGroup>
-      <!-- <div class="join">
-        <div v-for="(time, i) in times" :key="i" class="btn btn-xl join-item flex flex-col justify-center items-center">
-          <p class="text-2xl font-bold text-primary leading-3 mt-2">{{ time.value }}</p>
-          <span class="text-primary text-xs">{{ time.label }}</span>
-        </div>
-      </div> -->
       <NuxtLink href="#" class="text-white flex gap-1 mt-auto self-start mr-10 items-center">
         <span>مشاهده همه</span>
         <ChevronLeft :size="18" />
       </NuxtLink>
     </div>
     <div class="w-full col-span-2 md:col-span-3">
-      <Carousel :items="data.items">
+      <Carousel :items="data?.items">
         <template #default="{ item }">
           <CommonProductCard :type="1" :product="item" />
         </template>
@@ -36,8 +30,7 @@ import { convertToPersianNumber } from '@/utils'
 import Carousel from '@/components/common/Carousel/Carousel.vue'
 import { ChevronLeft } from 'lucide-vue-next'
 
-const { data } = await useAsyncData('produts', () => getProducts())
-
+const { data } = await useAsyncData('products', () => getProducts({ sort: 'most_offer' }))
 
 const timer = ref({
   hours: '2',
@@ -45,20 +38,23 @@ const timer = ref({
   seconds: '45'
 })
 
-
-const times = ref([
+const times = computed(() => [ // Changed to computed to react to timer changes
   { label: 'ساعت', value: timer.value.hours },
   { label: 'دقیقه', value: timer.value.minutes },
   { label: 'ثانیه', value: timer.value.seconds }
 ])
+
 let interval
 
 onMounted(() => {
-  // Implement countdown timer
-  let endTime = new Date()
-  endTime.setHours(endTime.getHours() + 2)
-  endTime.setMinutes(endTime.getMinutes() + 33)
-  endTime.setSeconds(endTime.getSeconds() + 45)
+  const initialHours = 2
+  const initialMinutes = 33
+  const initialSeconds = 45
+
+  const endTime = new Date()
+  endTime.setHours(endTime.getHours() + initialHours)
+  endTime.setMinutes(endTime.getMinutes() + initialMinutes)
+  endTime.setSeconds(endTime.getSeconds() + initialSeconds)
 
   interval = setInterval(() => {
     const now = new Date()
@@ -66,6 +62,11 @@ onMounted(() => {
 
     if (diff <= 0) {
       clearInterval(interval)
+      timer.value = {
+        hours: '00',
+        minutes: '00',
+        seconds: '00'
+      }
       return
     }
 
@@ -73,14 +74,17 @@ onMounted(() => {
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
     const seconds = Math.floor((diff % (1000 * 60)) / 1000)
 
-    // Convert to Persian numerals
-    timer.value.hours = convertToPersianNumber(hours)
-    timer.value.minutes = convertToPersianNumber(minutes)
-    timer.value.seconds = convertToPersianNumber(seconds)
+    timer.value = {
+      hours: convertToPersianNumber(hours.toString().padStart(2, '0')),
+      minutes: convertToPersianNumber(minutes.toString().padStart(2, '0')),
+      seconds: convertToPersianNumber(seconds.toString().padStart(2, '0'))
+    }
   }, 1000)
 })
 
 onUnmounted(() => {
-  clearInterval(interval)
+  if (interval) {
+    clearInterval(interval)
+  }
 })
 </script>
