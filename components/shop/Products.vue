@@ -10,10 +10,10 @@
                 <!-- Price Range -->
                 <div class="space-y-4 mb-6">
                     <h4 class="font-medium">محدوده قیمت</h4>
-                    <URange v-model="filters.price" :min="0" :max="10000000" :step="100000" class="w-full" />
+                    <USlider v-model="filters.price" :min="0" :max="10000000" :step="100000" class="w-full" />
                     <div class="flex justify-between text-sm text-gray-600">
-                        <span>{{ filters.price[0].toLocaleString('fa-IR') }} تومان</span>
                         <span>{{ filters.price[1].toLocaleString('fa-IR') }} تومان</span>
+                        <span>{{ filters.price[0].toLocaleString('fa-IR') }} تومان</span>
                     </div>
                 </div>
 
@@ -21,13 +21,8 @@
                 <div class="space-y-4 mb-6">
                     <h4 class="font-medium">رنگ‌ها</h4>
                     <div class="space-y-2">
-                        <UCheckbox v-for="color in colors" :key="color.id" v-model="filters.selectedColors"
-                            :value="color.id">
-                            <div class="flex items-center gap-2">
-                                <div :class="['w-4 h-4 rounded-full', color.class]"></div>
-                                <span>{{ color.name }}</span>
-                            </div>
-                        </UCheckbox>
+                        <UCheckboxGroup v-model="filters.selectedColors" :items="colors" value-key="id"
+                            label-key="name" />
                     </div>
                 </div>
 
@@ -35,10 +30,8 @@
                 <div class="space-y-4 mb-6">
                     <h4 class="font-medium">برندها</h4>
                     <div class="space-y-2">
-                        <UCheckbox v-for="brand in brands" :key="brand.id" v-model="filters.selectedBrands"
-                            :value="brand.id">
-                            {{ brand.name }}
-                        </UCheckbox>
+                        <UCheckboxGroup v-model="filters.selectedBrands" :items="brands" value-key="id"
+                            label-key="name" />
                     </div>
                 </div>
 
@@ -46,17 +39,13 @@
                 <div class="space-y-4 mb-6">
                     <h4 class="font-medium">نوع محصول</h4>
                     <div class="space-y-2">
-                        <URadio v-for="type in types" :key="type.id" v-model="filters.selectedType" :value="type.id">
-                            {{ type.name }}
-                        </URadio>
+                        <URadioGroup v-model="filters.selectedType" :items="types" value-key="id" label-key="name" />
                     </div>
                 </div>
 
                 <!-- Tomorrow Shipping -->
-                <div class="pt-4 border-t">
-                    <UCheckbox v-model="filters.tomorrowShipping">
-                        ارسال فردا
-                    </UCheckbox>
+                <div class="pt-4 border-t border-gray-300">
+                    <UCheckbox v-model="filters.tomorrowShipping" label="ارسال فردا" />
                 </div>
             </UCard>
         </div>
@@ -65,7 +54,7 @@
         <div class="w-full">
             <!-- Sorting and View Options -->
             <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-                <USelect v-model="sorting" :options="sortOptions" placeholder="مرتب‌سازی بر اساس"
+                <USelect v-model="sorting" :items="sortOptions" placeholder="مرتب‌سازی بر اساس"
                     class="w-full sm:w-48" />
                 <div class="flex gap-2">
                     <UButton :variant="viewMode === 'grid' ? 'solid' : 'outline'" @click="viewMode = 'grid'"
@@ -82,13 +71,38 @@
                 <CommonProductCard v-for="product in filteredProducts" :key="product.id" :product="product"
                     :type="viewMode === 'grid' ? 1 : 2" />
             </div>
+
+            <div class="flex justify-center mt-8">
+                <UPagination v-model="currentPage" show-edges :total="data?.meta?.total || 0"
+                    :page-count="data?.meta?.per_page || 12" :ui="{
+                        rounded: 'rounded-lg',
+                        next: 'rotate-180',
+                        prev: 'rotate-180',
+                        first: 'rotate-180',
+                        last: 'rotate-180',
+                        default: {
+                            padding: 'px-3 py-1',
+                            size: 'sm',
+                            activeButton: 'bg-primary-500 text-white font-bold',
+                            inactiveButton: 'bg-gray-100 text-gray-600',
+                            button: 'hover:bg-primary-100',
+                        }
+                    }" dir="rtl" />
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue'
-import { PRODUCTS } from '~/constant'
+import { getProducts } from '~/api/product-api'
+
+const sorting = ref('newest')
+const currentPage = ref(1)
+
+const { data, refresh } = await useAsyncData('products', () => getProducts({ sort: sorting.value, page: currentPage.value }), {
+    watch: [sorting, currentPage]
+})
 
 // Filter states
 const filters = ref({
@@ -103,21 +117,23 @@ const filters = ref({
 const viewMode = ref('grid')
 
 // Sorting
-const sorting = ref('newest')
 const sortOptions = [
     { value: 'newest', label: 'جدیدترین' },
-    { value: 'price_asc', label: 'ارزان‌ترین' },
-    { value: 'price_desc', label: 'گران‌ترین' },
-    { value: 'popular', label: 'محبوب‌ترین' }
+    { value: 'cheapest', label: 'ارزان‌ترین' },
+    { value: 'expensiveness', label: 'گران‌ترین' },
+    { value: 'popular', label: 'محبوب‌ترین' },
+    { value: 'most_offer', label: 'بیشترین تخفیف' },
+    { value: 'most_sale', label: 'پرفروش‌ترین' },
+    { value: 'chosen', label: 'منتخب' }
 ]
 
 // Filter options
 const colors = [
-    { id: 1, name: 'مشکی', class: 'bg-black' },
-    { id: 2, name: 'سفید', class: 'bg-white border border-gray-300' },
-    { id: 3, name: 'آبی', class: 'bg-blue-500' },
-    { id: 4, name: 'قرمز', class: 'bg-red-500' },
-    { id: 5, name: 'سبز', class: 'bg-green-500' }
+    { id: 1, name: 'مشکی' },
+    { id: 2, name: 'سفید' },
+    { id: 3, name: 'آبی' },
+    { id: 4, name: 'قرمز' },
+    { id: 5, name: 'سبز' },
 ]
 
 const brands = [
@@ -136,29 +152,50 @@ const types = [
     { id: 5, name: 'کیت آموزشی' }
 ]
 
+watch(sorting, async () => {
+    await refresh()
+})
+
+watch(currentPage, async () => {
+    await refresh()
+})
+
 // Filtered products
 const filteredProducts = computed(() => {
-    let result = [...PRODUCTS]
+    if (!data.value?.items) return []
+
+    let result = [...data.value.items]
 
     // Filter by price
     result = result.filter(product => {
-        const price = parseInt(product.price)
+        const price = parseInt(product.final_price?.price || 0)
         return price >= filters.value.price[0] && price <= filters.value.price[1]
     })
 
-    // Apply sorting
-    switch (sorting.value) {
-        case 'price_asc':
-            result.sort((a, b) => parseInt(a.price) - parseInt(b.price))
-            break
-        case 'price_desc':
-            result.sort((a, b) => parseInt(b.price) - parseInt(a.price))
-            break
-        case 'popular':
-            result.sort((a, b) => b.rating - a.rating)
-            break
-        default: // newest
-            result.sort((a, b) => b.id - a.id)
+    // Filter by colors
+    if (filters.value.selectedColors.length > 0) {
+        result = result.filter(product =>
+            filters.value.selectedColors.includes(product.color_id)
+        )
+    }
+
+    // Filter by brands
+    if (filters.value.selectedBrands.length > 0) {
+        result = result.filter(product =>
+            filters.value.selectedBrands.includes(product.brand_id)
+        )
+    }
+
+    // Filter by type
+    if (filters.value.selectedType) {
+        result = result.filter(product =>
+            product.type_id === filters.value.selectedType
+        )
+    }
+
+    // Filter by tomorrow shipping
+    if (filters.value.tomorrowShipping) {
+        result = result.filter(product => product.tomorrow_shipping)
     }
 
     return result

@@ -18,5 +18,8 @@ export const getProducts = async (params?: ProductsParams) => {
     const { $axios } = useNuxtApp();
     const res = await $axios.get('/general/products', { params });
 
-    return res.data.data[0];
+    return {
+        items: res.data.data[0].items,
+        meta: res.data.meta
+    };
 }
