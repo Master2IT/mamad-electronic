@@ -61,7 +61,6 @@
   </header>
 </template>
 <script setup>
-import { ref } from 'vue';
 import MegaMenu from './common/MegaMenu.vue';
 import { getCategories } from '~/api/category-api';
 
@@ -72,17 +71,4 @@ const { data: categories } = await useAsyncData('categories', async () => {
     to: `/category/${category.id}`
   }))
 })
-
-const items = ref([
-  // {
-  //   label: 'دسته‌بندی‌ها',
-  //   icon: 'i-lucide-grid',
-  //   to: '/categories'
-  // },
-  // ...data?.value?.data?.map(category => ({
-  //   label: category.title,
-  //   to: `/category/${category.id}`,
-  //   // icon: 'i-lucide-chevron-left'
-  // }))
-])
 </script>
