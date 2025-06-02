@@ -6,6 +6,7 @@ export const useAuthStore = defineStore("auth", {
   state: () => ({
     user: null,
     token: null,
+    isCodeSent: false
   }),
   actions: {
     async login({ mobile, password }: any) {
@@ -13,7 +14,7 @@ export const useAuthStore = defineStore("auth", {
         const response = await login({ mobile, password });
         this.user = response.user;
         this.token = response.token;
-
+        this.isCodeSent = true
       } catch (error) {
         // Handle login error
         console.error('Login failed:', error);

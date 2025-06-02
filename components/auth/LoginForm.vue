@@ -10,7 +10,7 @@
     <!-- Mobile input -->
     <div class="w-full justify-center items-center flex flex-col">
       <p class="text-right mb-2 text-sm">شماره موبایل خود را وارد نمایید</p>
-      <UInput v-model="form.mobile" type="tel" placeholder="09xxxxxxxxx"
+      <UInput v-model="mobile" type="tel" placeholder="09xxxxxxxxx"
         :ui="{ base: 'w-full', input: 'rounded-lg text-right pr-10' }" icon="i-heroicons-user"
         @blur="v$.mobile.$touch" />
       <p v-if="v$.mobile.$error" class="text-red-500 text-sm mt-1 text-right">
@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import { useAuthStore } from '~/stores/auth'
@@ -41,10 +41,7 @@ import { useAuthStore } from '~/stores/auth'
 const authStore = useAuthStore()
 const loading = ref(false)
 const termsAccepted = ref(false)
-
-const form = reactive({
-  mobile: ''
-})
+const mobile = ref('')
 
 const rules = {
   mobile: {
@@ -53,14 +50,14 @@ const rules = {
   }
 }
 
-const v$ = useVuelidate(rules, form)
+const v$ = useVuelidate(rules, { mobile })
 
 const handleSubmit = async () => {
   const isValid = await v$.value.$validate()
   if (isValid && termsAccepted.value) {
     loading.value = true
     try {
-      await authStore.login(form)
+      await authStore.login({ mobile: mobile.value })
       navigateTo('/verify')
     } catch (error) {
       alert(error.message)

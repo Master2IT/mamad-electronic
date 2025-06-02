@@ -26,10 +26,15 @@
             </UButton>
           </div>
           <div class="hidden md:flex items-center justify-between gap-4">
-            <UButton color="primary" icon="i-lucide-log-in" size="lg" class="text-sm md:text-base">
-              ورود / ثبت نام
-            </UButton>
-
+            <UModal>
+              <UButton color="primary" icon="i-lucide-log-in" size="lg" class="text-sm md:text-base">
+                ورود / ثبت نام
+              </UButton>
+              <template #content>
+                <AuthLoginForm v-if="!isCodeSent" />
+                <AuthVerifyForm v-else />
+              </template>
+            </UModal>
             <UButton variant="ghost" icon="i-lucide-shopping-cart" class="size-10" />
           </div>
           <div class="flex justify-between text-xs sm:text-sm md:text-base">
@@ -39,7 +44,6 @@
         </div>
       </div>
 
-      <!-- Navigation Menu -->
     </UContainer>
     <nav class="mt-3">
       <UContainer>
@@ -61,6 +65,8 @@
 <script setup>
 import MegaMenu from './common/MegaMenu.vue';
 import { getCategories } from '~/api/category-api';
+
+const { isCodeSent } = useAuthStore()
 
 const { data: categories } = await useAsyncData('categories', async () => {
   const categories = await getCategories()
