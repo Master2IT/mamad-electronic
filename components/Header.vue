@@ -1,15 +1,17 @@
 <template>
   <header class="border-b min-h-[174px] px-4">
     <UContainer>
-      <div class="flex flex-col md:flex-row justify-between gap-4 py-4">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4 py-4">
         <!-- Logo and Brand -->
-        <div class="flex items-center justify-center md:justify-start">
-          <NuxtImg src="logo.svg" alt="logo" class="w-[60px] md:w-[81px] ml-2" />
-          <div>
-            <p class="text-secondary-300 leading-6 font-bold text-xl md:text-2xl lg:text-4xl">محمد</p>
-            <span class="text-sm md:text-base">الکترونیک</span>
+        <nuxt-link to="/">
+          <div class="flex items-center justify-center md:justify-start">
+            <NuxtImg src="logo.svg" alt="logo" class="w-[60px] md:w-[81px] ml-2" />
+            <div>
+              <p class="text-secondary-300 leading-6 font-bold text-xl md:text-2xl lg:text-4xl">محمد</p>
+              <span class="text-sm md:text-base">الکترونیک</span>
+            </div>
           </div>
-        </div>
+        </nuxt-link>
 
         <!-- Search Bar -->
         <div class="flex gap-2 w-full md:w-auto order-3 md:order-2">

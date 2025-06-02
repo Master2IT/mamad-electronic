@@ -19,14 +19,9 @@
         <div class="flex flex-col items-center space-x-2 rtl:space-x-reverse">
           <h3 class="text-white mb-2">شبکه های اجتماعی</h3>
           <div class="flex space-x-2 rtl:space-x-reverse">
-            <NuxtLink to="https://twitter.com" class="bg-gray-700 p-2 rounded-md hover:bg-gray-600">
-              <Twitter class="size-5 text-white" />
-            </NuxtLink>
-            <NuxtLink to="https://instagram.com" class="bg-gray-700 p-2 rounded-md hover:bg-gray-600">
-              <Instagram />
-            </NuxtLink>
-            <NuxtLink to="https://telegram.org" class="bg-gray-700 p-2 rounded-md hover:bg-gray-600">
-              <Send />
+            <NuxtLink v-for="social in socialLinks" :key="social.url" :to="social.url"
+              class="bg-gray-700 p-2 rounded-md hover:bg-gray-600">
+              <component :is="social.icon" class="size-5 text-white" />
             </NuxtLink>
           </div>
         </div>
@@ -40,81 +35,12 @@
           <!-- Services Column -->
           <div
             class="col-span-1 md:col-span-2 lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-right">
-            <div>
-              <h3 class="text-xl lg:text-2xl font-bold mb-4 text-secondary">خدمات</h3>
+            <div v-for="section in footerSections" :key="section.title">
+              <h3 class="text-xl lg:text-2xl font-bold mb-4 text-neutral-800">{{ section.title }}</h3>
               <ul class="space-y-4 lg:space-y-8">
-                <li>
-                  <NuxtLink to="/services/price" class="text-secondary hover:text-secondary">
-                    قیمت آی سی
-                  </NuxtLink>
-                </li>
-                <li>
-                  <NuxtLink to="/services/selection" class="text-secondary hover:text-purple-600">
-                    انتخاب هوشمند آی سی
-                  </NuxtLink>
-                </li>
-                <li>
-                  <NuxtLink to="/services/selection" class="text-secondary hover:text-purple-600">
-                    انتخاب هوشمند آی سی
-                  </NuxtLink>
-                </li>
-                <li>
-                  <NuxtLink to="/services/selection" class="text-secondary hover:text-purple-600">
-                    انتخاب هوشمند آی سی
-                  </NuxtLink>
-                </li>
-              </ul>
-            </div>
-
-            <!-- IC Purchase Column -->
-            <div>
-              <h3 class="text-xl lg:text-2xl font-bold mb-4 text-secondary">خرید آی سی</h3>
-              <ul class="space-y-4 lg:space-y-8">
-                <li>
-                  <NuxtLink to="/ic/price" class="text-secondary hover:text-purple-600">
-                    قیمت آی سی
-                  </NuxtLink>
-                </li>
-                <li>
-                  <NuxtLink to="/ic/price" class="text-secondary hover:text-purple-600">
-                    قیمت آی سی
-                  </NuxtLink>
-                </li>
-                <li>
-                  <NuxtLink to="/ic/warranty" class="text-secondary hover:text-purple-600">
-                    گارانتی
-                  </NuxtLink>
-                </li>
-                <li>
-                  <NuxtLink to="/ic/installment" class="text-secondary hover:text-purple-600">
-                    خرید اقساطی
-                  </NuxtLink>
-                </li>
-              </ul>
-            </div>
-
-            <!-- Online Store Column -->
-            <div>
-              <h3 class="text-xl lg:text-2xl font-bold mb-4 text-secondary">فروشگاه اینترنتی</h3>
-              <ul class="space-y-4 lg:space-y-8">
-                <li>
-                  <NuxtLink to="/store/about" class="text-secondary hover:text-purple-600">
-                    درباره ما
-                  </NuxtLink>
-                </li>
-                <li>
-                  <NuxtLink to="/store/contact" class="text-secondary hover:text-purple-600">
-                    تماس با ما
-                  </NuxtLink>
-                </li>
-                <li>
-                  <NuxtLink to="/store/terms" class="text-secondary hover:text-purple-600">
-                    شرایط و قوانین
-                  </NuxtLink>
-                </li>
-                <li>
-                  <NuxtLink to="/store/comments" class="text-secondary hover:text-purple-600">
-                    نظرات کاربران
+                <li v-for="link in section.links" :key="link.url">
+                  <NuxtLink :to="link.url" class="text-neutral-800 hover:text-purple-600">
+                    {{ link.text }}
                   </NuxtLink>
                 </li>
               </ul>
@@ -122,25 +48,17 @@
 
             <!-- Support Column -->
             <div>
-              <h3 class="text-xl lg:text-2xl font-bold mb-4 text-secondary">پشتیبانی</h3>
-              <p class="text-secondary mb-4 lg:mb-8">شنبه تا پنجشنبه ۹ الی ۱۸:۳۰</p>
-              <div class="mb-4 lg:mb-8">
-                <a href="mailto:Merqc.Shop@Gmail.Com"
-                  class="text-secondary hover:text-purple-600 flex items-center justify-center gap-2">
-                  <Icon name="lucide:mail" class="text-purple-600" />
-                  <span class="text-sm lg:text-base">Merqc.Shop@Gmail.Com</span>
-                </a>
-              </div>
-              <div class="mb-4 lg:mb-8">
-                <a href="tel:+989123456789"
-                  class="text-secondary hover:text-purple-600 flex items-center justify-center gap-2">
-                  <Icon name="lucide:phone" class="text-purple-600" />
-                  <span class="text-sm lg:text-base">تلفن امور مشتریان: ۰۹۱۲۳۴۵۶۷۸۹</span>
+              <h3 class="text-xl lg:text-2xl font-bold mb-4 text-neutral-800">پشتیبانی</h3>
+              <p class="text-neutral-800 mb-4 lg:mb-8">شنبه تا پنجشنبه ۹ الی ۱۸:۳۰</p>
+              <div v-for="contact in contactInfo" :key="contact.value" class="mb-4 lg:mb-8">
+                <a :href="contact.href"
+                  class="text-neutral-800 hover:text-purple-600 flex items-center justify-center gap-2">
+                  <Icon :name="contact.icon" class="text-purple-600" />
+                  <span class="text-sm lg:text-base">{{ contact.value }}</span>
                 </a>
               </div>
             </div>
           </div>
-
 
           <div class="col-span-1 md:col-span-2 lg:col-span-3">
             <div class="flex items-center justify-center">
@@ -149,23 +67,16 @@
                 <p class="text-primary font-bold text-2xl md:text-4xl">محمد</p>
                 <span>الکترونیک</span>
               </div>
-
             </div>
             <div class="">
-              <h4 class="text-lg font-bold mt-4 mb-2 text-secondary text-center lg:text-right">آدرس فروشگاه</h4>
-              <p class="text-secondary text-center lg:text-right">
+              <h4 class="text-lg font-bold mt-4 mb-2 text-neutral-800 text-center lg:text-right">آدرس فروشگاه</h4>
+              <p class="text-neutral-800 text-center lg:text-right">
                 اصفهان، خیابان هاتف، بازار بزرگ، پاساژ صنف الکترونیک، مجتمع الکترونیک
               </p>
               <!-- Trust Badges -->
               <div class="flex justify-center items-center mt-8 space-x-4 rtl:space-x-reverse">
-                <div class="bg-gray-100 p-2 rounded-lg">
-                  <img src="" alt="E-Namad" class="h-8 w-auto" />
-                </div>
-                <div class="bg-gray-100 p-2 rounded-lg">
-                  <img src="" alt="Samandehi" class="h-8 w-auto" />
-                </div>
-                <div class="bg-gray-100 p-2 rounded-lg">
-                  <img src="" alt="Electronic Union" class="h-8 w-auto" />
+                <div v-for="badge in trustBadges" :key="badge.alt" class="bg-gray-100 p-2 rounded-lg">
+                  <img :src="badge.src" :alt="badge.alt" class="h-8 w-auto" />
                 </div>
               </div>
             </div>
@@ -184,10 +95,64 @@
 </template>
 
 <script setup>
-import { Instagram } from "lucide-vue-next"
-import { Twitter } from "lucide-vue-next"
-import { Send } from "lucide-vue-next"
+import { Instagram, Twitter, Send } from "lucide-vue-next"
+
 const email = ref('');
+
+const socialLinks = [
+  { url: 'https://twitter.com', icon: Twitter },
+  { url: 'https://instagram.com', icon: Instagram },
+  { url: 'https://telegram.org', icon: Send }
+];
+
+const footerSections = [
+  {
+    title: 'خدمات',
+    links: [
+      { url: '/services/price', text: 'قیمت آی سی' },
+      { url: '/services/selection', text: 'انتخاب هوشمند آی سی' },
+      { url: '/services/selection', text: 'انتخاب هوشمند آی سی' },
+      { url: '/services/selection', text: 'انتخاب هوشمند آی سی' }
+    ]
+  },
+  {
+    title: 'خرید آی سی',
+    links: [
+      { url: '/ic/price', text: 'قیمت آی سی' },
+      { url: '/ic/price', text: 'قیمت آی سی' },
+      { url: '/ic/warranty', text: 'گارانتی' },
+      { url: '/ic/installment', text: 'خرید اقساطی' }
+    ]
+  },
+  {
+    title: 'فروشگاه اینترنتی',
+    links: [
+      { url: '/store/about', text: 'درباره ما' },
+      { url: '/store/contact', text: 'تماس با ما' },
+      { url: '/store/terms', text: 'شرایط و قوانین' },
+      { url: '/store/comments', text: 'نظرات کاربران' }
+    ]
+  }
+];
+
+const contactInfo = [
+  {
+    href: 'mailto:Merqc.Shop@Gmail.Com',
+    icon: 'lucide:mail',
+    value: 'Merqc.Shop@Gmail.Com'
+  },
+  {
+    href: 'tel:+989123456789',
+    icon: 'lucide:phone',
+    value: 'تلفن امور مشتریان: ۰۹۱۲۳۴۵۶۷۸۹'
+  }
+];
+
+const trustBadges = [
+  { src: '', alt: 'E-Namad' },
+  { src: '', alt: 'Samandehi' },
+  { src: '', alt: 'Electronic Union' }
+];
 
 const subscribeNewsletter = () => {
   // Handle newsletter subscription logic here

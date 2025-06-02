@@ -64,44 +64,44 @@ const categories = [
                 label: 'قطعات الکترونیکی',
                 // description: 'انواع قطعات و کامپوننت‌های الکترونیکی',
                 icon: 'i-lucide-cpu',
-                to: '/categories/electronics',
+                to: '/category/1',
                 subcategories: [
-                    { label: 'مقاومت‌ها', to: '/categories/electronics/resistors' },
-                    { label: 'خازن‌ها', to: '/categories/electronics/capacitors' },
-                    { label: 'ترانزیستورها', to: '/categories/electronics/transistors' }
+                    { label: 'مقاومت‌ها', to: '/category/2' },
+                    { label: 'خازن‌ها', to: '/category/3' },
+                    { label: 'ترانزیستورها', to: '/category/4' }
                 ]
             },
             {
                 label: 'ابزار و تجهیزات',
                 // description: 'ابزارهای تخصصی تعمیرات و مونتاژ',
                 icon: 'i-lucide-wrench',
-                to: '/categories/tools',
+                to: '/category/5',
                 subcategories: [
-                    { label: 'هویه و لوازم لحیم‌کاری', to: '/categories/tools/soldering' },
-                    { label: 'مولتی‌متر و تستر', to: '/categories/tools/meters' },
-                    { label: 'ابزار دستی', to: '/categories/tools/hand-tools' }
+                    { label: 'هویه و لوازم لحیم‌کاری', to: '/category/6' },
+                    { label: 'مولتی‌متر و تستر', to: '/category/7' },
+                    { label: 'ابزار دستی', to: '/category/8' }
                 ]
             },
             {
                 label: 'بردهای توسعه',
                 // description: 'انواع آردوینو، رزبری‌پای و بردهای توسعه',
                 icon: 'i-lucide-circuit-board',
-                to: '/categories/development-boards',
+                to: '/category/9',
                 subcategories: [
-                    { label: 'آردوینو', to: '/categories/development-boards/arduino' },
-                    { label: 'رزبری‌پای', to: '/categories/development-boards/raspberry-pi' },
-                    { label: 'میکروکنترلرها', to: '/categories/development-boards/microcontrollers' }
+                    { label: 'آردوینو', to: '/category/10' },
+                    { label: 'رزبری‌پای', to: '/category/11' },
+                    { label: 'میکروکنترلرها', to: '/category/12' }
                 ]
             },
             {
                 label: 'سنسورها و ماژول‌ها',
                 // description: 'تجهیزات اندازه‌گیری و کنترل',
                 icon: 'i-lucide-radio-tower',
-                to: '/categories/sensors',
+                to: '/category/13',
                 subcategories: [
-                    { label: 'سنسورهای دما', to: '/categories/sensors/temperature' },
-                    { label: 'سنسورهای فشار', to: '/categories/sensors/pressure' },
-                    { label: 'ماژول‌های وای‌فای', to: '/categories/sensors/wifi-modules' }
+                    { label: 'سنسورهای دما', to: '/category/14' },
+                    { label: 'سنسورهای فشار', to: '/category/15' },
+                    { label: 'ماژول‌های وای‌فای', to: '/category/16' }
                 ]
             }
         ]
