@@ -64,17 +64,53 @@
                 </div>
             </div>
 
+            <!-- Loading Skeleton -->
+            <div v-if="pending" :class="[
+                viewMode === 'grid' ? 'grid grid-cols-1 lg:grid-cols-4 gap-6' : 'space-y-4'
+            ]">
+                <div v-for="i in 12" :key="i" :class="[
+                    'animate-pulse',
+                    viewMode === 'grid' ? 'flex flex-col' : 'flex gap-4'
+                ]">
+                    <div :class="[
+                        'bg-gray-200 rounded-lg',
+                        viewMode === 'grid' ? 'h-48 w-full' : 'h-32 w-32'
+                    ]"></div>
+                    <div :class="[
+                        'space-y-3',
+                        viewMode === 'grid' ? 'mt-4' : 'flex-1'
+                    ]">
+                        <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+                        <div class="h-4 bg-gray-200 rounded w-1/2"></div>
+                        <div class="h-4 bg-gray-200 rounded w-1/4"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- No Products Message -->
+            <div v-else-if="!products?.items?.length" class="flex flex-col items-center justify-center py-12 px-4">
+                <div class="text-gray-400 mb-4">
+                    <div class="i-lucide-package-x text-6xl"></div>
+                </div>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">محصولی یافت نشد</h3>
+                <p class="text-gray-500 text-center max-w-md">
+                    با تغییر فیلترها یا جستجوی متفاوت می‌توانید محصولات دیگری را مشاهده کنید
+                </p>
+            </div>
+
             <!-- Products -->
-            <div :class="[
+            <div v-else :class="[
                 viewMode === 'grid' ? 'grid grid-cols-1 lg:grid-cols-4 gap-6' : 'space-y-4',
             ]">
                 <CommonProductCard v-for="product in products.items" :key="product.id" :product="product"
                     :type="viewMode === 'grid' ? 1 : 2" />
             </div>
 
-            <div class="flex justify-center mt-8">
-                <UPagination v-model="currentPage" show-edges :total="data?.meta?.total || 0"
-                    :page-count="data?.meta?.per_page || 12" :ui="{
+            <!-- Pagination -->
+            <div class="flex justify-center mt-8" v-if="products?.meta?.total > 12">
+                <UPagination show-edges v-model:page="currentPage" 
+                :total="products?.meta?.total - 1 || 0"
+                    :page-count="products?.meta?.per_page || 12" :total-pages="products?.meta?.last_page || 1" :ui="{
                         rounded: 'rounded-lg',
                         next: 'rotate-180',
                         prev: 'rotate-180',
@@ -94,17 +130,14 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
+import { useDebounceFn } from '@vueuse/core'
 import { getProducts } from '~/api/product-api'
 
 const sorting = ref('newest')
 const currentPage = ref(1)
+const viewMode = ref('grid')
 
-const { data: products, refresh } = await useAsyncData('products', () => getProducts({ sort: sorting.value, page: currentPage.value }), {
-    watch: [sorting, currentPage]
-})
-
-// Filter states
 const filters = ref({
     price: [0, 10000000],
     selectedColors: [],
@@ -113,10 +146,31 @@ const filters = ref({
     tomorrowShipping: false
 })
 
-// View mode (grid/list)
-const viewMode = ref('grid')
+const { data: products, pending, refresh } = await useAsyncData('products',
+    () => getProducts({
+        sort: sorting.value,
+        page: currentPage.value,
+        prices: {
+            min: filters.value.price[0],
+            max: filters.value.price[1]
+        }
+    }), {
+    watch: [sorting]
+})
 
-// Sorting
+
+// Watch price changes with debounce
+watch(() => filters.value.price, useDebounceFn(async () => {
+    await refresh()
+}, 1000))
+
+// Watch page changes immediately
+watch(() => currentPage.value, async () => {
+    await refresh()
+}, {
+    immediate: true
+})
+
 const sortOptions = [
     { value: 'newest', label: 'جدیدترین' },
     { value: 'cheapest', label: 'ارزان‌ترین' },
@@ -127,13 +181,12 @@ const sortOptions = [
     { value: 'chosen', label: 'منتخب' }
 ]
 
-// Filter options
 const colors = [
     { id: 1, name: 'مشکی' },
     { id: 2, name: 'سفید' },
     { id: 3, name: 'آبی' },
     { id: 4, name: 'قرمز' },
-    { id: 5, name: 'سبز' },
+    { id: 5, name: 'سبز' }
 ]
 
 const brands = [
@@ -151,53 +204,4 @@ const types = [
     { id: 4, name: 'ابزار' },
     { id: 5, name: 'کیت آموزشی' }
 ]
-
-watch(sorting, async () => {
-    await refresh()
-})
-
-watch(currentPage, async () => {
-    await refresh()
-})
-
-// Filtered products
-// const filteredProducts = computed(() => {
-//     if (!data.value?.items) return []
-
-//     let result = [...data.value.items]
-
-//     // Filter by price
-//     result = result.filter(product => {
-//         const price = parseInt(product.final_price?.price || 0)
-//         return price >= filters.value.price[0] && price <= filters.value.price[1]
-//     })
-
-//     // Filter by colors
-//     if (filters.value.selectedColors.length > 0) {
-//         result = result.filter(product =>
-//             filters.value.selectedColors.includes(product.color_id)
-//         )
-//     }
-
-//     // Filter by brands
-//     if (filters.value.selectedBrands.length > 0) {
-//         result = result.filter(product =>
-//             filters.value.selectedBrands.includes(product.brand_id)
-//         )
-//     }
-
-//     // Filter by type
-//     if (filters.value.selectedType) {
-//         result = result.filter(product =>
-//             product.type_id === filters.value.selectedType
-//         )
-//     }
-
-//     // Filter by tomorrow shipping
-//     if (filters.value.tomorrowShipping) {
-//         result = result.filter(product => product.tomorrow_shipping)
-//     }
-
-//     return result
-// })
 </script>
