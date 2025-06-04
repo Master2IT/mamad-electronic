@@ -1,6 +1,6 @@
 <template>
   <div class="profile-form">
-    <div>
+    <form @submit.prevent="saveProfile">
       <div class="mb-6">
         <h2 class="text-xl font-bold">اطلاعات فردی</h2>
         <p class="text-gray-500 mt-1">هویت خود را تأیید کنید</p>
@@ -8,7 +8,7 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- Name Field -->
-        <UFormGroup label="نام نام">
+        <UFormGroup label="نام نام" name="name" :required="true">
           <UInput v-model="form.name" type="text" :trailing="true">
             <template #trailing>
               <UButton color="gray" variant="ghost" icon="i-heroicons-pencil" square />
@@ -17,7 +17,7 @@
         </UFormGroup>
 
         <!-- Email Field -->
-        <UFormGroup label="ایمیل">
+        <UFormGroup label="ایمیل" name="email" :required="true">
           <UInput v-model="form.email" type="email" :trailing="true">
             <template #trailing>
               <UButton color="gray" variant="ghost" icon="i-heroicons-pencil" square />
@@ -26,16 +26,26 @@
         </UFormGroup>
 
         <!-- Password Field -->
-        <UFormGroup label="پسوورد">
-          <UInput v-model="form.password" type="password" :trailing="true">
+        <UFormGroup label="پسوورد" name="password">
+          <UInput 
+            v-model="form.password" 
+            :type="showPassword ? 'text' : 'password'" 
+            :trailing="true"
+          >
             <template #trailing>
-              <UButton color="gray" variant="ghost" icon="i-heroicons-eye" square />
+              <UButton 
+                color="gray" 
+                variant="ghost" 
+                :icon="showPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'" 
+                square
+                @click="showPassword = !showPassword"
+              />
             </template>
           </UInput>
         </UFormGroup>
 
         <!-- Phone Number Field -->
-        <UFormGroup label="شماره همراه">
+        <UFormGroup label="شماره همراه" name="phone" :required="true">
           <UInput v-model="form.phone" type="tel" :trailing="true">
             <template #trailing>
               <UButton color="gray" variant="ghost" icon="i-heroicons-pencil" square />
@@ -44,7 +54,7 @@
         </UFormGroup>
 
         <!-- Address Field -->
-        <UFormGroup label="آدرس">
+        <UFormGroup label="آدرس" name="address" :required="true">
           <UInput v-model="form.address" type="text" :trailing="true">
             <template #trailing>
               <UButton color="gray" variant="ghost" icon="i-heroicons-home" square />
@@ -53,7 +63,7 @@
         </UFormGroup>
 
         <!-- Postal Code Field -->
-        <UFormGroup label="کد پستی">
+        <UFormGroup label="کد پستی" name="postalCode" :required="true">
           <UInput v-model="form.postalCode" type="text" :trailing="true">
             <template #trailing>
               <UButton color="gray" variant="ghost" icon="i-heroicons-map" square />
@@ -63,47 +73,68 @@
       </div>
 
       <div class="flex justify-center mt-6">
-        <UButton color="purple" @click="saveProfile">
+        <UButton type="submit" color="purple" :loading="loading">
           ذخیره تغییرات
         </UButton>
       </div>
-    </div>
+    </form>
   </div>
 </template>
 
 <script setup>
-
 import { useAuthStore } from '~/stores/auth'
 import { storeToRefs } from 'pinia'
 
 const authStore = useAuthStore()
 const { user } = storeToRefs(authStore)
+const loading = ref(false)
+const showPassword = ref(false)
 
 const form = reactive({
   name: user.value?.name || '',
   email: user.value?.email || '',
-  password: '***********',
+  password: '',
   phone: user.value?.phone || '',
   address: user.value?.address || '',
   postalCode: user.value?.postalCode || ''
 })
 
+const validateForm = () => {
+  if (!form.name || !form.email || !form.phone || !form.address || !form.postalCode) {
+    throw new Error('Please fill in all required fields')
+  }
+  
+  if (form.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+    throw new Error('Please enter a valid email address')
+  }
+}
+
 const saveProfile = async () => {
   try {
-    await authStore.updateProfile(form)
-    // Show success notification
+    loading.value = true
+    validateForm()
+    
+    // Only include password in update if it was changed
+    const updateData = { ...form }
+    if (!updateData.password) {
+      delete updateData.password
+    }
+
+    await authStore.updateProfile(updateData)
+    
     useToast().add({
-      title: 'Success',
-      description: 'Profile updated successfully',
+      title: 'موفقیت',
+      description: 'پروفایل با موفقیت بروزرسانی شد',
       color: 'green'
     })
   } catch (error) {
-    // Show error notification
     useToast().add({
-      title: 'Error',
-      description: error.message || 'Failed to update profile',
+      title: 'خطا',
+      description: error.message || 'خطا در بروزرسانی پروفایل',
       color: 'red'
     })
+  } finally {
+    loading.value = false
   }
 }
 </script>
