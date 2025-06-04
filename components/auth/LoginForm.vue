@@ -57,8 +57,8 @@ const handleSubmit = async () => {
   if (isValid && termsAccepted.value) {
     loading.value = true
     try {
+
       await authStore.login({ mobile: mobile.value })
-      navigateTo('/verify')
     } catch (error) {
       alert(error.message)
     } finally {

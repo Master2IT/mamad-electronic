@@ -1,97 +1,111 @@
 <template>
   <div class="profile-form">
-    <h2 class="form-title">اطلاعات فردی</h2>
-    <p class="form-subtitle">هویت خود را تأیید کنید</p>
-
-    <div class="form-grid">
-      <!-- Name Field -->
-      <div class="form-group">
-        <label>نام نام</label>
-        <div class="input-container">
-          <input v-model="form.name" type="text" class="form-input" />
-          <button class="edit-button">
-            <Icon name="heroicons:pencil" class="edit-icon" />
-          </button>
-        </div>
+    <div>
+      <div class="mb-6">
+        <h2 class="text-xl font-bold">اطلاعات فردی</h2>
+        <p class="text-gray-500 mt-1">هویت خود را تأیید کنید</p>
       </div>
 
-      <!-- Email Field -->
-      <div class="form-group">
-        <label>ایمیل</label>
-        <div class="input-container">
-          <input v-model="form.email" type="email" class="form-input" />
-          <button class="edit-button">
-            <Icon name="heroicons:pencil" class="edit-icon" />
-          </button>
-        </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Name Field -->
+        <UFormGroup label="نام نام">
+          <UInput v-model="form.name" type="text" :trailing="true">
+            <template #trailing>
+              <UButton color="gray" variant="ghost" icon="i-heroicons-pencil" square />
+            </template>
+          </UInput>
+        </UFormGroup>
+
+        <!-- Email Field -->
+        <UFormGroup label="ایمیل">
+          <UInput v-model="form.email" type="email" :trailing="true">
+            <template #trailing>
+              <UButton color="gray" variant="ghost" icon="i-heroicons-pencil" square />
+            </template>
+          </UInput>
+        </UFormGroup>
+
+        <!-- Password Field -->
+        <UFormGroup label="پسوورد">
+          <UInput v-model="form.password" type="password" :trailing="true">
+            <template #trailing>
+              <UButton color="gray" variant="ghost" icon="i-heroicons-eye" square />
+            </template>
+          </UInput>
+        </UFormGroup>
+
+        <!-- Phone Number Field -->
+        <UFormGroup label="شماره همراه">
+          <UInput v-model="form.phone" type="tel" :trailing="true">
+            <template #trailing>
+              <UButton color="gray" variant="ghost" icon="i-heroicons-pencil" square />
+            </template>
+          </UInput>
+        </UFormGroup>
+
+        <!-- Address Field -->
+        <UFormGroup label="آدرس">
+          <UInput v-model="form.address" type="text" :trailing="true">
+            <template #trailing>
+              <UButton color="gray" variant="ghost" icon="i-heroicons-home" square />
+            </template>
+          </UInput>
+        </UFormGroup>
+
+        <!-- Postal Code Field -->
+        <UFormGroup label="کد پستی">
+          <UInput v-model="form.postalCode" type="text" :trailing="true">
+            <template #trailing>
+              <UButton color="gray" variant="ghost" icon="i-heroicons-map" square />
+            </template>
+          </UInput>
+        </UFormGroup>
       </div>
 
-      <!-- Password Field -->
-      <div class="form-group">
-        <label>پسوورد</label>
-        <div class="input-container">
-          <input v-model="form.password" type="password" class="form-input" />
-          <button class="view-password">
-            <Icon name="heroicons:eye" class="view-icon" />
-          </button>
-        </div>
+      <div class="flex justify-center mt-6">
+        <UButton color="purple" @click="saveProfile">
+          ذخیره تغییرات
+        </UButton>
       </div>
-
-      <!-- Phone Number Field -->
-      <div class="form-group">
-        <label>شماره همراه</label>
-        <div class="input-container">
-          <input v-model="form.phone" type="tel" class="form-input" />
-          <button class="edit-button">
-            <Icon name="heroicons:pencil" class="edit-icon" />
-          </button>
-        </div>
-      </div>
-
-      <!-- Address Field -->
-      <div class="form-group">
-        <label>آدرس</label>
-        <div class="input-container">
-          <input v-model="form.address" type="text" class="form-input" />
-          <button class="edit-button">
-            <Icon name="heroicons:home" class="edit-icon" />
-          </button>
-        </div>
-      </div>
-
-      <!-- Postal Code Field -->
-      <div class="form-group">
-        <label>کد پستی</label>
-        <div class="input-container">
-          <input v-model="form.postalCode" type="text" class="form-input" />
-          <button class="edit-button">
-            <Icon name="heroicons:map" class="edit-icon" />
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-actions">
-      <button class="submit-button" @click="saveProfile">ذخیره تغییرات</button>
     </div>
   </div>
 </template>
 
 <script setup>
-const form = reactive({
-  name: 'محمد عبدی',
-  email: 'themohax@gmail.com',
-  password: '***********',
-  phone: '09155609909',
-  address: 'مشهد.خیابان فلان',
-  postalCode: '-'
-});
 
-const saveProfile = () => {
-  // Handle form submission
-  console.log('Profile data:', form);
-  // You can add API call here to save the profile data
-};
+import { useAuthStore } from '~/stores/auth'
+import { storeToRefs } from 'pinia'
+
+const authStore = useAuthStore()
+const { user } = storeToRefs(authStore)
+
+const form = reactive({
+  name: user.value?.name || '',
+  email: user.value?.email || '',
+  password: '***********',
+  phone: user.value?.phone || '',
+  address: user.value?.address || '',
+  postalCode: user.value?.postalCode || ''
+})
+
+const saveProfile = async () => {
+  try {
+    await authStore.updateProfile(form)
+    // Show success notification
+    useToast().add({
+      title: 'Success',
+      description: 'Profile updated successfully',
+      color: 'green'
+    })
+  } catch (error) {
+    // Show error notification
+    useToast().add({
+      title: 'Error',
+      description: error.message || 'Failed to update profile',
+      color: 'red'
+    })
+  }
+}
 </script>
 
 <style scoped>
