@@ -1,51 +1,60 @@
 import { defineStore } from "pinia";
 import { login, verify } from "~/api/auth-api";
-import { Storage } from "@/utils/storage";
 
-export const useAuthStore = defineStore("auth", {
-  state: () => ({
-    user: null,
-    token: null,
-    isCodeSent: false
-  }),
-  actions: {
-    async login({ mobile }: { mobile: string }) {
-      try {
-        const response = await login(mobile);
-        this.user = response.user;
-        this.token = response.token;
-        this.isCodeSent = true;
-      } catch (error) {
-        console.error('Login failed:', error);
-        throw error;
-      }
-    },
-    async onVerify(code: number) {
-      try {
-        const response = await verify({ verification_token: code, access_token: true });
-        this.user = response.data;
-        window.location.href = "/panel/profile";
-      } catch (error) {
-        console.error('Login failed:', error);
-        throw error;
-      }
-    },
-    logout() {
-      this.user = null;
-      this.token = null;
-      this.isCodeSent = false;
-    },
-    setCodeSent(value: boolean) {
-      this.isCodeSent = value;
+export const useAuthStore = defineStore("auth", () => {
+  const user = ref(null);
+  const token = ref(null);
+  const isCodeSent = ref(false);
+
+  async function loginAction({ mobile }: { mobile: string }) {
+    try {
+      const response = await login(mobile);
+      user.value = response.user;
+      token.value = response.token;
+      isCodeSent.value = true;
+    } catch (error) {
+      console.error('Login failed:', error);
+      throw error;
     }
-  },
-  getters: {
-    isAuthenticated: (state) => !!state.token,
-    getUser: (state) => state.user,
-    getToken: (state) => state.token,
-  },
-  persist: {
-    storage: sessionStorage,
-    paths: ['user', 'token', 'isCodeSent'],
-  },
+  }
+
+  async function onVerify(code: number) {
+    try {
+      const response = await verify({ verification_token: code, access_token: true });
+      user.value = response.data;
+      window.location.href = "/panel/profile";
+    } catch (error) {
+      console.error('Login failed:', error);
+      throw error;
+    }
+  }
+
+  function logout() {
+    user.value = null;
+    token.value = null;
+    isCodeSent.value = false;
+  }
+
+  function setCodeSent(value: boolean) {
+    isCodeSent.value = value;
+  }
+
+  const isAuthenticated = computed(() => !!token.value);
+  const getUser = computed(() => user.value);
+  const getToken = computed(() => token.value);
+
+  return {
+    user,
+    token,
+    isCodeSent,
+    loginAction,
+    onVerify,
+    logout,
+    setCodeSent,
+    isAuthenticated,
+    getUser,
+    getToken
+  };
+}, {
+  persist: true
 });
