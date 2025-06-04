@@ -9,9 +9,9 @@ export const useAuthStore = defineStore("auth", {
     isCodeSent: false
   }),
   actions: {
-    async login({ mobile, password }: any) {
+    async login({ mobile }: any) {
       try {
-        const response = await login({ mobile, password });
+        const response = await login(mobile);
         this.user = response.user;
         this.token = response.token;
         this.isCodeSent = true
@@ -21,11 +21,11 @@ export const useAuthStore = defineStore("auth", {
         throw error;
       }
     },
-    async verify(code: number) {
+    async onVerify(code: number) {
       try {
-        const response = await verify({ verification_token: code, access_token: this.token });
-        Storage.set("permissions", response.permissions)
-        window.location.href = "/portal"
+        const response = await verify({ verification_token: code, access_token: true });
+        this.user = response.data
+        window.location.href = "/panel/profile"
 
       } catch (error) {
         // Handle login error
@@ -33,10 +33,12 @@ export const useAuthStore = defineStore("auth", {
         throw error;
       }
     },
-
     logout() {
       this.user = null;
       this.token = null;
+    },
+    setCodeSent(value: boolean) {
+      this.isCodeSent = value;
     }
   },
 

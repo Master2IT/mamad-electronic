@@ -1,9 +1,14 @@
 
 import { useNuxtApp } from '#app';
 
-export const login = async (data:any) => {
+
+export const login = async (mobile:string) => {
     const { $axios } = useNuxtApp();
-    const res = await $axios.post('/general/login',data);
+    const res = await $axios.post('/general/auth',{
+        type: "Sms",
+        value: mobile,
+        otp: true
+    });
 
     return res.data.data;
 }

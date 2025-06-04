@@ -28,7 +28,7 @@
             </UButton>
           </div>
           <div class="hidden md:flex items-center justify-between gap-4">
-            <UModal>
+            <UModal close>
               <UButton color="primary" icon="i-lucide-log-in" size="lg" class="text-sm md:text-base">
                 ورود / ثبت نام
               </UButton>
@@ -67,9 +67,13 @@
 <script setup>
 import MegaMenu from './common/MegaMenu.vue';
 import { getCategories } from '~/api/category-api';
+import { useAuthStore } from '~/stores/auth'
 
-const { isCodeSent } = useAuthStore()
+const authStore = useAuthStore()
 
+const isCodeSent = computed(() => {
+  return authStore.isCodeSent
+})
 const { data: categories } = await useAsyncData('categories', async () => {
   const categories = await getCategories()
   return categories.map(category => ({

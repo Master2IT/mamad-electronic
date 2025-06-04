@@ -11,81 +11,44 @@
     <div class="w-full justify-center items-center flex flex-col">
       <p class="text-right mb-2 text-sm">کد تایید را وارد کنید</p>
       <div class="flex justify-center gap-2 mt-4 w-full">
-        <UInput 
-          v-for="(digit, index) in 6" 
-          :key="index"
-          v-model="verificationCode[index]"
-          type="text"
-          maxlength="1"
-          class="w-12 h-12 text-center"
-          :ui="{ base: 'w-12 h-12', input: 'rounded-lg text-center text-xl' }"
-          @input="handleDigitInput(index)"
-          @keydown="handleKeyDown($event, index)"
-          ref="inputRefs"
-        />
+        <UPinInput v-model="verificationCode" :length="4" autofocus class="ltr" :ui="{
+          wrapper: 'flex gap-2',
+          input: 'w-12 h-12 rounded-lg text-center text-xl'
+        }" />
       </div>
       <p class="text-sm text-gray-500 mt-2 text-center">
         زمان باقی مانده تا ارسال مجدد: {{ remainingTime }} ثانیه
       </p>
-      <p class="text-sm mt-2 text-center">
+      <UButton variant="link" @click="setCodeSent(false)" class="text-sm mt-2 text-center">
         ویرایش شماره موبایل
-      </p>
+      </UButton>
     </div>
 
     <!-- Submit button -->
-    <UButton 
-      type="submit" 
-      :loading="loading" 
-      :disabled="loading || !isCodeComplete" 
-      block 
-      color="primary"
-      variant="solid" 
-      class="rounded-lg bg-purple-700 hover:bg-purple-800">
+    <UButton type="submit" :loading="loading" :disabled="loading || !isCodeComplete" block color="primary"
+      variant="solid" class="rounded-lg bg-purple-700 hover:bg-purple-800">
       ورود
     </UButton>
   </form>
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useAuthStore } from '~/stores/auth'
 
 const authStore = useAuthStore()
+const { setCodeSent } = authStore
+
 const loading = ref(false)
-const verificationCode = reactive(['', '', '', '', '', ''])
+const verificationCode = ref([])
 const inputRefs = ref([])
 const remainingTime = ref(120)
 const timer = ref(null)
 
-// Check if verification code is complete
 const isCodeComplete = computed(() => {
-  return verificationCode.every(digit => digit !== '')
+  return verificationCode.value.length == 4
 })
 
-// Handle input for each digit
-const handleDigitInput = (index) => {
-  if (verificationCode[index] && index < 5) {
-    // Move to next input
-    inputRefs.value[index + 1]?.focus()
-  }
-}
-
-// Handle keyboard navigation
-const handleKeyDown = (event, index) => {
-  if (event.key === 'Backspace' && !verificationCode[index] && index > 0) {
-    // Move to previous input when backspace is pressed on empty input
-    verificationCode[index - 1] = ''
-    inputRefs.value[index - 1]?.focus()
-  } else if (event.key === 'ArrowLeft' && index > 0) {
-    // Move to previous input with left arrow
-    inputRefs.value[index - 1]?.focus()
-  } else if (event.key === 'ArrowRight' && index < 5) {
-    // Move to next input with right arrow
-    inputRefs.value[index + 1]?.focus()
-  }
-}
-
-// Start countdown timer
 const startTimer = () => {
   timer.value = setInterval(() => {
     if (remainingTime.value > 0) {
@@ -100,9 +63,9 @@ const startTimer = () => {
 const handleSubmit = async () => {
   if (isCodeComplete.value) {
     loading.value = true
+
     try {
-      const code = verificationCode.join('')
-      await authStore.verify(code)
+      await authStore.onVerify(+Object.values(verificationCode.value).join(""))
     } catch (error) {
       alert(error.message)
     } finally {
