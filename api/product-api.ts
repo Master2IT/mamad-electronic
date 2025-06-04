@@ -23,3 +23,11 @@ export const getProducts = async (params?: ProductsParams) => {
         meta: res.data.meta
     };
 }
+
+export const getProductById = async (slug: string) => {
+    const { $axios } = useNuxtApp();
+    const res = await $axios.get(`/general/products/show/${slug}`);
+
+    return res.data.data;
+}
+

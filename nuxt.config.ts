@@ -13,6 +13,7 @@ export default defineNuxtConfig({
     // "vue3-carousel-nuxt",
     "@nuxt/scripts",
     "nuxt-swiper",
+    "nuxt-rating"
   ],
 
   devtools: { enabled: true },

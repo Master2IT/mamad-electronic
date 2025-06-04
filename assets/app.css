@@ -42,3 +42,6 @@ body {
 .ltr {
   direction: ltr;
 }
+.nuxt-rating-star-svg{
+  border-color: #F4B740;
+}

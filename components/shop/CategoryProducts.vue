@@ -68,7 +68,7 @@
             <div :class="[
                 viewMode === 'grid' ? 'grid grid-cols-1 lg:grid-cols-4 gap-6' : 'space-y-4',
             ]">
-                <CommonProductCard v-for="product in filteredProducts" :key="product.id" :product="product"
+                <CommonProductCard v-for="product in products.items" :key="product.id" :product="product"
                     :type="viewMode === 'grid' ? 1 : 2" />
             </div>
 
@@ -100,7 +100,7 @@ import { getProducts } from '~/api/product-api'
 const sorting = ref('newest')
 const currentPage = ref(1)
 
-const { data, refresh } = await useAsyncData('products', () => getProducts({ sort: sorting.value, page: currentPage.value }), {
+const { data: products, refresh } = await useAsyncData('products', () => getProducts({ sort: sorting.value, page: currentPage.value }), {
     watch: [sorting, currentPage]
 })
 
@@ -161,43 +161,43 @@ watch(currentPage, async () => {
 })
 
 // Filtered products
-const filteredProducts = computed(() => {
-    if (!data.value?.items) return []
+// const filteredProducts = computed(() => {
+//     if (!data.value?.items) return []
 
-    let result = [...data.value.items]
+//     let result = [...data.value.items]
 
-    // Filter by price
-    result = result.filter(product => {
-        const price = parseInt(product.final_price?.price || 0)
-        return price >= filters.value.price[0] && price <= filters.value.price[1]
-    })
+//     // Filter by price
+//     result = result.filter(product => {
+//         const price = parseInt(product.final_price?.price || 0)
+//         return price >= filters.value.price[0] && price <= filters.value.price[1]
+//     })
 
-    // Filter by colors
-    if (filters.value.selectedColors.length > 0) {
-        result = result.filter(product =>
-            filters.value.selectedColors.includes(product.color_id)
-        )
-    }
+//     // Filter by colors
+//     if (filters.value.selectedColors.length > 0) {
+//         result = result.filter(product =>
+//             filters.value.selectedColors.includes(product.color_id)
+//         )
+//     }
 
-    // Filter by brands
-    if (filters.value.selectedBrands.length > 0) {
-        result = result.filter(product =>
-            filters.value.selectedBrands.includes(product.brand_id)
-        )
-    }
+//     // Filter by brands
+//     if (filters.value.selectedBrands.length > 0) {
+//         result = result.filter(product =>
+//             filters.value.selectedBrands.includes(product.brand_id)
+//         )
+//     }
 
-    // Filter by type
-    if (filters.value.selectedType) {
-        result = result.filter(product =>
-            product.type_id === filters.value.selectedType
-        )
-    }
+//     // Filter by type
+//     if (filters.value.selectedType) {
+//         result = result.filter(product =>
+//             product.type_id === filters.value.selectedType
+//         )
+//     }
 
-    // Filter by tomorrow shipping
-    if (filters.value.tomorrowShipping) {
-        result = result.filter(product => product.tomorrow_shipping)
-    }
+//     // Filter by tomorrow shipping
+//     if (filters.value.tomorrowShipping) {
+//         result = result.filter(product => product.tomorrow_shipping)
+//     }
 
-    return result
-})
+//     return result
+// })
 </script>
