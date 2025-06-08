@@ -3,7 +3,7 @@
     <UContainer>
       <div class="flex flex-col md:flex-row items-center justify-between gap-4 py-4">
         <!-- Logo and Brand -->
-        <nuxt-link to="/">
+        <nuxt-link external to="/">
           <div class="flex items-center justify-center md:justify-start">
             <NuxtImg src="logo.svg" alt="logo" class="w-[60px] md:w-[81px] ml-2" />
             <div>

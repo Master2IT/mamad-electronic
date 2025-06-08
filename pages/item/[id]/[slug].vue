@@ -1,5 +1,9 @@
 <template>
     <NuxtLayout name="shop">
+        <UTabs :items="tabs" color="primary" variant="link" class="bg-[#FAFAFA]" :ui="{
+            trigger: 'py-5',
+            indicator: 'bg-primary-500',
+        }" />
         <div class="bg-white container mx-auto py-8">
             <!-- Product Details Section -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
@@ -47,18 +51,17 @@
             </div>
 
             <!-- Related Products -->
-            <!-- <ShopProductsCategory link="#" title="کالاهای مشابه" :products="relatedProducts" /> -->
+            <ShopProductsCategory link="#" title="کالاهای مشابه" :products="product.product_relations"
+                v-if="product.product_relations?.length" />
         </div>
     </NuxtLayout>
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import { getProductById } from '~/api/product-api'
 
 const route = useRoute()
 
-const relatedProducts = ref([])
 const { data: product } = useAsyncData('product', () => getProductById(route.params.slug), {
     // server: true,
     // lazy: false,
@@ -73,17 +76,14 @@ const tabs = [
     {
         key: 'description',
         label: 'توضیحات محصول',
-        icon: 'i-lucide-file-text'
     },
     {
         key: 'specifications',
         label: 'مشخصات فنی',
-        icon: 'i-lucide-list'
     },
     {
         key: 'reviews',
         label: 'نظرات کاربران',
-        icon: 'i-lucide-message-circle'
     }
 ]
 </script>
