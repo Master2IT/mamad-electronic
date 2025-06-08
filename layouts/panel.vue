@@ -10,16 +10,23 @@
         <UNavigationMenu orientation="vertical" :items="items" class="data-[orientation=vertical]:w-48" :ui="{
           item: 'mb-3',
         }" />
+        <UButton class="w-full flex justify-center cursor-pointer" @click="logout">خروج</UButton>
       </UCard>
       <slot />
     </div>
     <Footer />
+
   </div>
 </template>
 <script setup>
 import { ref } from 'vue';
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
+import { useAuthStore } from '~/stores/auth'
+
+const authStore = useAuthStore()
+const { logout } = authStore
+
 
 const items = ref([
 [
@@ -57,7 +64,7 @@ const items = ref([
     label: "تماس با ما",
     to: "/panel/contact",
     icon: "i-heroicons-chat-bubble-oval-left",
-  }
+  },
 ]
 ]);
 </script>

@@ -58,7 +58,7 @@ const handleSubmit = async () => {
     loading.value = true
     try {
 
-      await authStore.login({ mobile: mobile.value })
+      await authStore.loginAction({ mobile: mobile.value })
     } catch (error) {
       alert(error.message)
     } finally {

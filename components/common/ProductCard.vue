@@ -41,10 +41,10 @@
 <script setup>
 import { Heart } from 'lucide-vue-next'
 import Icon from '../common/Icon.vue';
-
+import { createFavorite } from '~/api/customer-api'
 const BASE_URL = "https://api.merqc.com/v1";
 
-defineProps({
+const props = defineProps({
   product: {
     type: Object,
     required: true
@@ -59,7 +59,12 @@ defineProps({
   }
 })
 
-const toggleFavorite = async () => {
-  await createFavorite('product', props.product.id)
+const toggleFavorite = async (e) => {
+  e.preventDefault()
+  try {
+    await createFavorite('product', props.product.id)
+  } catch (error) {
+    console.error('Error toggling favorite:', error)
+  }
 }
 </script>

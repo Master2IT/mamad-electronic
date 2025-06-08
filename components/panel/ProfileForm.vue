@@ -83,20 +83,21 @@
 
 <script setup>
 import { useAuthStore } from '~/stores/auth'
-import { storeToRefs } from 'pinia'
 
 const authStore = useAuthStore()
-const { user } = storeToRefs(authStore)
+const { user } = authStore
+console.log(user);
+
 const loading = ref(false)
 const showPassword = ref(false)
 
 const form = reactive({
-  name: user.value?.name || '',
-  email: user.value?.email || '',
+  name: user?.name + user?.family|| '',
+  email: user?.email || '',
   password: '',
-  phone: user.value?.phone || '',
-  address: user.value?.address || '',
-  postalCode: user.value?.postalCode || ''
+  phone: user?.mobile || '',
+  address: user?.address || '',
+  postalCode: user?.postalCode || ''
 })
 
 const validateForm = () => {
