@@ -36,19 +36,21 @@
         </div>
         <div>
             <h3 class="text-lg font-bold mb-2">ویژگی ها</h3>
-            <ul class="border rounded-md w-[280px]">
-                <li v-for="price in product.prices" class="flex items-center gap-2 p-2">
-                    <span class="text-neutral-500 text-sm">{{ price.final_price.title }}</span>
-                    <span>{{ price.final_price.final_price.toLocaleString() }}</span>
-                </li>
-                <hr class="my-1 w-full border-neutral-300 border-[1.5px] border-dashed"
-                    v-if="index !== product.prices.length - 1 && product.prices.length > 1" />
+            <ul class="border rounded-md w-[280px]" v-if="product.prices.length > 0">
+                <template v-for="(price, index) in product.prices" :key="index">
+                    <li class="flex items-center gap-2 p-2">
+                        <span class="text-neutral-500 text-sm">{{ price?.final_price?.title }}</span>
+                        <span>{{ price?.final_price?.final_price?.toLocaleString() }}</span>
+                    </li>
+                    <hr class="my-1 w-full border-neutral-300 border-[1.5px] border-dashed"
+                        v-if="index !== product.prices.length - 1 && product.prices.length > 1" />
+                </template>
             </ul>
 
             <div class="flex gap-2 mt-8 flex-col">
                 <div>
                     تومان <span class="text-xl font-bold">
-                        {{ product.prices[0].final_price.final_price.toLocaleString() }}
+                        {{ product.prices[0]?.final_price?.final_price?.toLocaleString() || 0 }}
                     </span>
                 </div>
                 <div class="flex gap-2 mt-1">
@@ -56,7 +58,7 @@
                         افزودن به سبد خرید
                         <ShoppingCartIcon class="size-4" />
                     </UButton>
-                    <UButton size="xl" v-if="basket > 0">
+                    <UButton size="xl" v-if="basket > 0" @click="basket--">
                         +{{ basket }}
                     </UButton>
                 </div>

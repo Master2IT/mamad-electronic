@@ -47,7 +47,7 @@
 
             <div class="py-4">
                 <!-- <ShopReviews :items="REVIEWS" /> -->
-                <ShopUserReviews :items="USER_REVIEWS" />
+                <ShopUserReviews />
             </div>
 
             <!-- Related Products -->
@@ -62,12 +62,7 @@ import { getProductById } from '~/api/product-api'
 
 const route = useRoute()
 
-const { data: product } = useAsyncData('product', () => getProductById(route.params.slug), {
-    // server: true,
-    // lazy: false,
-    // immediate: true,
-    // transform: (res) => res.data
-})
+const { data: product } = useAsyncData('product', () => getProductById(route.params.slug))
 
 const image_url = `${process.env.API_BASE_URL}/`;
 

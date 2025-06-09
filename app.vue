@@ -13,7 +13,13 @@ useHead({
 
 <template>
   <!-- <div data-theme="light"> -->
-  <UApp>
+  <UApp :locale="{
+    code: 'fa',
+    dir: 'rtl'
+  }" :toaster="{
+    position: 'top-center',
+    expand: false,
+  }" >
     <NuxtPage />
   </UApp>
   <!-- </div> -->

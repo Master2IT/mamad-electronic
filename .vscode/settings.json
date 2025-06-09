@@ -14,5 +14,15 @@
             "ui:\\s*{([^)]*)\\s*}",
             "(?:'|\"|`)([^']*)(?:'|\"|`)"
         ]
-    ]
+    ],
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "modifications",
+    "editor.formatOnSaveOptions": {
+        "tabSize": 2,
+        "insertSpaces": true
+    },
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "explicit",
+        "source.organizeImports": "explicit"
+    }
 }

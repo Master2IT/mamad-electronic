@@ -45,3 +45,7 @@ body {
 .nuxt-rating-star-svg{
   border-color: #F4B740;
 }
+
+button {
+  cursor: pointer;
+}
