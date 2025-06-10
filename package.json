@@ -28,6 +28,7 @@
     "axios": "^1.9.0",
     "lucide": "^0.487.0",
     "lucide-vue-next": "^0.487.0",
+    "maska": "^3.1.1",
     "moment-jalaali": "^0.10.4",
     "nuxt": "^3.16.2",
     "nuxt-rating": "^0.1.5",

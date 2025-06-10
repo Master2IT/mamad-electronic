@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header />
-    <div class="flex gap-3">
+    <div class="flex gap-3 p-3">
       <UCard class="w-56">
         <div class="flex items-center gap-4 mb-4">
           <UAvatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" size="sm" />
@@ -19,10 +19,10 @@
   </div>
 </template>
 <script setup>
-import { ref } from 'vue';
-import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
-import { useAuthStore } from '~/stores/auth'
+import Header from "@/components/Header.vue";
+import { ref } from 'vue';
+import { useAuthStore } from '~/stores/auth';
 
 const authStore = useAuthStore()
 const { logout } = authStore
@@ -36,7 +36,7 @@ const items = ref([
     icon: "i-heroicons-user",
   },
   {
-    label: "پرداخت و اقساط", 
+    label: "پرداخت", 
     to: "/panel/card",
     icon: "i-heroicons-currency-dollar-20-solid",
   },
@@ -50,11 +50,11 @@ const items = ref([
     to: "/panel/wishlist",
     icon: "i-heroicons-heart",
   },
-  {
-    label: "کارت های هدیه",
-    to: "/panel/gifts",
-    icon: "i-heroicons-gift",
-  },
+  // {
+  //   label: "کارت های هدیه",
+  //   to: "/panel/gifts",
+  //   icon: "i-heroicons-gift",
+  // },
   {
     label: "پیغام ها",
     to: "/panel/notifications",

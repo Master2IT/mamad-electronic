@@ -1,69 +1,88 @@
 <template>
-  <form @submit.prevent="handleSubmit" class="flex flex-col space-y-6 p-4 sm:p-6 max-w-md mx-auto">
+  <div class="mx-auto flex max-w-md flex-col space-y-6 p-4 sm:p-6">
     <!-- Logo and title -->
-    <div class="flex flex-col items-center mb-4">
-      <img src="/logo.svg" alt="محمد الکترونیک" class="h-10 mb-2" />
-      <p class="text-sm text-gray-600">الکترونیک</p>
-      <h2 class="text-xl font-bold text-primary-500 mt-6 mb-4">ورود/ثبت نام</h2>
+    <div class="mb-4 flex items-center justify-center gap-1">
+      <img src="/logo.svg" alt="محمد الکترونیک" class="mt-1 h-10" />
+      <div class="flex flex-col">
+        <span class="text-secondary text-2xl font-bold">محمد</span>
+        <span class="text-sm text-gray-700">الکترونیک</span>
+      </div>
     </div>
+    <h2 class="text-primary-500 mt-6 mb-4 text-center text-xl font-bold">ورود/ثبت نام</h2>
 
     <!-- Mobile input -->
-    <div class="w-full justify-center items-center flex flex-col">
-      <p class="text-right mb-2 text-sm">شماره موبایل خود را وارد نمایید</p>
-      <UInput v-model="mobile" type="tel" placeholder="09xxxxxxxxx"
-        :ui="{ base: 'w-full', input: 'rounded-lg text-right pr-10' }" icon="i-heroicons-user"
-        @blur="v$.mobile.$touch" />
-      <p v-if="v$.mobile.$error" class="text-red-500 text-sm mt-1 text-right">
-        {{ v$.mobile.$errors[0].$message }}
-      </p>
+    <div class="flex w-full flex-col items-center justify-center">
+      <p class="mb-2 text-right text-sm">شماره موبایل خود را وارد نمایید</p>
+      <UInput
+        v-model="mobile"
+        type="tel"
+        variant="soft"
+        placeholder="09xxxxxxxxx"
+        size="xl"
+        class="h-[72px] bg-[#F9F9F9] !text-left"
+        icon="i-heroicons-user"
+      />
     </div>
 
     <!-- Terms checkbox -->
     <div class="flex items-center justify-end gap-2">
-      <UCheckbox v-model="termsAccepted" name="terms" />
-      <p class="text-sm text-right">با ورود و ثبت‌نام در سایت، با قوانین تکوشاپ، موافقت می‌کنم.</p>
+      <UCheckbox size="xl" v-model="termsAccepted" name="terms" />
+      <p class="text-right text-sm">با ورود و ثبت‌نام در سایت، با قوانین تکنوشاپ موافقت می‌کنم.</p>
     </div>
 
     <!-- Submit button -->
-    <UButton type="submit" :loading="loading" :disabled="loading || !termsAccepted" block color="primary"
-      variant="solid" class="rounded-lg bg-purple-700 hover:bg-purple-800">
+    <UButton
+      type="button"
+      @click="handleSubmit"
+      :loading="loading"
+      :disabled="loading || !termsAccepted"
+      block
+      color="primary"
+      variant="solid"
+      class="rounded-lg bg-purple-700 hover:bg-purple-800"
+    >
       تایید
     </UButton>
-  </form>
+  </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import { useVuelidate } from '@vuelidate/core'
-import { required } from '@vuelidate/validators'
 import { useAuthStore } from '~/stores/auth'
+
+const toast = useToast()
 
 const authStore = useAuthStore()
 const loading = ref(false)
 const termsAccepted = ref(false)
 const mobile = ref('')
 
-const rules = {
-  mobile: {
-    required,
-    validMobile: (value) => /^09\d{9}$/.test(value) || 'شماره موبایل نامعتبر است'
-  }
-}
-
-const v$ = useVuelidate(rules, { mobile })
-
 const handleSubmit = async () => {
-  const isValid = await v$.value.$validate()
-  if (isValid && termsAccepted.value) {
-    loading.value = true
-    try {
+  if (!mobile.value) {
+    toast.add({
+      title: 'خطا',
+      description: 'شماره موبایل الزامی است',
+      color: 'error',
+    })
+    return
+  }
 
-      await authStore.loginAction({ mobile: mobile.value })
-    } catch (error) {
-      alert(error.message)
-    } finally {
-      loading.value = false
-    }
+  if (!/^09\d{9}$/.test(mobile.value) || mobile.value.length !== 11) {
+    toast.add({
+      title: 'خطا',
+      description: 'شماره موبایل نامعتبر است',
+      color: 'error',
+    })
+    return
+  }
+
+  loading.value = true
+  try {
+    await authStore.loginAction({ mobile: mobile.value })
+  } catch (error) {
+    toast.error(error.message)
+  } finally {
+    loading.value = false
   }
 }
 </script>
