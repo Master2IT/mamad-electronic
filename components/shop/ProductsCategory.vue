@@ -7,7 +7,7 @@
                 <ChevronLeft class="w-4 h-4" />
             </UButton>
         </div>
-        <Carousel :items="products">
+        <Carousel :items="data?.items">
             <template #default="{ item }">
                 <CommonProductCard showReview :type="2" :product="item" />
             </template>
@@ -15,10 +15,10 @@
     </div>
 </template>
 <script setup>
-import { ChevronLeft } from 'lucide-vue-next'
 import Carousel from '@/components/common/Carousel/Carousel.vue'
+import { ChevronLeft } from 'lucide-vue-next'
 
-defineProps({
+const props = defineProps({
     products: {
         type: Array,
         required: true
@@ -30,6 +30,12 @@ defineProps({
     link: {
         type: String,
         required: true
+    },
+    type: {
+        type: String,
+        required: true
     }
 })
+
+const { data } = await useAsyncData('products', () => getProducts({ sort: props.type }))
 </script>

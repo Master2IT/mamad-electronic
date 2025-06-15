@@ -1,15 +1,17 @@
 <template>
   <header class="border-b min-h-[174px] px-4">
     <UContainer>
-      <div class="flex flex-col md:flex-row justify-between gap-4 py-4">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4 py-4">
         <!-- Logo and Brand -->
-        <div class="flex items-center justify-center md:justify-start">
-          <NuxtImg src="logo.svg" alt="logo" class="w-[60px] md:w-[81px] ml-2" />
-          <div>
-            <p class="text-secondary-300 leading-6 font-bold text-xl md:text-2xl lg:text-4xl">محمد</p>
-            <span class="text-sm md:text-base">الکترونیک</span>
+        <nuxt-link external to="/">
+          <div class="flex items-center justify-center md:justify-start">
+            <NuxtImg src="logo.svg" alt="logo" class="w-[60px] md:w-[81px] ml-2" />
+            <div>
+              <p class="text-secondary-300 leading-6 font-bold text-xl md:text-2xl lg:text-4xl">محمد</p>
+              <span class="text-sm md:text-base">الکترونیک</span>
+            </div>
           </div>
-        </div>
+        </nuxt-link>
 
         <!-- Search Bar -->
         <div class="flex gap-2 w-full md:w-auto order-3 md:order-2">
@@ -26,10 +28,15 @@
             </UButton>
           </div>
           <div class="hidden md:flex items-center justify-between gap-4">
-            <UButton color="primary" icon="i-lucide-log-in" size="lg" class="text-sm md:text-base">
-              ورود / ثبت نام
-            </UButton>
-
+            <UModal close>
+              <UButton color="primary" icon="i-lucide-log-in" size="lg" class="text-sm md:text-base">
+                ورود / ثبت نام
+              </UButton>
+              <template #content>
+                <AuthLoginForm v-if="!isCodeSent" />
+                <AuthVerifyForm v-else />
+              </template>
+            </UModal>
             <UButton variant="ghost" icon="i-lucide-shopping-cart" class="size-10" />
           </div>
           <div class="flex justify-between text-xs sm:text-sm md:text-base">
@@ -39,7 +46,6 @@
         </div>
       </div>
 
-      <!-- Navigation Menu -->
     </UContainer>
     <nav class="mt-3">
       <UContainer>
@@ -47,10 +53,10 @@
           <MegaMenu />
 
           <div class="flex items-center gap-4">
-            <NuxtLink v-for="item in items.slice(1)" :key="item.label" :to="item.to"
+            <NuxtLink v-for="category in categories" :key="category.label" :to="category.to"
               class="flex items-center gap-2 text-gray-700 hover:text-primary-500 transition-colors">
-              <UIcon :name="item.icon" class="size-5" />
-              <span>{{ item.label }}</span>
+              <!-- <UIcon :name="category.icon" class="size-5" /> -->
+              <span>{{ category.label }}</span>
             </NuxtLink>
           </div>
         </div>
@@ -59,19 +65,20 @@
   </header>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { getCategories } from '~/api/category-api';
+import { useAuthStore } from '~/stores/auth';
 import MegaMenu from './common/MegaMenu.vue';
 
-const items = ref([
-  {
-    label: 'تخفیفات',
-    icon: 'i-lucide-percent',
-    to: '/discounts'
-  },
-  {
-    label: 'پیشنهاد ویژه',
-    icon: 'i-lucide-gift',
-    to: '/special-offers'
-  }
-])
+const authStore = useAuthStore()
+
+const isCodeSent = computed(() => {
+  return authStore.isCodeSent
+})
+const { data: categories } = await useAsyncData('categories', async () => {
+  const categories = await getCategories()
+  return categories.map(category => ({
+    label: category.title,
+    to: `/category/${category.id}`
+  }))
+})
 </script>

@@ -10,9 +10,10 @@ export default defineNuxtConfig({
     "@nuxt/fonts",
     "@nuxt/icon",
     "@nuxt/image",
-    // "vue3-carousel-nuxt",
     "@nuxt/scripts",
     "nuxt-swiper",
+    "nuxt-rating",
+    'pinia-plugin-persistedstate/nuxt',
   ],
 
   devtools: { enabled: true },

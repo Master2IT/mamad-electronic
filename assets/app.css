@@ -36,9 +36,22 @@ body {
 }
 
 .rtl {
-  direction: rtl;
+  direction: rtl !important;
 }
 
 .ltr {
-  direction: ltr;
+  direction: ltr !important;
+}
+.nuxt-rating-star-svg{
+  border-color: #F4B740;
+}
+
+button {
+  cursor: pointer;
+}
+.left-unset{
+  left: unset !important;
+}
+.right-unset{
+  right: unset !important;
 }

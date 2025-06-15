@@ -1,191 +1,223 @@
 <template>
-  <div class="profile-form">
-    <h2 class="form-title">اطلاعات فردی</h2>
-    <p class="form-subtitle">هویت خود را تأیید کنید</p>
-
-    <div class="form-grid">
-      <!-- Name Field -->
-      <div class="form-group">
-        <label>نام نام</label>
-        <div class="input-container">
-          <input v-model="form.name" type="text" class="form-input" />
-          <button class="edit-button">
-            <Icon name="heroicons:pencil" class="edit-icon" />
-          </button>
-        </div>
-      </div>
-
-      <!-- Email Field -->
-      <div class="form-group">
-        <label>ایمیل</label>
-        <div class="input-container">
-          <input v-model="form.email" type="email" class="form-input" />
-          <button class="edit-button">
-            <Icon name="heroicons:pencil" class="edit-icon" />
-          </button>
-        </div>
-      </div>
-
-      <!-- Password Field -->
-      <div class="form-group">
-        <label>پسوورد</label>
-        <div class="input-container">
-          <input v-model="form.password" type="password" class="form-input" />
-          <button class="view-password">
-            <Icon name="heroicons:eye" class="view-icon" />
-          </button>
-        </div>
-      </div>
-
-      <!-- Phone Number Field -->
-      <div class="form-group">
-        <label>شماره همراه</label>
-        <div class="input-container">
-          <input v-model="form.phone" type="tel" class="form-input" />
-          <button class="edit-button">
-            <Icon name="heroicons:pencil" class="edit-icon" />
-          </button>
-        </div>
-      </div>
-
-      <!-- Address Field -->
-      <div class="form-group">
-        <label>آدرس</label>
-        <div class="input-container">
-          <input v-model="form.address" type="text" class="form-input" />
-          <button class="edit-button">
-            <Icon name="heroicons:home" class="edit-icon" />
-          </button>
-        </div>
-      </div>
-
-      <!-- Postal Code Field -->
-      <div class="form-group">
-        <label>کد پستی</label>
-        <div class="input-container">
-          <input v-model="form.postalCode" type="text" class="form-input" />
-          <button class="edit-button">
-            <Icon name="heroicons:map" class="edit-icon" />
-          </button>
-        </div>
-      </div>
+  <div class="p-5">
+    <div class="mb-6">
+      <h2 class="text-xl font-bold">اطلاعات فردی</h2>
+      <p class="text-gray-500">هویت خود را تأیید کنید</p>
     </div>
 
-    <div class="form-actions">
-      <button class="submit-button" @click="saveProfile">ذخیره تغییرات</button>
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <!-- Name Field -->
+      <UFormField label="نام و نام خانوادگی" name="name">
+        <UInput
+          v-model="form.name"
+          type="text"
+          :trailing="true"
+          size="xl"
+          class="w-[300px] !pl-2"
+          :disabled="!editableFields.name"
+          placeholder="نام شما"
+        >
+          <template #trailing>
+            <UButton
+              variant="ghost"
+              icon="i-lucide-square-pen"
+              size="sm"
+              class="hover:bg-neutral-100"
+              square
+              @click="editableFields.name = !editableFields.name"
+            />
+          </template>
+        </UInput>
+      </UFormField>
+
+      <!-- Email Field -->
+      <UFormField label="ایمیل" name="email">
+        <UInput
+          v-model="form.email"
+          type="email"
+          :trailing="true"
+          size="xl"
+          class="w-[300px] !pl-2"
+          :disabled="!editableFields.email"
+          placeholder="youremail@gmail.com"
+        >
+          <template #trailing>
+            <UButton
+              variant="ghost"
+              icon="i-lucide-square-pen"
+              size="sm"
+              class="hover:bg-neutral-100"
+              square
+              @click="editableFields.email = !editableFields.email"
+            />
+          </template>
+        </UInput>
+      </UFormField>
+
+      <!-- Phone Number Field -->
+      <UFormField label="شماره همراه" name="phone">
+        <UInput 
+          v-model="form.phone" 
+          type="tel" 
+          :trailing="true" 
+          size="xl" 
+          class="w-[300px] !pl-2"
+          :disabled="!editableFields.phone"
+          placeholder="09120000000"
+        >
+          <template #trailing>
+            <UButton
+              variant="ghost"
+              icon="i-lucide-square-pen"
+              size="sm"
+              class="hover:bg-neutral-100"
+              square
+              @click="editableFields.phone = !editableFields.phone"
+            />
+          </template>
+        </UInput>
+      </UFormField>
+
+      <!-- Password Field -->
+      <UFormField label="رمز عبور" name="password">
+        <UInput
+          v-model="form.password"
+          :type="showPassword ? 'text' : 'password'"
+          :trailing="true"
+          size="xl"
+          class="w-[300px] !pl-2"
+          :disabled="!editableFields.password"
+          placeholder="********"
+        >
+          <template #trailing>
+            <UButton
+              variant="ghost"
+              icon="i-lucide-square-pen"
+              size="sm"
+              class="hover:bg-neutral-100"
+              square
+              @click="editableFields.password = !editableFields.password"
+            />
+          </template>
+        </UInput>
+      </UFormField>
+
+      <!-- Address Field -->
+      <UFormField label="آدرس" name="address">
+        <UInput
+          v-model="form.address"
+          type="text"
+          :trailing="true"
+          size="xl"
+          class="w-[300px] !pl-2"
+          :disabled="!editableFields.address"
+          placeholder="تهران، خیابان آزادی، پلاک 123"
+        >
+          <template #trailing>
+            <UButton
+              variant="ghost"
+              icon="i-lucide-square-pen"
+              size="sm"
+              class="hover:bg-neutral-100"
+              square
+              @click="editableFields.address = !editableFields.address"
+            />
+          </template>
+        </UInput>
+      </UFormField>
+
+      <!-- Postal Code Field -->
+      <UFormField label="کد پستی" name="postalCode">
+        <UInput
+          v-model="form.postalCode"
+          type="text"
+          :trailing="true"
+          size="xl"
+          class="w-[300px] !pl-2"
+          :disabled="!editableFields.postalCode"
+          placeholder="1234567890"
+        >
+          <template #trailing>
+            <UButton
+              variant="ghost"
+              icon="i-lucide-square-pen"
+              size="sm"
+              class="hover:bg-neutral-100"
+              square
+              @click="editableFields.postalCode = !editableFields.postalCode"
+            />
+          </template>
+        </UInput>
+      </UFormField>
     </div>
   </div>
 </template>
 
 <script setup>
+import { useAuthStore } from '~/stores/auth'
+
+const authStore = useAuthStore()
+const { user } = authStore
+
+const loading = ref(false)
+const showPassword = ref(false)
+
 const form = reactive({
-  name: 'محمد عبدی',
-  email: 'themohax@gmail.com',
-  password: '***********',
-  phone: '09155609909',
-  address: 'مشهد.خیابان فلان',
-  postalCode: '-'
-});
+  name: user?.name + user?.family || '',
+  email: user?.email || '',
+  password: '',
+  phone: user?.mobile || '',
+  address: user?.address || '',
+  postalCode: user?.postalCode || '',
+})
 
-const saveProfile = () => {
-  // Handle form submission
-  console.log('Profile data:', form);
-  // You can add API call here to save the profile data
-};
-</script>
+const editableFields = ref({
+  name: false,
+  email: false,
+  password: false,
+  phone: false,
+  address: false,
+  postalCode: false,
+})
 
-<style scoped>
-.profile-form {
-  max-width: 800px;
-  padding: 20px;
-  direction: rtl;
-}
+const validateForm = () => {
+  if (!form.name || !form.email || !form.phone || !form.address || !form.postalCode) {
+    throw new Error('Please fill in all required fields')
+  }
 
-.form-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  text-align: right;
-}
-
-.form-subtitle {
-  color: #666;
-  margin-bottom: 2rem;
-  text-align: right;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
-  color: #666;
-}
-
-.input-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  background-color: #f5f5f5;
-  border-radius: 8px;
-  padding: 0 10px;
-}
-
-.form-input {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  background-color: transparent;
-  font-size: 1rem;
-  direction: rtl;
-}
-
-.edit-button,
-.view-password {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #6b46c1;
-}
-
-.edit-icon,
-.view-icon {
-  width: 20px;
-  height: 20px;
-}
-
-.form-actions {
-  margin-top: 2rem;
-  text-align: center;
-}
-
-.submit-button {
-  background-color: #6b46c1;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.submit-button:hover {
-  background-color: #553c9a;
-}
-
-@media (max-width: 768px) {
-  .form-grid {
-    grid-template-columns: 1fr;
+  if (form.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+    throw new Error('Please enter a valid email address')
   }
 }
-</style>
+
+const saveProfile = async () => {
+  try {
+    loading.value = true
+    validateForm()
+
+    // Only include password in update if it was changed
+    const updateData = { ...form }
+    if (!updateData.password) {
+      delete updateData.password
+    }
+
+    await authStore.updateProfile(updateData)
+
+    useToast().add({
+      title: 'موفقیت',
+      description: 'پروفایل با موفقیت بروزرسانی شد',
+      color: 'green',
+    })
+  } catch (error) {
+    useToast().add({
+      title: 'خطا',
+      description: error.message || 'خطا در بروزرسانی پروفایل',
+      color: 'red',
+    })
+  } finally {
+    loading.value = false
+  }
+}
+</script>
+
+<style scoped></style>

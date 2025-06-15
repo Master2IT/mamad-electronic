@@ -5,13 +5,30 @@
         <p class="text-gray-600">مواردی که لیست شده</p>
     </div>
     <div class="grid grid-cols-4 gap-4">
-        <CommonProductCard :type="2" show-review v-for="product in PRODUCTS" :product="product" :key="product.id" />
+        <CommonProductCard 
+            v-for="product in data?.items" 
+            :key="product.id"
+            :type="2" 
+            :product="{item}"
+            show-review 
+        />
     </div>
 </div>
 </template>
 
 <script setup>
-import { PRODUCTS } from '@/constant';
+import { getFavorite } from '~/api/customer-api';
 
+const data = ref(null)
+
+onMounted(async () => {
+  try {
+    const response = await getFavorite()
+    data.value = response
+    console.log("data", data.value)
+  } catch (error) {
+    console.error("Error fetching favorites:", error)
+  }
+})
 
 </script>
