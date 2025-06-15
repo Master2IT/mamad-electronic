@@ -17,7 +17,7 @@
         <div class="rounded-lg bg-white p-4">
           <NuxtImg
             :src="BASE_URL + selectedImage"
-            :alt="product?.title_fa"
+            :alt="product?.title_fa ?? 'Product Image'"
             class="h-[400px] w-full object-contain"
           />
           <div
@@ -28,7 +28,7 @@
               v-for="(gallery, index) in product?.galleries"
               :key="index"
               :src="BASE_URL + gallery?.path"
-              :alt="`${gallery?.name} - thumbnail ${index + 1}`"
+              :alt="`${gallery?.name ?? 'Gallery'} - thumbnail ${index + 1}`"
               class="hover:border-primary-500 h-20 w-20 cursor-pointer rounded border object-contain"
               @click="selectedImage = gallery?.path"
             />
@@ -36,7 +36,11 @@
         </div>
 
         <!-- Product Info -->
-        <ShopProductInfo :product="product" />
+        <ShopProductInfo
+          @update:selectedColorId="selectedColorId = $event"
+          @update:selectedPriceId="selectedPriceId = $event"
+          :product="product"
+        />
       </div>
 
       <div class="my-4" v-if="product?.attributes?.length">
@@ -70,22 +74,51 @@
 </template>
 
 <script setup>
+import { ref, watch } from 'vue'
 import { getProductById } from '~/api/product-api'
 
-const BASE_URL = process.env.BASE_URL
+// Environment and route
+const BASE_URL = process.env.BASE_URL || "https://api.merqc.com"
 const route = useRoute()
 
+const selectedColorId = ref(null)
+const selectedPriceId = ref(null)
+
+// Fetch product data
 const { data: product } = await useAsyncData('product', () => getProductById(route.params.slug))
 
+// Reactive image selection
 const selectedImage = ref(null)
 
-watchEffect(() => {
-  if (product.value?.banner?.path) {
-    selectedImage.value = product.value?.banner?.path
-  } else if (product.value?.file?.path) {
-    selectedImage.value = product.value.file.path
-  }
-})
+// Set initial image based on product data
+watch(
+  () => product.value,
+  (newProduct) => {
+    if (newProduct?.banner?.path) {
+      selectedImage.value = newProduct.banner.path
+    } else if (newProduct?.file?.path) {
+      selectedImage.value = newProduct.file.path
+    } else {
+      selectedImage.value = '/fallback-image.jpg' // Fallback image
+    }
+  },
+  { immediate: true }
+)
+
+// Watch selectedColorId to update image
+watch(
+  selectedColorId,
+  (newColorId) => {
+    if (newColorId && product.value?.galleries) {
+      const matchingGallery = product.value.galleries.find(
+        (gallery) => gallery.color.id === newColorId
+      )
+      if (matchingGallery?.path) selectedImage.value = matchingGallery?.path
+      else selectedImage.value = product.value.banner.path ?? product.value.file.path
+    }
+  },
+  { immediate: true }
+)
 
 // Tabs configuration
 const tabs = [
