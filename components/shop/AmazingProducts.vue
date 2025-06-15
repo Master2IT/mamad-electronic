@@ -24,11 +24,11 @@
 </template>
 
 <script setup>
-import { getProducts } from '~/api/product-api'
-import { ref, onMounted, onUnmounted } from 'vue'
-import { convertToPersianNumber } from '@/utils'
 import Carousel from '@/components/common/Carousel/Carousel.vue'
+import { convertToPersianNumber } from '@/utils'
 import { ChevronLeft } from 'lucide-vue-next'
+import { onMounted, onUnmounted, ref } from 'vue'
+import { getProducts } from '~/api/product-api'
 
 const { data } = await useAsyncData('products', () => getProducts({ sort: 'most_offer' }))
 

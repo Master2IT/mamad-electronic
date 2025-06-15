@@ -37,7 +37,6 @@
 </template>
 
 <script setup>
-import { getCategories } from '~/api/category-api'
 
 const isOpen = ref(false)
 const activeCategory = ref(null)

@@ -15,8 +15,8 @@
     </div>
 </template>
 <script setup>
-import { ChevronLeft } from 'lucide-vue-next'
 import Carousel from '@/components/common/Carousel/Carousel.vue'
+import { ChevronLeft } from 'lucide-vue-next'
 
 const props = defineProps({
     products: {

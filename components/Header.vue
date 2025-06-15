@@ -65,9 +65,9 @@
   </header>
 </template>
 <script setup>
-import MegaMenu from './common/MegaMenu.vue';
 import { getCategories } from '~/api/category-api';
-import { useAuthStore } from '~/stores/auth'
+import { useAuthStore } from '~/stores/auth';
+import MegaMenu from './common/MegaMenu.vue';
 
 const authStore = useAuthStore()
 

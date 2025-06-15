@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import { CATEGORIES, PRODUCTS, FAQS, ARTICLES } from '@/constant'
+import { ARTICLES, CATEGORIES, FAQS, PRODUCTS } from '@/constant'
 import { getBrands } from '~/api/brand-api'
 
 const { data: brands } = await useAsyncData('brands', async () => {
