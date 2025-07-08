@@ -1,0 +1,406 @@
+export const PRODUCTS = [
+  {
+    id: 1,
+    name: "آی سی ATmega328",
+    image:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
+    discount: 15,
+    price: "2000000",
+    discountedPrice: "1700000",
+    favorite: false,
+    rating: 4.5,
+  },
+  {
+    id: 2,
+    name: "برد آردوینو نانو",
+    image:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-02.jpg",
+    discount: 20,
+    price: "1500000",
+    discountedPrice: "1200000",
+    favorite: false,
+    rating: 4.8,
+  },
+  {
+    id: 3,
+    name: "سنسور دما DHT22",
+    image:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-03.jpg",
+    discount: 10,
+    price: "500000",
+    discountedPrice: "450000",
+    favorite: false,
+    rating: 4.2,
+  },
+  {
+    id: 4,
+    name: "ماژول ESP8266",
+    image:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-04.jpg",
+    discount: 25,
+    price: "800000",
+    discountedPrice: "600000",
+    favorite: false,
+    rating: 4.7,
+  },
+  {
+    id: 5,
+    name: "نمایشگر OLED",
+    image:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-03.jpg",
+    discount: 15,
+    price: "900000",
+    discountedPrice: "765000",
+    favorite: false,
+    rating: 4.4,
+  },
+  {
+    id: 6,
+    name: "موتور سروو MG996R",
+    image:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-02.jpg",
+    discount: 30,
+    price: "450000",
+    discountedPrice: "315000",
+    favorite: false,
+    rating: 4.3,
+  },
+  {
+    id: 7,
+    name: "ماژول رله ۴ کاناله",
+    image:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-04.jpg",
+    discount: 18,
+    price: "350000",
+    discountedPrice: "287000",
+    favorite: false,
+    rating: 4.6,
+  },
+  {
+    id: 8,
+    name: "سنسور تشخیص حرکت PIR",
+    image:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
+    discount: 12,
+    price: "280000",
+    discountedPrice: "246400",
+    favorite: false,
+    rating: 4.1,
+  },
+  {
+    id: 9,
+    name: "برد رزبری پای ۴",
+    image:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-05.jpg",
+    discount: 8,
+    price: "3500000",
+    discountedPrice: "3220000",
+    favorite: false,
+    rating: 4.9,
+  },
+  {
+    id: 10,
+    name: "ماژول بلوتوث HC-05",
+    image:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-03.jpg0",
+    discount: 22,
+    price: "420000",
+    discountedPrice: "327600",
+    favorite: false,
+    rating: 4.4,
+  },
+];
+export const FAQS = [
+  {
+    id: 1,
+    label: "آیا ارسال به تمام نقاط ایران انجام می‌شود؟",
+    content:
+      "بله، ما به تمام نقاط ایران با استفاده از پست پیشتاز و تیپاکس ارسال انجام می‌دهیم. هزینه ارسال بر اساس وزن و مقصد محاسبه می‌شود.",
+  },
+  {
+    id: 2,
+    label: "مدت زمان گارانتی محصولات چقدر است؟",
+    content:
+      "تمامی محصولات ما دارای ۶ ماه گارانتی تعویض هستند. برخی از محصولات خاص مانند بردهای آردوینو اصل و رزبری پای دارای ۱۲ ماه گارانتی می‌باشند.",
+  },
+  {
+    id: 3,
+    label: "آیا امکان مرجوع کردن کالا وجود دارد؟",
+    content:
+      "بله، تا ۷ روز پس از دریافت کالا، در صورت عدم استفاده و سالم بودن بسته‌بندی، می‌توانید کالا را مرجوع کنید. هزینه ارسال مرجوعی بر عهده مشتری است.",
+  },
+  {
+    id: 4,
+    label: "آیا راهنمای استفاده از قطعات را ارائه می‌دهید؟",
+    content:
+      "بله، برای اکثر محصولات، دیتاشیت و راهنمای استفاده به صورت PDF در بخش دانلود سایت قرار داده شده است. همچنین برای برخی محصولات، ویدیوهای آموزشی نیز موجود است.",
+  },
+  {
+    id: 5,
+    label: "آیا امکان خرید عمده وجود دارد؟",
+    content:
+      "بله، برای خریدهای بالای ۵ میلیون تومان، تخفیف ویژه در نظر گرفته می‌شود. برای اطلاع از قیمت‌های عمده با بخش فروش تماس بگیرید.",
+  },
+  {
+    id: 6,
+    label: "روش‌های پرداخت چیست؟",
+    content:
+      "پرداخت آنلاین از طریق درگاه بانکی، کارت به کارت و پرداخت در محل (برای تهران) امکان‌پذیر است.",
+  },
+  {
+    id: 7,
+    label: "آیا قطعات شما اورجینال هستند؟",
+    content:
+      "بله، تمامی قطعات ما اصل و با کیفیت هستند. ما تضمین اصالت کالا را به مشتریان خود ارائه می‌دهیم و در صورت مغایرت، کالا را تعویض می‌کنیم.",
+  },
+  {
+    id: 8,
+    label: "مدت زمان ارسال سفارش چقدر است؟",
+    content:
+      "سفارشات در روزهای کاری، در صورت تایید تا ساعت ۱۴، همان روز ارسال می‌شوند. زمان تحویل برای تهران ۱ تا ۲ روز کاری و برای شهرستان‌ها ۲ تا ۴ روز کاری است.",
+  },
+];
+export const USER_REVIEWS = [
+  {
+    id: 1,
+    userName: "علی محمدی",
+    rating: 5,
+    date: "1402/08/15",
+    productId: 1,
+    comment:
+      "کیفیت قطعه عالی بود و بسته‌بندی مناسبی داشت. ارسال هم سریع انجام شد.",
+    verified: true,
+  },
+  {
+    id: 2,
+    userName: "مریم حسینی",
+    rating: 4,
+    date: "1402/08/12",
+    productId: 3,
+    comment:
+      "سنسور دقت خوبی داره و راه‌اندازیش راحته. فقط کاش راهنمای فارسی هم داشت.",
+    verified: true,
+  },
+  {
+    id: 3,
+    userName: "رضا کریمی",
+    rating: 5,
+    date: "1402/08/10",
+    productId: 2,
+    comment: "برد آردوینو اصل بود و کیفیت ساخت بالایی داشت. از خرید راضی هستم.",
+    verified: true,
+  },
+  {
+    id: 4,
+    userName: "سارا احمدی",
+    rating: 3,
+    date: "1402/08/08",
+    productId: 5,
+    comment: "نمایشگر خوب کار میکنه ولی کاش قیمت کمتر بود.",
+    verified: true,
+  },
+  {
+    id: 5,
+    userName: "امیر رضایی",
+    rating: 5,
+    date: "1402/08/05",
+    productId: 9,
+    comment:
+      "رزبری پای اورجینال و نو بود. پشتیبانی هم عالی جواب سوالاتم رو دادن.",
+    verified: true,
+  },
+  {
+    id: 6,
+    userName: "زهرا نوری",
+    rating: 4,
+    date: "1402/08/03",
+    productId: 7,
+    comment: "ماژول رله کیفیت خوبی داره و تست کردم درست کار میکنه.",
+    verified: true,
+  },
+  {
+    id: 7,
+    userName: "حسین عباسی",
+    rating: 5,
+    date: "1402/08/01",
+    productId: 4,
+    comment: "ماژول ESP8266 اصل بود و تو پروژه‌ام خیلی خوب جواب داد.",
+    verified: true,
+  },
+  {
+    id: 8,
+    userName: "نیما صادقی",
+    rating: 4,
+    date: "1402/07/29",
+    productId: 10,
+    comment: "ماژول بلوتوث کیفیت خوبی داره. فقط کاش زودتر ارسال می‌شد.",
+    verified: true,
+  },
+];
+export const REVIEWS = [
+  {
+    id: 1,
+    title: "  طراحی و کیفیت ساخت Macbook Air 2020",
+    description:
+      "          در طراحی مک بوک ایر 2020، اپل از آلیاژ آلومینیوم برای تولید بدنه اصلی استفاده کرده و طراحی مهندسی این لپ تاپ باعث شده تا وزن آن به فقط 1.29 کیلوگرم برسد؛ این یعنی کاربران بدون نگرانی می‌توانند لپ تاپ را همه‌جا همراه خود داشته باشند. سیستم بدون فن، یکی دیگر از نقاط قوت در طراحی مک بوک ایر 2020 MGN63 بوده و باعث می‌شود تا حتی موقع پردازش‌های سنگین نیز دستگاه، کمترین صدا را داشته باشد.",
+  },
+  {
+    id: 2,
+    title: "  طراحی و کیفیت ساخت Macbook Air 2020",
+    description:
+      "          در طراحی مک بوک ایر 2020، اپل از آلیاژ آلومینیوم برای تولید بدنه اصلی استفاده کرده و طراحی مهندسی این لپ تاپ باعث شده تا وزن آن به فقط 1.29 کیلوگرم برسد؛ این یعنی کاربران بدون نگرانی می‌توانند لپ تاپ را همه‌جا همراه خود داشته باشند. سیستم بدون فن، یکی دیگر از نقاط قوت در طراحی مک بوک ایر 2020 MGN63 بوده و باعث می‌شود تا حتی موقع پردازش‌های سنگین نیز دستگاه، کمترین صدا را داشته باشد.",
+  },
+];
+export const SPECIFICATIONS = [
+  {
+    id: 1,
+    name: "سری خازن:",
+    detail: "test 1",
+  },
+  {
+    id: 2,
+    name: "نوع کاربری:",
+    detail: "عمومی/طراحی",
+  },
+  {
+    id: 3,
+    name: "وزن:",
+    detail: " کیلوگرم 1029",
+  },
+  {
+    id: 4,
+    name: "ابعاد:",
+    detail: "۳۰۴.۱ × ۲۱۲.۴ × ۱۶.۱ میلی متر",
+  },
+  {
+    id: 1,
+    name: "توضیحات:",
+    detail: "این یک تسته",
+  },
+];
+export const CATEGORIES = [
+  {
+    id: 1,
+    name: "میکروکنترلرها",
+    image:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
+  },
+  {
+    id: 2,
+    name: "سنسورها",
+    image:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
+  },
+  {
+    id: 3,
+    name: "بردهای توسعه",
+    image:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
+  },
+  {
+    id: 4,
+    name: "قطعات الکترونیکی",
+    image:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
+  },
+  {
+    id: 5,
+    name: "ماژول‌های ارتباطی",
+    image:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
+  },
+  {
+    id: 6,
+    name: "رباتیک و موتورها",
+    image:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg",
+  },
+];
+export const BRANDS = [
+  {
+    id: 1,
+    name: "Arduino",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Arduino_Logo.svg/2560px-Arduino_Logo.png",
+  },
+  {
+    id: 2,
+    name: "Raspberry Pi",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Nvidia_logo.svg/2560px-Nvidia_logo.png",
+  },
+  {
+    id: 3,
+    name: "Texas Instruments",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Arduino_Logo.svg/2560px-Arduino_Logo.png",
+  },
+  {
+    id: 4,
+    name: "STMicroelectronics",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Nvidia_logo.svg/2560px-Nvidia_logo.png",
+  },
+  {
+    id: 5,
+    name: "Microchip",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Intel_logo_%282006-2020%29.svg/1200px-Intel_logo_%282006-2020%29.png",
+  },
+  {
+    id: 6,
+    name: "Atmel",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Samsung_Logo.svg/2560px-Samsung_Logo.png",
+  },
+  {
+    id: 7,
+    name: "Intel",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Intel_logo_%282006-2020%29.svg/1200px-Intel_logo_%282006-2020%29.png",
+  },
+  {
+    id: 8,
+    name: "Nvidia",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Nvidia_logo.svg/2560px-Nvidia_logo.png",
+  },
+  {
+    id: 9,
+    name: "Samsung Electronics",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Samsung_Logo.svg/2560px-Samsung_Logo.png",
+  },
+  {
+    id: 10,
+    name: "Qualcomm",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Nvidia_logo.svg/2560px-Nvidia_logo.png",
+  },
+];
+export const ARTICLES = [
+  {
+    id: 1,
+    name: "راهنمای جامع برنامه‌نویسی آردوینو برای مبتدیان",
+    image:
+      "https://www.digikala.com/mag/wp-content/uploads/2025/04/marinated-fish.jpg",
+  },
+  {
+    id: 2,
+    name: "آشنایی با سنسورهای پرکاربرد در پروژه‌های الکترونیکی",
+    image:
+      "https://www.digikala.com/mag/wp-content/uploads/2025/04/the-myth.jpg",
+  },
+  {
+    id: 3,
+    name: "مقایسه میکروکنترلرهای محبوب در بازار",
+    image:
+      "https://www.digikala.com/mag/wp-content/uploads/2025/04/facial-redness-home-remedies-1.jpg",
+  },
+  {
+    id: 4,
+    name: "آموزش راه‌اندازی پروژه خانه هوشمند با ESP8266",
+    image:
+      "https://www.digikala.com/mag/wp-content/uploads/2025/04/iphone-x-on-black-desk-2.jpg",
+  },
+];
