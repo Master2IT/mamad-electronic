@@ -1,31 +1,27 @@
-# Use Node.js 20 as base image
-FROM node:20-alpine
+# Use the official Node.js runtime as a parent image
+FROM node:18-alpine
 
-# Install build tools
-# RUN apk add --no-cache python3 make g++
-
-# Set working directory
+# Set the working directory in the container
 WORKDIR /app
 
-# Copy package.json and pnpm-lock.yaml
-# COPY package.json pnpm-lock.yaml* ./
+# Copy package.json and yarn.lock (if available)
+COPY package.json yarn.lock* ./
 
-# Install pnpm and dependencies
-# RUN npm install -g pnpm && pnpm install
+# Install dependencies
+RUN yarn install --frozen-lockfile
 
-# Rebuild native modules
-# RUN pnpm rebuild better-sqlite3
-
-# Copy the rest of the application
+# Copy the rest of the application code
 COPY . .
 
-RUN npm install --force
+# Build the application for production
+RUN yarn build
 
-# Build the application
-RUN npm run build
-
-# Expose port 3000
+# Expose the port the app runs on
 EXPOSE 3000
 
+# Set environment variables
+ENV NUXT_HOST=0.0.0.0
+ENV NUXT_PORT=3000
+
 # Start the application
-CMD ["npm", "run", "preview"]
+CMD ["node", ".output/server/index.mjs"]

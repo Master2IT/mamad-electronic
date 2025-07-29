@@ -2,17 +2,6 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  typescript: {
-    // typeCheck: true,
-    // strict: true,
-    // shim: true,
-    // tsConfig: {
-    //   compilerOptions: {
-    //     noStrictNullChecks: true,
-    //     allowJs: true,
-    //   }
-    // }
-  },
   ssr: true,
   nitro: {
     preset: 'node-server',
@@ -23,17 +12,12 @@ export default defineNuxtConfig({
       '/api/**': { swr: false }, // Don't cache API routes
       '/static/**': { swr: 60 * 60 * 24 * 7 } // Cache static assets for a week
     },
-    storage: {
-      redis: {
-        driver: 'redis',
-      }
-    },
+
   },
   modules: [
     '@pinia/nuxt',
     '@nuxt/ui',
     '@nuxt/eslint',
-    '@nuxt/content',
     '@nuxt/fonts',
     '@nuxt/icon',
     '@nuxt/image',
@@ -44,7 +28,6 @@ export default defineNuxtConfig({
     '@nuxtjs/seo', // Added for better SEO
     '@nuxtjs/robots', // Added for robots.txt handling
   ],
-
   app: {
     head: {
       charset: 'utf-8',
@@ -60,7 +43,6 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' },
     layoutTransition: { name: 'layout', mode: 'out-in' }
   },
-
   runtimeConfig: {
     // Keys within public are exposed to the client
     public: {
@@ -69,7 +51,6 @@ export default defineNuxtConfig({
     // Server-only keys
     apiSecret: process.env.API_SECRET || 'default_secret',
   },
-
   devtools: { enabled: true },
   compatibilityDate: '2024-11-27',
   vite: {
@@ -79,7 +60,7 @@ export default defineNuxtConfig({
       rollupOptions: {
         output: {
           manualChunks: {
-            ui: ['@nuxt/ui'],
+            // ui: ['@nuxt/ui'],
           },
         },
       },
