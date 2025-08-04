@@ -33,7 +33,7 @@ export default defineNuxtConfig({
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
       meta: [
-        { name: 'description', content: 'Mamad Electronic' },
+        { name: 'description', content: 'Pars Premium' },
         { name: 'theme-color', content: '#ffffff' },
       ],
       link: [
