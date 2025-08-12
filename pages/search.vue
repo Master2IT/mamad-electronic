@@ -1,8 +1,10 @@
 <template>
-  <SearchResults />
+  <NuxtLayout name="shop">
+    <div class="container mx-auto py-8">
+      <ShopCategoryProducts />
+    </div>
+  </NuxtLayout>
 </template>
 
 <script setup>
-const route = useRoute()
-const { data: results } = await useFetch(`/api/search?q=${route.query.q}`)
 </script>

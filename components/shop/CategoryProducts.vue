@@ -130,13 +130,16 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
+import { ref } from 'vue'
 import { getProducts } from '~/api/product-api'
+
+const route = useRoute()
 
 const sorting = ref('newest')
 const currentPage = ref(1)
 const viewMode = ref('grid')
+const searchQuery = ref(route.query.q || '')
 
 const filters = ref({
     price: [0, 10000000],
@@ -153,9 +156,10 @@ const { data: products, pending, refresh } = await useAsyncData('products',
         prices: {
             min: filters.value.price[0],
             max: filters.value.price[1]
-        }
+        },
+        search_global: searchQuery.value
     }), {
-    watch: [sorting]
+    watch: [sorting, searchQuery]
 })
 
 

@@ -1,5 +1,5 @@
 <template>
-  <header class="min-h-[174px] border-b border-gray-200 !bg-white px-4 mb-5">
+  <header class="border-b border-gray-200 !bg-white px-4 mb-5">
     <UContainer>
       <div class="flex flex-col items-center justify-between gap-4 py-4 md:flex-row">
         <!-- Logo and Brand -->
@@ -18,7 +18,7 @@
         <!-- Search Bar -->
         <div class="order-3 flex w-full gap-2 md:order-2 md:w-auto">
           <UInput placeholder="جستجو" icon="i-heroicons-magnifying-glass" class="w-full md:w-[300px] lg:w-[500px]"
-            size="xl" />
+            size="xl" @keydown.enter="goToSearch" />
         </div>
 
         <!-- User Actions -->
@@ -54,18 +54,8 @@
     </UContainer>
     <nav class="mt-3">
       <UContainer>
-        <div class="flex items-center gap-8">
-          <MegaMenu :categories="categories" />
-          <!-- <div class="flex items-center gap-4">
-            <NuxtLink
-              v-for="category in categories"
-              :key="category.label"
-              :to="category.to"
-              class="hover:text-primary-500 flex items-center gap-2 text-gray-700 transition-colors"
-            >
-              <span>{{ category.label }}</span>
-            </NuxtLink>
-          </div> -->
+        <div class="flex items-center gap-5">
+          <CommonMegaMenu :categories="categories" />
         </div>
       </UContainer>
     </nav>
@@ -74,7 +64,6 @@
 <script setup>
 import { getCategories } from '~/api/category-api'
 import { useAuthStore } from '~/stores/auth'
-import MegaMenu from './common/MegaMenu.vue'
 
 const authStore = useAuthStore()
 const { hasToken } = useAuth()
@@ -119,5 +108,10 @@ const goToCard = () => {
   } else {
     authStore.setLoginModal(true)
   }
+}
+
+const goToSearch = () => {
+  const searchValue = document.querySelector('input[placeholder="جستجو"]').value
+  window.location.href = `/search?q=${searchValue}`
 }
 </script>

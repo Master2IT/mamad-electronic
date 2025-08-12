@@ -2,13 +2,15 @@
   <div
     v-for="category in categories"
     :key="category.id"
-    class="relative"
-    @mouseenter="openMenu"
-    @mouseleave="closeMenu"
+    class="relative pb-2"
+    @mouseenter="openMenu(category.id)"
+    @mouseleave="closeMenu(category.id)"
   >
-    <UButton v-if="category.children?.length" variant="ghost" class="flex items-center gap-2">
-      <span>{{ category.label }}</span>
-      <UIcon name="i-lucide-chevron-down" class="size-5" />
+    <UButton :key="category.id" v-if="category.children?.length" variant="ghost" class="flex items-center gap-2">
+      <span class="text-[13px]">{{ category.label }}</span>
+      <span>
+        <UIcon name="i-lucide-chevron-down" class="size-4 align-middle" />
+      </span>
     </UButton>
     <NuxtLink
       v-else
@@ -19,13 +21,16 @@
     </NuxtLink>
 
     <div
-      v-if="isOpen && category.children?.length"
+      v-if="openMenus[category.id] && category.children?.length"
       class="absolute top-full right-0 z-50 mt-1 w-[1200px] rounded-lg border border-neutral-100 bg-white p-4 shadow-lg"
     >
       <div class="flex">
         <!-- Parent Categories Column -->
         <div class="w-[200px] border-l pl-2 border-neutral-300 pr-3">
-          <div
+          <UButton
+            :to="child.to"
+            external
+            variant="ghost"
             v-for="child in category.children"
             :key="child.id"
             @mouseenter="activeCategory = child"
@@ -33,7 +38,7 @@
           >
             <h3 class="text-sm font-medium text-neutral-800">{{ child.label }}</h3>
             <UIcon v-if="child.children?.length" name="i-lucide-chevron-right" class="size-5 text-gray-400" />
-          </div>
+          </UButton>
         </div>
 
         <!-- Subcategories Column -->
@@ -42,6 +47,7 @@
             <li v-for="sub in activeCategory.children" :key="sub.id">
               <UButton
                 :to="sub.to"
+                external
                 variant="ghost"
                 class="hover:text-primary-500 w-full text-start text-sm text-gray-600 transition-colors"
               >
@@ -56,28 +62,29 @@
 </template>
 
 <script setup>
-const isOpen = ref(false)
+const openMenus = ref({})
 const activeCategory = ref(null)
-let closeTimeout = null
+let closeTimeouts = {}
 
-defineProps({
+const props = defineProps({
   categories: {
     type: Array,
     required: true,
   },
 })
 
-const openMenu = () => {
-  if (closeTimeout) {
-    clearTimeout(closeTimeout)
+const openMenu = (categoryId) => {
+  if (closeTimeouts[categoryId]) {
+    clearTimeout(closeTimeouts[categoryId])
   }
-  isOpen.value = true
-  activeCategory.value = categories.value?.[0]?.children?.[0] || null
+  openMenus.value[categoryId] = true
+  const category = props.categories.find(cat => cat.id === categoryId)
+  activeCategory.value = category?.children?.[0] || null
 }
 
-const closeMenu = () => {
-  closeTimeout = setTimeout(() => {
-    isOpen.value = false
+const closeMenu = (categoryId) => {
+  closeTimeouts[categoryId] = setTimeout(() => {
+    openMenus.value[categoryId] = false
     activeCategory.value = null
   }, 200)
 }
