@@ -6,7 +6,7 @@
     @mouseenter="openMenu(category.id)"
     @mouseleave="closeMenu(category.id)"
   >
-    <UButton :key="category.id" v-if="category.children?.length" variant="ghost" class="flex items-center gap-2">
+    <UButton :key="category.id" v-if="category.children?.length && category.show_in_menu" variant="ghost" class="flex items-center gap-2">
       <span class="text-[13px]">{{ category.label }}</span>
       <span>
         <UIcon name="i-lucide-chevron-down" class="size-4 align-middle" />
@@ -22,11 +22,11 @@
 
     <div
       v-if="openMenus[category.id] && category.children?.length"
-      class="absolute top-full right-0 z-50 mt-1 w-[1200px] rounded-lg border border-neutral-100 bg-white p-4 shadow-lg"
+      class="absolute top-full right-0 z-50 w-[1200px] rounded-lg border border-neutral-100 bg-white p-4 mt-1 shadow-lg"
     >
       <div class="flex">
         <!-- Parent Categories Column -->
-        <div class="w-[200px] border-l pl-2 border-neutral-300 pr-3">
+        <div class="w-[200px] border-l pl-3 border-neutral-300">
           <UButton
             :to="child.to"
             external
@@ -42,7 +42,7 @@
         </div>
 
         <!-- Subcategories Column -->
-        <div v-if="activeCategory?.children?.length" class="w-2/3 p-4">
+        <div v-if="activeCategory && activeCategory?.children?.length" class="w-2/3 p-4">
           <ul class="space-y-2">
             <li v-for="sub in activeCategory.children" :key="sub.id">
               <UButton
@@ -86,6 +86,6 @@ const closeMenu = (categoryId) => {
   closeTimeouts[categoryId] = setTimeout(() => {
     openMenus.value[categoryId] = false
     activeCategory.value = null
-  }, 200)
+  }, 50)
 }
 </script>

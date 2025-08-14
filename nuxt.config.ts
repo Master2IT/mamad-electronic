@@ -8,11 +8,10 @@ export default defineNuxtConfig({
     compressPublicAssets: true, // Compress assets for better performance
     publicAssets: [{ dir: './public' }],
     routeRules: {
-      '/**': { swr: 600 }, // Default cache for 10 minutes
+      '/**': { swr: process.env.NODE_ENV === 'development' ? false : 600 }, // Disable cache in dev, 10 minutes in prod
       '/api/**': { swr: false }, // Don't cache API routes
-      '/static/**': { swr: 60 * 60 * 24 * 7 } // Cache static assets for a week
+      '/static/**': { swr: process.env.NODE_ENV === 'development' ? false : 60 * 60 * 24 * 7 } // Disable cache in dev, cache static assets for a week in prod
     },
-
   },
   modules: [
     '@pinia/nuxt',

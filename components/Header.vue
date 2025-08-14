@@ -77,6 +77,7 @@ const isCodeSent = computed(() => {
 })
 const { data: categories } = await useAsyncData('categories', async () => {
   const categories = await getCategories()
+  console.log("categories: ", categories[0].children)
   return categories.map((category) => ({
     id: category.id,
     label: category.title,
