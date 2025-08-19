@@ -11,6 +11,7 @@
       v-if="category.children?.length && category.show_in_menu"
       variant="ghost"
       class="flex items-center gap-2"
+      :class="{ 'text-primary-500': isActiveCategory(category) }"
     >
       <span class="text-[13px]">{{ category.label }}</span>
       <span>
@@ -40,6 +41,7 @@
             :key="child.id"
             @mouseenter="activeCategory = child"
             class="hover:bg-transparent text-neutral-800 hover:text-primary-500 flex cursor-pointer items-center justify-between gap-2 rounded-lg p-2 transition-colors"
+            :class="{ 'text-primary-500': activeCategory?.id === child.id }"
           >
             <h3 class="text-sm font-medium">
               {{ child.label }}
@@ -65,6 +67,7 @@
                 variant="ghost"
                 @mouseenter="activeSubCategory = sub"
                 class="hover:text-primary-500 hover:bg-transparent flex justify-between items-center w-full text-start text-sm text-gray-600 transition-colors"
+                :class="{ 'text-primary-500': activeSubCategory?.id === sub.id }"
               >
                 {{ sub.label }}
                 <UIcon
@@ -90,6 +93,7 @@
                 variant="ghost"
                 @mouseenter="activeSubSubCategory = sub"
                 class="hover:text-primary-500 flex justify-between items-center hover:bg-transparent w-full text-start text-sm text-gray-600 transition-colors"
+                :class="{ 'text-primary-500': activeSubSubCategory?.id === sub.id }"
               >
                 {{ sub.label }}
                 <UIcon
@@ -143,6 +147,13 @@ const props = defineProps({
     required: true,
   },
 })
+
+const isActiveCategory = (category) => {
+  if (!activeCategory.value) return false
+  
+  // Check if this category contains the active category
+  return category.children?.some(child => child.id === activeCategory.value.id)
+}
 
 watch(activeSubCategory, (newVal) => {
   console.log('newVal: ', newVal)
