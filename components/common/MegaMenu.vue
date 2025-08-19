@@ -27,9 +27,9 @@
 
     <div
       v-if="openMenus[category.id] && category.children?.length"
-      class="absolute top-full right-0 z-50 mt-1 w-[1200px] rounded-lg border border-neutral-100 bg-white p-4 shadow-lg"
+      class="absolute top-full right-0 z-50 mt-1 min-h-[300px] w-[1200px] rounded-lg border border-neutral-100 bg-white p-4 shadow-lg"
     >
-      <div class="flex">
+      <div class="flex min-h-[250px]">
         <!-- Parent Categories Column -->
         <div class="min-w-[300px] border-l border-neutral-300 pl-3">
           <UButton
