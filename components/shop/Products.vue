@@ -116,14 +116,7 @@ const filters = ref({
 // View mode (grid/list)
 const viewMode = ref('grid')
 
-// const colors = computed(() => {
-//     if (!data.value?.items) return []
-//     const allColors = data.value.items.map((item) => item.final_price.color).filter(Boolean)
-//     return allColors.map((item) => ({
-//         id: item.id,
-//         name: item.title_fa
-//     }))
-// })
+
 const { data: brands } = await useAsyncData('brands', async () => {
   const brands = await getBrands()
   return brands.map(brand => ({

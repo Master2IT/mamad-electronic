@@ -2,7 +2,7 @@
   <div class="my-10 h-auto">
     <div class="flex items-center justify-between mb-3">
       <h2 class="text-2xl text-primary-700 font-black">{{ title }}</h2>
-      <UButton variant="link" :href="link" class="flex items-center gap-1">
+      <UButton v-if="show" variant="link" :href="link" class="flex items-center gap-1">
         مشاهده همه
         <ChevronLeft class="w-4 h-4" />
       </UButton>
@@ -20,6 +20,7 @@ interface FAQItem {
   id: number | string;
   question: string;
   answer: string;
+  show: boolean;
 }
 
 defineProps({
@@ -34,6 +35,10 @@ defineProps({
   link: {
     type: String,
     required: true
+  },
+  show: {
+    type: Boolean,
+    required: false
   }
 })
 </script>
