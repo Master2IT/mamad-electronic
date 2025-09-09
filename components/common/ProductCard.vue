@@ -1,6 +1,6 @@
 <template>
-  <NuxtLink external :to="`/products/${product?.id}/${product?.slug}`">
-    <div class="relative rounded-md w-full shadow-sm border-0 bg-[#F7F7F7] select-none">
+  <NuxtLink external :to="`/products/${product?.id}/${product?.slug}`" >
+    <div :class="['relative rounded-md w-full shadow-sm border-0 bg-[#F7F7F7] select-none', { '!h-[300px]': !product.final_price?.discount_price}]">
       <div class="relative p-0 flex justify-center items-center">
         <NuxtImg :src="`${BASE_URL}/${product?.banner?.path || product?.file?.path}`" :alt="product.title_fa"
           class="h-[200px] w-[200px] object-contain rounded-md" />

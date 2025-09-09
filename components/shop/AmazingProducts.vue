@@ -8,7 +8,7 @@
           <span class="text-primary-700 text-xs">{{ time.label }}</span>
         </UButton>
       </UButtonGroup>
-      <NuxtLink href="#" class="text-white flex gap-1 mt-auto self-start mr-10 items-center">
+      <NuxtLink external :to="`#`" class="text-white flex gap-1 mt-auto self-start mr-10 items-center">
         <span>مشاهده همه</span>
         <ChevronLeft :size="18" />
       </NuxtLink>

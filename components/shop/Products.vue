@@ -19,7 +19,7 @@
 
                 <!-- Colors -->
                 <div class="space-y-4 mb-6">
-                    <h4 class="font-medium">رنگ‌ها</h4>
+                    <h4 class="font-medium">رنگ</h4>
                     <div class="space-y-2">
                         <UCheckboxGroup v-model="filters.selectedColors" :items="colors" value-key="id"
                             label-key="name" />
@@ -28,24 +28,17 @@
 
                 <!-- Brands -->
                 <div class="space-y-4 mb-6">
-                    <h4 class="font-medium">برندها</h4>
+                    <h4 class="font-medium">برند</h4>
                     <div class="space-y-2">
                         <UCheckboxGroup v-model="filters.selectedBrands" :items="brands" value-key="id"
                             label-key="name" />
                     </div>
                 </div>
 
-                <!-- Product Type -->
-                <div class="space-y-4 mb-6">
-                    <h4 class="font-medium">نوع محصول</h4>
-                    <div class="space-y-2">
-                        <URadioGroup v-model="filters.selectedType" :items="types" value-key="id" label-key="name" />
-                    </div>
-                </div>
 
                 <!-- Tomorrow Shipping -->
                 <div class="pt-4 border-t border-gray-300">
-                    <UCheckbox v-model="filters.tomorrowShipping" label="ارسال فردا" />
+                    <UCheckbox  label="ارسال فردا" />
                 </div>
             </UCard>
         </div>
@@ -54,18 +47,28 @@
         <div class="w-full">
             <!-- Sorting and View Options -->
             <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-                <USelect v-model="sorting" :items="sortOptions" placeholder="مرتب‌سازی بر اساس"
-                    class="w-full sm:w-48" />
+                <USelect v-model="sorting" :items="sortOptions" placeholder="مرتب‌سازی بر اساس" class="w-full sm:w-48"
+                    @update:model-value="sortingQuery" :disabled="pending" />
                 <div class="flex gap-2">
                     <UButton :variant="viewMode === 'grid' ? 'solid' : 'outline'" @click="viewMode = 'grid'"
-                        icon="i-lucide-grid" />
+                        icon="i-lucide-grid" :disabled="pending" />
                     <UButton :variant="viewMode === 'list' ? 'solid' : 'outline'" @click="viewMode = 'list'"
-                        icon="i-lucide-list" />
+                        icon="i-lucide-list" :disabled="pending" />
                 </div>
             </div>
 
             <!-- Products -->
-            <div :class="[
+            <div v-if="pending" :class="[
+                viewMode === 'grid' ? 'grid grid-cols-1 lg:grid-cols-4 gap-6' : 'space-y-4',
+            ]">
+                <div v-for="i in 12" :key="i" class="border border-gray-200 rounded-lg p-4">
+                    <USkeleton class="h-48 w-full mb-4" />
+                    <USkeleton class="h-4 w-3/4 mb-2" />
+                    <USkeleton class="h-4 w-1/2 mb-2" />
+                    <USkeleton class="h-6 w-1/3" />
+                </div>
+            </div>
+            <div v-else :class="[
                 viewMode === 'grid' ? 'grid grid-cols-1 lg:grid-cols-4 gap-6' : 'space-y-4',
             ]">
                 <CommonProductCard v-for="product in filteredProducts" :key="product.id" :product="product"
@@ -73,13 +76,9 @@
             </div>
 
             <div class="flex justify-center mt-8">
-                <UPagination v-model="currentPage" show-edges :total="data?.meta?.total || 0"
-                    :page-count="data?.meta?.per_page || 12" :ui="{
+                <UPagination v-model:page="currentPage"  show-edges :total="data?.meta?.total || 0"
+                    :page-count="data?.meta?.per_page || 12" :disabled="pending" :ui="{
                         rounded: 'rounded-lg',
-                        next: 'rotate-180',
-                        prev: 'rotate-180',
-                        first: 'rotate-180',
-                        last: 'rotate-180',
                         default: {
                             padding: 'px-3 py-1',
                             size: 'sm',
@@ -94,27 +93,53 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { computed, ref } from 'vue'
 import { getProducts } from '~/api/product-api'
+import { getBrands } from '~/api/brand-api'
+import { getColors } from '~/api/colors-api'
+const route = useRoute()
+const sorting = ref(route.query.sort || 'newest')
+const currentPage = ref(parseInt(route.query.page) || 1)
 
-const sorting = ref('newest')
-const currentPage = ref(1)
-
-const { data, refresh } = await useAsyncData('products', () => getProducts({ sort: sorting.value, page: currentPage.value }), {
+const { data, refresh, pending } = await useAsyncData('products', () => getProducts({ sort: sorting.value, page: currentPage.value }), {
     watch: [sorting, currentPage]
 })
-
 // Filter states
 const filters = ref({
     price: [0, 10000000],
     selectedColors: [],
     selectedBrands: [],
     selectedType: null,
-    tomorrowShipping: false
+    
 })
 
 // View mode (grid/list)
 const viewMode = ref('grid')
+
+// const colors = computed(() => {
+//     if (!data.value?.items) return []
+//     const allColors = data.value.items.map((item) => item.final_price.color).filter(Boolean)
+//     return allColors.map((item) => ({
+//         id: item.id,
+//         name: item.title_fa
+//     }))
+// })
+const { data: brands } = await useAsyncData('brands', async () => {
+  const brands = await getBrands()
+  return brands.map(brand => ({
+    id: brand.id,
+    name: brand.title,
+  }))
+})
+const { data: colors } = await useAsyncData('colors', async () => {
+  const colors = await getColors()
+  return colors.map(color => ({
+    id: color.id,
+    name: color.title_fa,
+  }))
+})
+
+
 
 // Sorting
 const sortOptions = [
@@ -127,37 +152,22 @@ const sortOptions = [
     { value: 'chosen', label: 'منتخب' }
 ]
 
-// Filter options
-const colors = [
-    { id: 1, name: 'مشکی' },
-    { id: 2, name: 'سفید' },
-    { id: 3, name: 'آبی' },
-    { id: 4, name: 'قرمز' },
-    { id: 5, name: 'سبز' },
-]
 
-const brands = [
-    { id: 1, name: 'آردوینو' },
-    { id: 2, name: 'رزبری پای' },
-    { id: 3, name: 'اس‌تی' },
-    { id: 4, name: 'تگزاس اینسترومنت' },
-    { id: 5, name: 'میکروچیپ' }
-]
 
-const types = [
-    { id: 1, name: 'میکروکنترلر' },
-    { id: 2, name: 'سنسور' },
-    { id: 3, name: 'قطعات پسیو' },
-    { id: 4, name: 'ابزار' },
-    { id: 5, name: 'کیت آموزشی' }
-]
+const sortingQuery = () => {
+    if (!pending.value) {
+        navigateTo(`/products?sort=${sorting.value}&page=${currentPage.value}`)
+    }
+}
 
 watch(sorting, async () => {
+    currentPage.value = 1
     await refresh()
 })
 
 watch(currentPage, async () => {
     await refresh()
+    navigateTo(`/products?sort=${sorting.value}&page=${currentPage.value}`)
 })
 
 // Filtered products
@@ -175,14 +185,14 @@ const filteredProducts = computed(() => {
     // Filter by colors
     if (filters.value.selectedColors.length > 0) {
         result = result.filter(product =>
-            filters.value.selectedColors.includes(product.color_id)
+            filters.value.selectedColors.includes(product.final_price.color.id)
         )
     }
 
     // Filter by brands
     if (filters.value.selectedBrands.length > 0) {
         result = result.filter(product =>
-            filters.value.selectedBrands.includes(product.brand_id)
+            filters.value.selectedBrands.includes(product.brand.id)
         )
     }
 
@@ -193,10 +203,10 @@ const filteredProducts = computed(() => {
         )
     }
 
-    // Filter by tomorrow shipping
-    if (filters.value.tomorrowShipping) {
-        result = result.filter(product => product.tomorrow_shipping)
-    }
+    // // Filter by tomorrow shipping
+    // if (filters.value.tomorrowShipping) {
+    //     result = result.filter(product => product.tomorrow_shipping)
+    // }
 
     return result
 })

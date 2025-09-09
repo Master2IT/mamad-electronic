@@ -7,7 +7,7 @@
             },
         }">
             <template #default="{ item }">
-                <ShopCategoryCard :image="item.image" :name="item.name" />
+                <ShopCategoryCard :image="item.image" :name="item.name" :to="item.to" />
             </template>
         </Carousel>
     </div>

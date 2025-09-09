@@ -2,10 +2,12 @@
     <UCard class="my-10 h-auto w-full">
         <div class="flex items-center justify-between mb-5">
             <h2 class="text-[20px] text-primary-700 font-medium">{{ title }}</h2>
-            <UButton variant="link" :href="link" class="flex items-center gap-1">
+            <NuxtLink external :to="link" class="flex items-center gap-1">
+                <UButton variant="link" class="flex items-center gap-1">
                 مشاهده همه
                 <ChevronLeft class="w-4 h-4" />
             </UButton>
+            </NuxtLink>
         </div>
         <Carousel :items="products">
             <template #default="{ item }">
