@@ -4,6 +4,7 @@ export const useCartStore = defineStore("cart", {
   state: () => ({
     items: [],
     total: 0,
+    address: null,
   }),
 
   getters: {
@@ -24,6 +25,9 @@ export const useCartStore = defineStore("cart", {
 
     calculateTotal() {
       this.total = this.items.reduce((sum, item) => sum + item.price, 0);
+    },
+    addAddress(address) {
+      this.address = address;
     },
   },
 });

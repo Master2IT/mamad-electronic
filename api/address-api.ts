@@ -19,7 +19,7 @@ const addressApi = {
 
     updateAddress: async (address: any) => {
         const { $axios } = useNuxtApp()
-        const res = await $axios.put(`/customer/addresses/update/${address.id}`, address)
+        const res = await $axios.post(`/customer/addresses/update/${address.id}`, address)
         return res.data
     },
 

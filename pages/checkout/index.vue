@@ -1,5 +1,5 @@
 <template>
   <NuxtLayout name="checkout">
-    <ShopAddress />
+    <ShopCheckout />
   </NuxtLayout>
 </template>

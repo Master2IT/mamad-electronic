@@ -41,7 +41,7 @@ watch(path, () => {
       case 'address':
         currentStep.value = 1
         break
-      case 'payment':
+      case 'checkout':
         currentStep.value = 2
         break
       case 'order':

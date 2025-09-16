@@ -1,5 +1,23 @@
 <template>
   <footer class="text-white">
+    <div class="grid grid-cols-4 p-4 border border-gray-200 my-4 rounded-md bg-white">
+     <div class="flex justify-center items-center gap-2">
+      <p class="text-black">پشتیبانی 24 ساعته</p>
+      <img src="/Vect.svg" alt="logo" class="w-16 md:w-auto" />
+     </div>
+     <div class="flex justify-center items-center gap-2">
+      <p class="text-black">تحویل سریع</p>
+      <img src="/Vector.svg" alt="logo" class="w-16 md:w-auto" />
+     </div>
+     <div class="flex justify-center items-center gap-2">
+      <p class="text-black">ضمانت کالا</p>
+      <img src="/Vecto.svg" alt="logo" class="w-16 md:w-auto" />
+     </div>
+     <div class="flex justify-center items-center gap-2">
+      <p class="text-black">جدیدترین تکنولوژی</p>
+      <img src="/Vec.svg" alt="logo" class="w-16 md:w-auto" />
+     </div>
+    </div>
     <!-- Social Media Bar -->
     <div class="bg-[#1F032F]">
       <UContainer class="mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-6 md:gap-0">
@@ -96,7 +114,11 @@
 
 <script setup>
 import { Instagram, Send, Twitter } from "lucide-vue-next";
-
+import { getFooter } from '~/api/footer-api'
+const { data: footer } = await useAsyncData('footer', async () => {
+  const footer = await getFooter()
+  return footer.data
+})
 const email = ref('');
 
 const socialLinks = [

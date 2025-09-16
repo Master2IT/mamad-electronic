@@ -1,5 +1,5 @@
 <template>
-<NuxtLayout name="check-out">
+<NuxtLayout name="checkout">
   <ShopCart />
 </NuxtLayout>
 </template>

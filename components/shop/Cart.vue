@@ -79,7 +79,7 @@
                   variant="ghost"
                   icon="i-lucide-trash-2"
                   size="sm"
-                  @click="removeFromCart(item.prices.id)"
+                  @click="removeFromCart(item.id)"
                 />
               </div>
             </div>
@@ -109,7 +109,7 @@
       </UCard>
     </div>
     <UCard class="col-span-2 h-fit">
-      <template v-if="loading" class="h-[200px]">
+      <template v-if="loading">
         <div class="mb-4 flex justify-between">
           <USkeleton class="h-5 w-1/3" />
           <USkeleton class="h-5 w-1/3" />

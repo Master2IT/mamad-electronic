@@ -9,18 +9,12 @@
               <UIcon name="i-lucide-map-pin" class="text-primary" />
               <h2 class="text-lg font-bold">آدرس تحویل سفارش</h2>
             </div>
-            <UButton
-              color="primary"
-              variant="soft"
-              icon="i-lucide-plus"
-              @click="
-                () => {
-                  editMode = false
-                  isOpen = true
-                }
-              "
-              :ui="{ rounded: 'rounded-full' }"
-            >
+            <UButton color="primary" variant="soft" icon="i-lucide-plus" @click="
+              () => {
+                editMode = false
+                isOpen = true
+              }
+            " :ui="{ rounded: 'rounded-full' }">
               افزودن آدرس جدید
             </UButton>
           </div>
@@ -28,100 +22,75 @@
         </template>
 
         <div v-if="loading" class="flex items-center justify-center p-12">
-          <UIcon
-            name="i-lucide-loader-2"
-            class="text-primary h-8 w-8 animate-spin"
-          />
+          <UIcon name="i-lucide-loader-2" class="text-primary h-8 w-8 animate-spin" />
         </div>
 
-        <div
-          v-else-if="!savedAddresses.length"
-          class="flex flex-col items-center justify-center p-10 text-center"
-        >
+        <div v-else-if="!savedAddresses.length" class="flex flex-col items-center justify-center p-10 text-center">
           <UIcon name="i-lucide-map-off" class="mb-4 h-16 w-16 text-gray-400" />
           <p class="text-lg font-medium text-gray-500">
             هنوز آدرسی ثبت نکرده‌اید
           </p>
-          <UButton
-            color="primary"
-            variant="soft"
-            class="mt-4"
-            @click="
-              () => {
-                editMode = false
-                isOpen = true
-              }
-            "
-            :ui="{ rounded: 'rounded-full' }"
-          >
+          <UButton color="primary" variant="soft" class="mt-4" @click="
+            () => {
+              editMode = false
+              isOpen = true
+              resetForm()
+            }
+          " :ui="{ rounded: 'rounded-full' }">
             افزودن آدرس جدید
           </UButton>
         </div>
 
         <div v-else>
-          <div
-            v-for="address in savedAddresses"
-            :key="address.id"
-            class="hover:border-primary rounded-lg border bg-gray-50 p-5 transition-colors"
-          >
-            <div class="mb-3 flex items-center justify-between">
-              <div class="flex items-center gap-2">
-                <UIcon name="i-lucide-user" class="text-primary" />
-                <span class="font-bold"
-                  >{{ address.name }} {{ address.family }}</span
-                >
-                <!-- <UBadge color="primary" variant="subtle">پیش‌فرض</UBadge> -->
-              </div>
-              <div class="flex gap-2">
-                <UButton
-                  color="gray"
-                  variant="ghost"
-                  size="xs"
-                  icon="i-lucide-edit"
-                  @click="
+          <URadioGroup default-value="mellat" :ui="{ item: 'flex items-center gap-2' }" :items="savedAddresses"
+            v-model="address.id">
+            <template #label="{ item: address }">
+              <div class="mb-3 flex items-center justify-between border-b border-gray-200 pb-3">
+                <div class="flex items-center gap-2">
+                  <UIcon name="i-lucide-user" class="text-primary" />
+                  <span class="font-bold">{{ address.name }} {{ address.family }}</span>
+                  <!-- <UBadge color="primary" variant="subtle">پیش‌فرض</UBadge> -->
+                </div>
+                <div class="flex gap-2">
+                  <UButton color="gray" variant="ghost" size="xs" icon="i-lucide-edit" @click="
                     () => {
                       selectedId = address.id
-                      editAddress()
+                      getAddress()
+                      editMode = true
+                      isOpen = true
                     }
-                  "
-                />
-                <UButton
-                  color="red"
-                  variant="ghost"
-                  size="xs"
-                  icon="i-lucide-trash-2"
-                  @click="confirmDelete = true"
-                />
+                  " />
+                  <UButton color="red" variant="ghost" size="xs" icon="i-lucide-trash-2" @click="
+                    () => {
+                      selectedId = address.id
+                      confirmDelete = true
+                    }
+                  " />
+                </div>
               </div>
-            </div>
 
-            <div
-              class="grid grid-cols-1 gap-3 text-sm text-gray-600 sm:grid-cols-2"
-            >
-              <div class="flex items-center gap-2">
-                <UIcon name="i-lucide-phone" class="text-gray-400" />
-                <span>{{ address.mobile }}</span>
+              <div class="grid grid-cols-1 gap-3 text-sm text-gray-600 sm:grid-cols-2">
+                <div class="flex items-center gap-2">
+                  <UIcon name="i-lucide-phone" class="text-gray-400" />
+                  <span>{{ address.mobile }}</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <UIcon name="i-lucide-map" class="text-gray-400" />
+                  <span>{{ address.province.title }} - {{ address.city.title }}</span>
+                </div>
               </div>
-              <div class="flex items-center gap-2">
-                <UIcon name="i-lucide-map" class="text-gray-400" />
-                <span
-                  >{{ address.province.title }} - {{ address.city.title }}</span
-                >
+
+              <div class="mt-3 flex items-start gap-2">
+                <UIcon name="i-lucide-home" class="mt-1 text-gray-400" />
+                <p class="text-gray-600">{{ address.address }}</p>
               </div>
-            </div>
 
-            <div class="mt-3 flex items-start gap-2">
-              <UIcon name="i-lucide-home" class="mt-1 text-gray-400" />
-              <p class="text-gray-600">{{ address.address }}</p>
-            </div>
-
-            <div class="mt-3 flex items-center gap-2">
-              <UIcon name="i-lucide-mail" class="text-gray-400" />
-              <span class="text-gray-600"
-                >کد پستی: {{ address.postal_code }}</span
-              >
-            </div>
-          </div>
+              <div class="mt-3 flex items-center gap-2">
+                <UIcon name="i-lucide-mail" class="text-gray-400" />
+                <span class="text-gray-600">کد پستی: {{ address.postal_code }}</span>
+              </div>
+            </template>
+          </URadioGroup>
         </div>
       </UCard>
     </div>
@@ -161,6 +130,13 @@
           </p>
         </div>
         <div class="mb-4 flex justify-between">
+          <span>سود شما</span>
+          <p class="font-medium text-gray-500">
+            {{ totalDiscount?.toLocaleString() || '0' }}
+            <span class="text-xs text-gray-500">تومان</span>
+          </p>
+        </div>
+        <div class="mb-4 flex justify-between">
           <span class="font-bold">جمع سبد خرید</span>
           <p class="font-medium">
             {{ ((total || 0) - (totalDiscount || 0)).toLocaleString() }}
@@ -168,41 +144,35 @@
           </p>
         </div>
         <div class="mb-4 flex justify-between">
-          <span class="font-bold text-red-500">سود تخفیف</span>
+          <span class="font-bold text-red-500">هزینه ارسال</span>
           <p class="font-medium text-red-500">
-            {{ (totalDiscount || 0).toLocaleString() }}
+            <!-- {{ (totalDiscount || 0).toLocaleString() }}
+               -->
+            0
             <span class="text-xs">تومان</span>
           </p>
         </div>
-        <UButton
-          color="primary"
-          class="mt-4 w-full p-3"
-          :loading="loading"
-          @click="confirmOrder"
-          :disabled="!savedAddresses.length"
-        >
+        <div class="border border-dashed border-gray-300 my-4" />
+        <div class="mb-4 flex justify-between">
+          <span class="font-bold">مبلغ قابل پرداخت</span>
+          <p class="font-medium">
+            {{ (total || 0).toLocaleString() }}
+            <span class="text-xs text-gray-500">تومان</span>
+          </p>
+        </div>
+        <UButton color="primary" class="mt-4 w-full p-3 justify-center" :loading="loading" @click="confirmOrder"
+          :disabled="!savedAddresses.length" to="/checkout" external>
           تایید و پرداخت سفارش
         </UButton>
-        <span class="block pt-3 text-right text-xs leading-5 text-gray-500">
-          هزینه این سفارش هنوز پرداخت نشده است
-        </span>
+
       </div>
     </UCard>
   </div>
 
   <!-- Address Modal -->
-  <UModal
-    :title="editMode ? 'ویرایش آدرس' : 'افزودن آدرس جدید'"
-    v-model:open="isOpen"
-    :ui="{ width: 'sm:max-w-xl' }"
-  >
+  <UModal :title="editMode ? 'ویرایش آدرس' : 'افزودن آدرس جدید'" v-model:open="isOpen" :ui="{ width: 'sm:max-w-xl' }">
     <template #body>
-      <UForm
-        :validate="validate"
-        :state="addressForm"
-        @submit="saveAddress"
-        class="space-y-6"
-      >
+      <UForm :validate="validate" :state="addressForm" @submit="onSubmit" class="space-y-6">
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <UFormField label="نام" name="name">
             <UInput class="w-full" size="lg" v-model="addressForm.name" />
@@ -214,86 +184,39 @@
 
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <UFormField label="شماره موبایل" name="mobile">
-            <UInput
-              class="w-full"
-              size="lg"
-              v-model="addressForm.mobile"
-              placeholder="09xxxxxxxxx"
-              type="tel"
-            />
+            <UInput class="w-full" size="lg" v-model="addressForm.mobile" placeholder="09xxxxxxxxx" type="tel" />
           </UFormField>
           <UFormField label="کد پستی" name="postal_code">
-            <UInput
-              class="w-full"
-              size="lg"
-              v-model="addressForm.postal_code"
-              placeholder="کد پستی 10 رقمی"
-            />
+            <UInput class="w-full" size="lg" v-model="addressForm.postal_code" placeholder="کد پستی 10 رقمی" />
           </UFormField>
         </div>
 
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <UFormField label="استان" name="province_id">
-            <USelect
-              class="w-full"
-              size="lg"
-              v-model="addressForm.province_id"
-              :items="provinces"
-              label-key="title"
-              value-key="id"
-              placeholder="استان خود را انتخاب کنید"
-              @update:model-value="getCities"
-            />
+            <USelect class="w-full" size="lg" v-model="addressForm.province_id" :items="provinces" label-key="title"
+              value-key="id" placeholder="استان خود را انتخاب کنید" @update:model-value="getCities" />
           </UFormField>
           <UFormField label="شهر" name="city_id">
-            <USelect
-              class="w-full"
-              size="lg"
-              v-model="addressForm.city_id"
-              :items="cities"
-              label-key="title"
-              value-key="id"
-              placeholder="شهر خود را انتخاب کنید"
-              :disabled="!addressForm.province_id"
-            />
+            <USelect class="w-full" size="lg" v-model="addressForm.city_id" :items="cities" label-key="title"
+              value-key="id" placeholder="شهر خود را انتخاب کنید" :disabled="!addressForm.province_id" />
           </UFormField>
         </div>
 
         <UFormField label="آدرس کامل" name="user_address">
-          <UTextarea
-            class="w-full"
-            size="lg"
-            v-model="addressForm.user_address"
-            placeholder="آدرس دقیق خود را وارد کنید"
-            rows="3"
-          />
+          <UTextarea class="w-full" size="lg" v-model="addressForm.user_address"
+            placeholder="آدرس دقیق خود را وارد کنید" rows="3" />
         </UFormField>
 
         <UFormField label="پلاک" name="number">
-          <UInput
-            class="w-full"
-            size="lg"
-            v-model="addressForm.number"
-            placeholder="شماره پلاک"
-          />
+          <UInput class="w-full" size="lg" v-model="addressForm.number" placeholder="شماره پلاک" />
         </UFormField>
 
         <div class="flex items-center">
-          <UCheckbox
-            v-model="addressForm.im_owner"
-            name="save-address"
-            label="گیرنده سفارش خودم هستم؟"
-          />
+          <UCheckbox v-model="addressForm.im_owner" name="save-address" label="گیرنده سفارش خودم هستم؟" />
         </div>
 
         <div class="flex w-full justify-end gap-2">
-          <UButton
-            type="button"
-            color="gray"
-            variant="soft"
-            @click="isOpen = false"
-            >انصراف</UButton
-          >
+          <UButton type="button" color="gray" variant="soft" @click="isOpen = false">انصراف</UButton>
           <UButton type="submit" color="primary" :loading="loading">
             {{ editMode ? 'ویرایش آدرس' : 'ثبت آدرس' }}
           </UButton>
@@ -306,19 +229,14 @@
   <UModal v-model:open="confirmDelete" title="حذف آدرس">
     <template #body>
       <div class="p-4 text-center">
-        <UIcon
-          name="i-lucide-alert-triangle"
-          class="mx-auto mb-4 h-12 w-12 text-red-500"
-        />
+        <UIcon name="i-lucide-alert-triangle" class="mx-auto mb-4 h-12 w-12 text-red-500" />
         <p class="mb-4 text-gray-600">آیا از حذف این آدرس اطمینان دارید؟</p>
       </div>
     </template>
     <template #footer>
       <div class="flex w-full justify-end gap-3">
-        <UButton color="neutral" variant="soft" @click="confirmDelete = false"
-          >انصراف</UButton
-        >
-        <UButton color="error" @click="deleteAddress">حذف</UButton>
+        <UButton color="neutral" variant="soft" :disabled="loading" @click="confirmDelete = false">انصراف</UButton>
+        <UButton color="error" @click="deleteAddress" :loading="loading">حذف</UButton>
       </div>
     </template>
   </UModal>
@@ -328,6 +246,15 @@
 import { onMounted, ref } from 'vue'
 import addressApi from '~/api/address-api'
 import placesApi from '~/api/places-api'
+import { fetchCart } from '~/api/product-api'
+const { addAddress } = useCartStore()
+const onSubmit = () => {
+  if (editMode.value) {
+    editAddress()
+  } else {
+    saveAddress()
+  }
+}
 
 const validate = (state) => {
   const errors = []
@@ -349,7 +276,7 @@ const validate = (state) => {
   return errors
 }
 
-const loading = ref(true)
+const loading = ref(false)
 const isOpen = ref(false)
 const confirmDelete = ref(false)
 const editMode = ref(false)
@@ -368,24 +295,36 @@ const addressForm = reactive({
 })
 
 // Cart data (example data)
-const cart = ref([{ id: 1 }, { id: 2 }])
-const total = ref(25000000)
-const totalDiscount = ref(2500000)
+const cart = ref([])
+const total = ref(0)
+const totalDiscount = ref(0)
+const total_discount_price = ref(0)
 const cities = ref([])
 const provinces = ref([])
 const savedAddresses = ref([])
 const selectedId = ref(null)
 
+
+const loadCart = async () => {
+  try {
+    const response = await fetchCart()
+    cart.value = response.items
+    total.value = response.total
+    totalDiscount.value = response.total_discount
+    // total_discount_price.value = response.prices.total_discount_price
+    // stepped_dicounts.value.push(response.items.map(item => item.prices.stepped_discount));
+  } catch (error) {
+    console.error('Error loading cart:', error)
+  }
+}
 // Methods
 const getAddresses = async () => {
-  loading.value = true
+  // loading.value = true
   try {
     const res = await addressApi.getAddresses()
     savedAddresses.value = res
   } catch (error) {
     console.error(error)
-  } finally {
-    loading.value = false
   }
 }
 
@@ -393,13 +332,13 @@ const saveAddress = async () => {
   loading.value = true
   try {
     await addressApi.createAddress(addressForm)
+    isOpen.value = false
     getAddresses()
     toast.add({
       title: 'آدرس با موفقیت ثبت شد',
       icon: 'i-heroicons-check-circle',
       color: 'success',
     })
-    isOpen.value = false
     resetForm()
   } catch (error) {
     console.error(error)
@@ -410,22 +349,28 @@ const saveAddress = async () => {
 
 const getAddress = async () => {
   const res = await addressApi.getAddress(selectedId.value)
-  addressForm = res
-}
+  addressForm.name = res.data.name
+  addressForm.family = res.data.family
+  addressForm.mobile = res.data.mobile
+  addressForm.province_id = res.data.province.id
+  addressForm.city_id = res.data.city.id
+  addressForm.user_address = res.data.address
+  addressForm.number = res.data.number
+  addressForm.postal_code = res.data.postal_code
+  addressForm.im_owner = res.data.im_owner
+  addressForm.id = res.data.id
 
+}
 const editAddress = async () => {
-  isOpen.value = true
-  editMode.value = true
-  await getAddress()
   try {
     await addressApi.updateAddress(addressForm)
+    isOpen.value = false
     getAddresses()
     toast.add({
       title: 'آدرس با موفقیت ویرایش شد',
       icon: 'i-heroicons-check-circle',
       color: 'success',
     })
-    isOpen.value = false
     resetForm()
   } catch (error) {
     console.error(error)
@@ -438,12 +383,14 @@ const deleteAddress = async () => {
   loading.value = true
   try {
     await addressApi.deleteAddress(selectedId.value)
+    confirmDelete.value = false
     getAddresses()
     toast.add({
       title: 'آدرس با موفقیت حذف شد',
       icon: 'i-heroicons-check-circle',
       color: 'success',
     })
+
   } catch (error) {
     console.error(error)
   } finally {
@@ -469,10 +416,11 @@ const getProvinces = async () => {
   const res = await placesApi.getProvinces()
   provinces.value = res
 
-  loading.value = false
 }
 
 const getCities = async (provinceId) => {
+  cities.value = []
+  addressForm.city_id = ''
   const res = await placesApi.getCities(provinceId)
   cities.value = res
 }
@@ -481,6 +429,9 @@ const getCities = async (provinceId) => {
 onMounted(async () => {
   await getAddresses()
   await getProvinces()
+  await loadCart()
+
+  loading.value = false
 })
 </script>
 
@@ -504,6 +455,7 @@ onMounted(async () => {
 }
 
 @keyframes bounce {
+
   0%,
   100% {
     transform: translateY(-5%);
