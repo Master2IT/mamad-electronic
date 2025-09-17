@@ -62,15 +62,17 @@
         <div v-else>
           <URadioGroup
             :items="savedAddresses"
-            v-model="selectedId"
+            v-model="selectedAddressId"
             value-key="id"
             :ui="{ item: 'flex items-center gap-2' }"
           >
             <template #label="{ item: addressItem }">
-              <div class="border border-neutral-200 p-3 mb-2 rounded-lg shadow-sm">
+              <div
+                class="mb-2 rounded-lg border border-neutral-200 p-3 shadow-sm"
+              >
                 <div class="mb-3 flex items-center justify-between">
                   <div class="flex items-center gap-2">
-                    <UIcon name="i-lucide-user"  class="text-primary" />
+                    <UIcon name="i-lucide-user" class="text-primary" />
                     <span class="text-gray-600"
                       >{{ addressItem.name }} {{ addressItem.family }}</span
                     >
@@ -209,7 +211,6 @@
           color="primary"
           class="mt-4 w-full justify-center p-3"
           :loading="loading"
-          @click="confirmOrder"
           :disabled="!savedAddresses.length"
           to="/checkout"
           external
@@ -364,8 +365,8 @@
 import { onMounted, ref } from 'vue'
 import addressApi from '~/api/address-api'
 import placesApi from '~/api/places-api'
-import { fetchCart } from '~/api/product-api'
-const { addAddress } = useCartStore()
+const cartStore = useCartStore()
+const { getSelectedAddressId, setSelectedAddressId } = cartStore
 const onSubmit = () => {
   if (editMode.value) {
     editAddress()
@@ -412,34 +413,25 @@ const addressForm = reactive({
   city_id: '',
 })
 
-// Cart data (example data)
-const cart = ref([])
-const total = ref(0)
-const totalDiscount = ref(0)
+const total = computed(() => cartStore.getTotal)
+const totalDiscount = computed(() => cartStore.getTotalDiscount)
+const cart = computed(() => cartStore.getItems)
 const cities = ref([])
 const provinces = ref([])
 const savedAddresses = ref([])
-const selectedId = ref(null)
 
-const loadCart = async () => {
-  try {
-    const response = await fetchCart()
-    cart.value = response.items
-    total.value = response.total
-    totalDiscount.value = response.total_discount
-    // total_discount_price.value = response.prices.total_discount_price
-    // stepped_dicounts.value.push(response.items.map(item => item.prices.stepped_discount));
-  } catch (error) {
-    console.error('Error loading cart:', error)
-  }
-}
+const selectedAddressId = computed({
+  get: () => cartStore.getSelectedAddressId,
+  set: (value) => cartStore.setSelectedAddressId(value),
+})
+
 // Methods
 const getAddresses = async () => {
   // loading.value = true
   try {
     const res = await addressApi.getAddresses()
     savedAddresses.value = res
-    selectedId.value = res[0].id
+    setSelectedAddressId(res[0].id)
   } catch (error) {
     console.error(error)
   }
@@ -450,7 +442,7 @@ const saveAddress = async () => {
   try {
     await addressApi.createAddress({
       ...addressForm,
-      address_id: selectedId.value
+      address_id: selectedAddressId.value,
     })
     getAddresses()
     toast.add({
@@ -468,7 +460,7 @@ const saveAddress = async () => {
 }
 
 const getAddress = async () => {
-  const res = await addressApi.getAddress(selectedId.value)
+  const res = await addressApi.getAddress(selectedAddressId.value)
   addressForm.name = res.data.name
   addressForm.family = res.data.family
   addressForm.mobile = res.data.mobile
@@ -480,6 +472,7 @@ const getAddress = async () => {
   addressForm.im_owner = res.data.im_owner
   addressForm.id = res.data.id
 }
+
 const editAddress = async () => {
   try {
     await addressApi.updateAddress(addressForm)
@@ -501,7 +494,7 @@ const editAddress = async () => {
 const deleteAddress = async () => {
   loading.value = true
   try {
-    await addressApi.deleteAddress(selectedId.value)
+    await addressApi.deleteAddress(selectedAddressId.value)
     confirmDelete.value = false
     getAddresses()
     toast.add({
@@ -546,18 +539,9 @@ const getCities = async (provinceId) => {
 onMounted(async () => {
   await getAddresses()
   await getProvinces()
-  await loadCart()
 
   loading.value = false
 })
-
-const confirmOrder = async () => {
-  // try {
-  //   await addressApi.confirmOrder(selectedId.value)
-  // } catch (error) {
-  //   console.error(error)
-  // }
-}
 </script>
 
 <style scoped>

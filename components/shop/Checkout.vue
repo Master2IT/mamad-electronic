@@ -9,32 +9,44 @@
               <h2 class="text-lg font-bold">شیوه پرداخت</h2>
             </div>
           </div>
-
         </template>
 
-
         <div v-if="loading" class="flex items-center justify-center p-12">
-          <UIcon name="i-lucide-loader-2" class="text-primary h-8 w-8 animate-spin" />
+          <UIcon
+            name="i-lucide-loader-2"
+            class="text-primary h-8 w-8 animate-spin"
+          />
         </div>
-        <div v-else class="hover:border-primary rounded-lg border bg-gray-50 p-5 transition-colors mb-3">
+        <div
+          v-else
+          class="hover:border-primary mb-3 rounded-lg border bg-gray-50 p-5 transition-colors"
+        >
           <div class="mb-3 flex items-center justify-between">
-            <div class="flex items-center gap-2">.
+            <div class="flex items-center gap-2">
+              .
 
-              <URadioGroup default-value="mellat" :ui="{ item: 'flex items-center gap-2' }" :items="items"
-                v-model="selectedPayment">
+              <URadioGroup
+                default-value="mellat"
+                :ui="{ item: 'flex items-center gap-2' }"
+                :items="items"
+                v-model="selectedPayment"
+              >
                 <template #label="{ item }">
                   <div class="flex items-center gap-2">
-                    <span class="p-2 bg-primary rounded-lg">
-                      <img :src="`/${item.img}.svg`" class="w-7 h-7 my-auto" />
+                    <span class="bg-primary rounded-lg p-2">
+                      <img :src="`/${item.img}.svg`" class="my-auto h-7 w-7" />
                     </span>
                     <div class="flex flex-col gap-1 py-2">
-                      <span class="font-medium mr-2 text-lg">{{ item.label.title }}</span>
-                      <span class="text-sm text-gray-500">{{ item.label.description }}</span>
+                      <span class="mr-2 text-lg font-medium">{{
+                        item.label.title
+                      }}</span>
+                      <span class="text-sm text-gray-500">{{
+                        item.label.description
+                      }}</span>
                     </div>
                   </div>
                 </template>
               </URadioGroup>
-
             </div>
           </div>
         </div>
@@ -97,7 +109,7 @@
             <span class="text-xs">تومان</span>
           </p>
         </div>
-        <div class="border border-dashed border-gray-300 my-4" />
+        <div class="my-4 border border-dashed border-gray-300" />
         <div class="mb-4 flex justify-between">
           <span class="font-bold">مبلغ قابل پرداخت</span>
           <p class="font-medium">
@@ -105,123 +117,76 @@
             <span class="text-xs text-gray-500">تومان</span>
           </p>
         </div>
-        <UButton color="primary" class="mt-4 w-full p-3 justify-center" :loading="loading" @click="confirmOrder"
-          :disabled="!savedAddresses.length">
+        <UButton
+          color="primary"
+          class="mt-4 w-full justify-center p-3"
+          :loading="loading"
+          @click="onSubmit"
+          :disabled="!cartStore.getSelectedAddressId"
+        >
           تایید و تکمیل سفارش
         </UButton>
-
       </div>
     </UCard>
   </div>
-
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
-import { fetchCart } from '~/api/product-api'
+import paymentApi from '~/api/payment-api'
+import { useCartStore } from '~/stores/cart'
+const cartStore = useCartStore()
 
 const items = ref([
   {
     label: {
       title: 'پرداخت آنلاین',
-      description: 'قابل پرداخت با تمامی کارت های عضو شتاب'
+      description: 'قابل پرداخت با تمامی کارت های عضو شتاب',
     },
     value: 'mellat',
     img: 'mellat',
   },
-  {
-    label: {
-      title: 'پرداخت اقساطی اسنپ پی',
-      description: '4 قسط ماهیانه'
-    },
-    value: 'snapp',
-    img: 'snapp',
-  },
-  {
-    label: {
-      title: 'پرداخت در محل',
-      description: 'پرداخت هزینه درب منزل'
-    },
-    value: 'cash',
-    img: 'truck',
-  }
+  // {
+  //   label: {
+  //     title: 'پرداخت اقساطی اسنپ پی',
+  //     description: '4 قسط ماهیانه'
+  //   },
+  //   value: 'snapp',
+  //   img: 'snapp',
+  // },
+  // {
+  //   label: {
+  //     title: 'پرداخت در محل',
+  //     description: 'پرداخت هزینه درب منزل'
+  //   },
+  //   value: 'cash',
+  //   img: 'truck',
+  // }
 ])
-const selectedPayment = ref('mellat')
-const onSubmit = () => {
-  if (editMode.value) {
-    editPayment()
-  } else {
-    savePayment()
-  }
-}
 
-const validate = (state) => {
-  const errors = []
-
-  if (!state.name) errors.push({ name: 'name', message: 'نام الزامی است' })
-  if (!state.family)
-    errors.push({ name: 'family', message: 'نام خانوادگی الزامی است' })
-  if (!state.mobile)
-    errors.push({ name: 'mobile', message: 'شماره موبایل الزامی است' })
-  if (!state.province_id)
-    errors.push({ name: 'province_id', message: 'استان الزامی است' })
-  if (!state.city_id)
-    errors.push({ name: 'city_id', message: 'شهر الزامی است' })
-  if (!state.user_address)
-    errors.push({ name: 'user_address', message: 'آدرس الزامی است' })
-  if (!state.number) errors.push({ name: 'number', message: 'پلاک الزامی است' })
-  if (!state.postal_code)
-    errors.push({ name: 'postal_code', message: 'کد پستی الزامی است' })
-  return errors
-}
-
-const loading = ref(true)
-const isOpen = ref(false)
-const confirmDelete = ref(false)
-const editMode = ref(false)
-
-// Form data
-const addressForm = reactive({
-  user_address: '',
-  number: '',
-  postal_code: '',
-  im_owner: true,
-  name: '',
-  family: '',
-  mobile: '',
-  province_id: '',
-  city_id: '',
+const form = ref({
+  address_id: cartStore.getSelectedAddressId,
+  payment_method: 'saman_GW',
+  shipping_method: 'Post',
+  amount: cartStore.getTotal,
 })
 
-// Cart data (example data)
-const cart = ref([])
-const total = ref(0)
-const totalDiscount = ref(0)
-const savedAddresses = ref([])
-const selectedId = ref(null)
+const total = computed(() => cartStore.getTotal)
+const totalDiscount = computed(() => cartStore.getTotalDiscount)
+const cart = computed(() => cartStore.getItems)
+const selectedPayment = ref('mellat')
+const loading = ref(false)
 
-
-const loadCart = async () => {
+const onSubmit = async () => {
   try {
     loading.value = true
-    const response = await fetchCart()
-    cart.value = response.items
-    total.value = response.total
-    totalDiscount.value = response.total_discount
-    // total_discount_price.value = response.prices.total_discount_price
-    // stepped_dicounts.value.push(response.items.map(item => item.prices.stepped_discount));
+    const data = await paymentApi.pay(form.value)
+    window.open(data.url)
   } catch (error) {
-    console.error('Error loading cart:', error)
+    console.error(error)
   } finally {
     loading.value = false
   }
 }
-
-
-// Simulate loading
-onMounted(async () => {
-  await loadCart()
-})
 </script>
 
 <style scoped>
@@ -244,7 +209,6 @@ onMounted(async () => {
 }
 
 @keyframes bounce {
-
   0%,
   100% {
     transform: translateY(-5%);

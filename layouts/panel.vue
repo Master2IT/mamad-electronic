@@ -38,38 +38,39 @@ const items = ref([
   {
     label: "اطلاعات فردی",
     to: "/panel/profile",
+    external: true,
     icon: "i-lucide-user",
   },
   {
     label: "پرداخت", 
     to: "/panel/card",
+    external: true,
     icon: "i-lucide-dollar-sign",
   },
   {
     label: "سفارش ها",
     to: "/panel/orders", 
+    external: true,
     icon: "i-lucide-shopping-bag",
   },
   {
     label: "لیست های من",
     to: "/panel/wishlist",
+    external: true,
     icon: "i-lucide-heart",
   },
-  // {
-  //   label: "کارت های هدیه",
-  //   to: "/panel/gifts",
-  //   icon: "i-lucide-gift",
-  // },
   {
     label: "پیغام ها",
     to: "/panel/notifications",
+    external: true,
     icon: "i-lucide-bell",
   },
-  {
-    label: "تماس با ما",
-    to: "/panel/contact",
-    icon: "i-lucide-message-circle",
-  },
+  // {
+  //   label: "تماس با ما",
+  //   to: "/panel/contact",
+  //   external: true,
+  //   icon: "i-lucide-message-circle",
+  // },
 ]
 ]);
 </script>

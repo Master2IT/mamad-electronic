@@ -45,4 +45,6 @@ export const useCartStore = defineStore("cart", {
       this.selectedAddressId = addressId;
     },
   },
+
+  persist: true,
 });
