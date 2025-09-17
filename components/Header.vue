@@ -200,19 +200,29 @@
                               {{ item.title_fa }}
                             </p>
                             <div class="space-y-1">
-                              <p class="text-primary-600 text-sm font-medium" :class="{ 'line-through': item.prices.discount_price }">
+                              <p
+                                class="text-primary-600 text-sm font-medium"
+                                :class="{
+                                  'line-through': item.prices.discount_price,
+                                }"
+                              >
                                 {{ item.prices.price.toLocaleString() }}
                                 <span class="text-xs text-gray-500">تومان</span>
                               </p>
-                              <p v-if="item.prices.discount_price" class="text-xs text-red-500">
-                                {{ item.prices.discount_price.toLocaleString() }}
+                              <p
+                                v-if="item.prices.discount_price"
+                                class="text-xs text-red-500"
+                              >
+                                {{
+                                  item.prices.discount_price.toLocaleString()
+                                }}
                                 <span class="text-xs">تومان</span>
                               </p>
                               <div
                                 class="flex items-center gap-2 text-xs text-gray-500"
                               >
                                 <span class="flex items-center gap-1">
-                                  رنگ : 
+                                  رنگ :
                                   {{ item.prices.color.title_fa }}
                                 </span>
                               </div>
@@ -287,8 +297,10 @@ import { getCategories } from '~/api/category-api'
 import { fetchCart } from '~/api/product-api'
 import settingsApi from '~/api/settings-api'
 import { useAuthStore } from '~/stores/auth'
+import { useCartStore } from '~/stores/cart'
 const authStore = useAuthStore()
 const { hasToken } = useAuth()
+const cartStore = useCartStore()
 
 const isLoginModalOpen = computed(() => {
   return authStore.getLoginModal
@@ -303,8 +315,14 @@ const header = ref({
   mobile: 0,
 })
 
-const cartItems = ref([])
-const cartItemsCount = ref(0)
+const cartItemsCount = computed(() => {
+  return cartStore.getItemCount
+})
+
+const cartItems = computed(() => {
+  return cartStore.getItems
+})
+
 // Transform category data to the required format
 const transformCategory = (category) => ({
   id: category.id,
@@ -320,8 +338,9 @@ const transformCategory = (category) => ({
 
 const getCart = async () => {
   const cartItemsResponse = await fetchCart()
-  cartItems.value = cartItemsResponse.items
-  cartItemsCount.value = cartItemsResponse.items.length
+  cartStore.setItems(cartItemsResponse.items)
+  cartStore.setTotal(cartItemsResponse.total)
+  cartStore.setTotalDiscount(cartItemsResponse.total_discount)
 }
 
 onMounted(async () => {

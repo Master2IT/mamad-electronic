@@ -1,24 +1,48 @@
 import { defineStore } from "pinia";
 
+// Define types for better type safety
+interface CartItem {
+  id: string | number;
+  name: string;
+  price: number;
+  quantity: number;
+}
+
+interface CartState {
+  items: CartItem[];
+  total: number;
+  total_discount: number;
+  selectedAddressId: string | number | null;
+}
+
 export const useCartStore = defineStore("cart", {
-  state: () => ({
+  state: (): CartState => ({
     items: [],
     total: 0,
     total_discount: 0,
-    selectedAddress: null,
+    selectedAddressId: null,
   }),
 
   getters: {
-    itemCount: (state) => state.items.length,
-    isEmpty: (state) => state.items.length === 0,
-    totalPrice: (state) => state.items.reduce((sum, item) => sum + item.prices.price, 0),
-    totalDiscount: (state) => state.items.reduce((sum, item) => sum + item.prices.discount_price, 0),
-    totalPriceWithDiscount: (state) => state.items.reduce((sum, item) => sum + item.prices.price - item.prices.discount_price, 0),
+    getSelectedAddressId: (state): string | number | null => state.selectedAddressId,
+    getTotal: (state): number => state.total,
+    getTotalDiscount: (state): number => state.total_discount,
+    getItems: (state): CartItem[] => state.items,
+    getItemCount: (state): number => state.items.length,
   },
 
   actions: {
-    setSelectedAddress(address) {
-      this.selectedAddress = address;
+    setItems(items: CartItem[]): void {
+      this.items = items;
+    },
+    setTotal(total: number): void {
+      this.total = total;
+    },
+    setTotalDiscount(total_discount: number): void {
+      this.total_discount = total_discount;
+    },
+    setSelectedAddressId(addressId: string | number | null): void {
+      this.selectedAddressId = addressId;
     },
   },
 });
