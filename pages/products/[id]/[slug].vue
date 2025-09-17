@@ -51,9 +51,7 @@
 
       <div class="my-4 px-8">
         <h2 class="mb-6 text-right text-xl font-bold text-purple-600 md:text-2xl">نقد و بررسی</h2>
-        <div class="prose max-w-none">
-          <p>{{ product?.description || 'توضیحات تکمیلی محصول در اینجا قرار می‌گیرد.' }}</p>
-        </div>
+        <div class="prose max-w-none" v-html="product?.description || '-'"></div>
       </div>
 
       <USeparator class="w-full" />

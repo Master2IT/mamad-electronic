@@ -74,8 +74,8 @@
 <script setup lang="ts">
 import type { FormError } from '@nuxt/ui'
 import { submitReview } from '~/api/product-api'
-import { reviewSchema, type ReviewFormData } from '~/shared/utils/submit-review-validate'
 import { useAuth } from '~/composables/useAuth'
+import { reviewSchema, type ReviewFormData } from '~/shared/utils/submit-review-validate'
 
 const { hasToken } = useAuth()
 
@@ -142,10 +142,11 @@ const onSubmitReview = async () => {
     loading.value = true
     await submitReview({
       body: review.description,
-      // mode: 'text',
+      question_boxes: [review.description],
+      mode: 'Text',
       send_anonymously: review.send_anonymously ? 1 : 0,
-      section: 'product',
-      section_id: route.params.slug,
+      section: 'Product',
+      section_id: route.params.id,
     })
     toast.add({
       title: 'موفق',

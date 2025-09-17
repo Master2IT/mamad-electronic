@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout name="panel">
-    <UCard class=" my-4">
+    <UCard class="my-4 w-fit lg:min-w-[1024px]">
       <p class="font-bold text-2xl mb-5">تاریخچه سفارشات</p>
       <UTabs :items="items" variant="link" class="gap-4 w-full" :ui="{ trigger: 'flex-1' }">
       <template #current="{ item }">
