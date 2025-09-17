@@ -4,30 +4,21 @@ export const useCartStore = defineStore("cart", {
   state: () => ({
     items: [],
     total: 0,
-    address: null,
+    total_discount: 0,
+    selectedAddress: null,
   }),
 
   getters: {
     itemCount: (state) => state.items.length,
     isEmpty: (state) => state.items.length === 0,
+    totalPrice: (state) => state.items.reduce((sum, item) => sum + item.prices.price, 0),
+    totalDiscount: (state) => state.items.reduce((sum, item) => sum + item.prices.discount_price, 0),
+    totalPriceWithDiscount: (state) => state.items.reduce((sum, item) => sum + item.prices.price - item.prices.discount_price, 0),
   },
 
   actions: {
-    addItem(product) {
-      this.items.push(product);
-      this.calculateTotal();
-    },
-
-    removeItem(productId) {
-      this.items = this.items.filter((item) => item.id !== productId);
-      this.calculateTotal();
-    },
-
-    calculateTotal() {
-      this.total = this.items.reduce((sum, item) => sum + item.price, 0);
-    },
-    addAddress(address) {
-      this.address = address;
+    setSelectedAddress(address) {
+      this.selectedAddress = address;
     },
   },
 });

@@ -1,485 +1,237 @@
 <template>
   <NuxtLayout name="shop">
-    <div class="contact-page">
-      <!-- Hero Section -->
-      <section class="hero-section">
-        <div class="container mx-auto px-4 py-16">
-          <div class="text-center">
-            <h1 class="mb-6 text-4xl font-bold text-gray-800 md:text-6xl">
-              تماس با ما
-            </h1>
-            <p class="mx-auto max-w-3xl text-xl leading-relaxed text-gray-600">
-              برای مشاوره، سفارش و یا کسب اطلاعات بیشتر درباره محصولات و خدمات
-              ما با کارشناسان فروشگاه محمد الکترونیک در تماس باشید
-            </p>
-            <!-- Display discount information if available -->
-            <div v-if="settings?.discount?.value && settings?.conditions?.status" class="mt-6 inline-block rounded-lg bg-green-100 px-6 py-3">
-              <p class="text-lg font-semibold text-green-800">
-                تخفیف ویژه {{ settings.discount.value }}{{ settings.discount.mode === 'percent' ? '%' : ' تومان' }}
-                <span v-if="settings.conditions.specific_cities?.length" class="text-sm">
-                  برای شهرهای {{ settings.conditions.specific_cities.join('، ') }}
-                </span>
-              </p>
-            </div>
-          </div>
+    <div class="container mx-auto px-4 py-8">
+      <div class="mx-auto max-w-4xl">
+        <!-- Page Header -->
+        <div class="mb-12 text-center">
+          <h1 class="mb-4 text-3xl font-bold text-gray-800">تماس با ما</h1>
+          <p class="text-gray-600">
+            برای مشاوره و کسب اطلاعات بیشتر با ما در ارتباط باشید
+          </p>
         </div>
-      </section>
 
-      <!-- Contact Information Section -->
-      <section class="contact-info-section bg-gray-50 py-16">
-        <div class="container mx-auto px-4">
-          <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            <!-- Phone -->
-            <div class="rounded-xl bg-white p-8 text-center shadow-lg">
-              <div
-                class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100"
-              >
-                <svg
-                  class="h-8 w-8 text-blue-500"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"
-                  />
-                </svg>
-              </div>
-              <h3 class="mb-3 text-xl font-semibold text-gray-800">
-                تلفن تماس
-              </h3>
-              <p class="mb-2 text-gray-600">021-12345678</p>
-              <p class="text-gray-600">09123456789</p>
-            </div>
-
-            <!-- Address -->
-            <div class="rounded-xl bg-white p-8 text-center shadow-lg">
-              <div
-                class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100"
-              >
-                <svg
-                  class="h-8 w-8 text-green-500"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </div>
-              <h3 class="mb-3 text-xl font-semibold text-gray-800">
-                آدرس فروشگاه
-              </h3>
-              <p class="text-gray-600">
-                <span v-if="settings?.origin_cities?.length">
-                  {{ settings.origin_cities.join('، ') }}، 
-                </span>
-                خیابان انقلاب، پلاک ۱۲۳ طبقه دوم، واحد ۵
-              </p>
-            </div>
-
-            <!-- Email -->
-            <div class="rounded-xl bg-white p-8 text-center shadow-lg">
-              <div
-                class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-purple-100"
-              >
-                <svg
-                  class="h-8 w-8 text-purple-500"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"
-                  />
-                  <path
-                    d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"
-                  />
-                </svg>
-              </div>
-              <h3 class="mb-3 text-xl font-semibold text-gray-800">ایمیل</h3>
-              <p class="text-gray-600">info@mohammadelectronic.com</p>
-              <p class="text-gray-600">support@mohammadelectronic.com</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Delivery Information Section -->
-      <section v-if="settings?.origin_cities?.length || settings?.conditions?.specific_cities?.length" class="delivery-info-section py-16">
-        <div class="container mx-auto px-4">
-          <div class="text-center mb-12">
-            <h2 class="mb-4 text-3xl font-bold text-gray-800">اطلاعات ارسال</h2>
-          </div>
-          
-          <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
-            <!-- Origin Cities -->
-            <div v-if="settings?.origin_cities?.length" class="rounded-xl bg-blue-50 p-8">
-              <h3 class="mb-4 text-xl font-semibold text-gray-800">شهرهای مبدا ارسال</h3>
-              <div class="flex flex-wrap gap-2">
-                <span 
-                  v-for="city in settings.origin_cities" 
-                  :key="city"
-                  class="rounded-full bg-blue-100 px-4 py-2 text-sm font-medium text-blue-800"
-                >
-                  {{ city }}
-                </span>
-              </div>
-            </div>
-
-            <!-- Special Delivery Cities -->
-            <div v-if="settings?.conditions?.specific_cities?.length" class="rounded-xl bg-green-50 p-8">
-              <h3 class="mb-4 text-xl font-semibold text-gray-800">
-                شهرهای دارای تخفیف ویژه
-                <span v-if="settings?.discount?.value" class="text-green-600">
-                  ({{ settings.discount.value }}{{ settings.discount.mode === 'percent' ? '%' : ' تومان' }})
-                </span>
-              </h3>
-              <div class="flex flex-wrap gap-2">
-                <span 
-                  v-for="city in settings.conditions.specific_cities" 
-                  :key="city"
-                  class="rounded-full bg-green-100 px-4 py-2 text-sm font-medium text-green-800"
-                >
-                  {{ city }}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Contact Form Section -->
-      <section class="contact-form-section py-16">
-        <div class="container mx-auto px-4">
-          <div class="grid grid-cols-1 gap-12 lg:grid-cols-2">
-            <!-- Contact Form -->
-            <div>
-              <h2 class="mb-6 text-3xl font-bold text-gray-800">فرم تماس</h2>
-              <p class="mb-8 text-lg text-gray-600">
-                پیام خود را برای ما ارسال کنید و در اسرع وقت پاسخ شما را خواهیم
-                داد
-              </p>
-
-              <form class="space-y-6">
-                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-                  <div>
-                    <label class="mb-2 block text-sm font-medium text-gray-700"
-                      >نام و نام خانوادگی</label
-                    >
-                    <input
-                      type="text"
-                      class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none"
-                      placeholder="نام خود را وارد کنید"
-                    />
-                  </div>
-                  <div>
-                    <label class="mb-2 block text-sm font-medium text-gray-700"
-                      >شماره تلفن</label
-                    >
-                    <input
-                      type="tel"
-                      class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none"
-                      placeholder="شماره تلفن خود را وارد کنید"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label class="mb-2 block text-sm font-medium text-gray-700"
-                    >ایمیل</label
-                  >
-                  <input
-                    type="email"
-                    class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none"
-                    placeholder="ایمیل خود را وارد کنید"
-                  />
-                </div>
-
-                <!-- City Selection -->
-                <div>
-                  <label class="mb-2 block text-sm font-medium text-gray-700"
-                    >شهر محل سکونت</label
-                  >
-                  <select
-                    class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none"
-                  >
-                    <option value="">شهر خود را انتخاب کنید</option>
-                    <optgroup v-if="settings?.origin_cities?.length" label="شهرهای مبدا">
-                      <option v-for="city in settings.origin_cities" :key="city" :value="city">
-                        {{ city }}
-                      </option>
-                    </optgroup>
-                    <optgroup v-if="settings?.conditions?.specific_cities?.length" label="شهرهای دارای تخفیف">
-                      <option v-for="city in settings.conditions.specific_cities" :key="city" :value="city">
-                        {{ city }} (تخفیف ویژه)
-                      </option>
-                    </optgroup>
-                  </select>
-                </div>
-
-                <div>
-                  <label class="mb-2 block text-sm font-medium text-gray-700"
-                    >موضوع</label
-                  >
-                  <select
-                    class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none"
-                  >
-                    <option value="">موضوع پیام خود را انتخاب کنید</option>
-                    <option value="consultation">مشاوره خرید</option>
-                    <option value="order">سفارش محصول</option>
-                    <option value="support">پشتیبانی فنی</option>
-                    <option value="complaint">شکایت</option>
-                    <option v-if="settings?.discount?.value" value="discount">استعلام تخفیف</option>
-                    <option value="other">سایر</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label class="mb-2 block text-sm font-medium text-gray-700"
-                    >پیام</label
-                  >
-                  <textarea
-                    rows="6"
-                    class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none"
-                    placeholder="پیام خود را بنویسید..."
-                  ></textarea>
-                </div>
-
-                <button
-                  type="submit"
-                  class="w-full rounded-lg bg-blue-600 px-8 py-3 font-semibold text-white transition-colors hover:bg-blue-700 focus:ring-2 focus:ring-blue-200 focus:outline-none"
-                >
-                  ارسال پیام
-                </button>
-              </form>
-            </div>
-
-            <!-- Working Hours & Additional Info -->
-            <div class="space-y-8">
-              <!-- Working Hours -->
-              <div
-                class="rounded-xl bg-gradient-to-br from-blue-50 to-purple-50 p-8"
-              >
-                <h3 class="mb-6 text-2xl font-bold text-gray-800">
-                  ساعات کاری
-                </h3>
-                <div class="space-y-4">
-                  <div class="flex justify-between">
-                    <span class="font-medium text-gray-700"
-                      >شنبه تا چهارشنبه:</span
-                    >
-                    <span class="text-gray-600">۹:۰۰ - ۱۸:۰۰</span>
-                  </div>
-                  <div class="flex justify-between">
-                    <span class="font-medium text-gray-700">پنج‌شنبه:</span>
-                    <span class="text-gray-600">۹:۰۰ - ۱۴:۰۰</span>
-                  </div>
-                  <div class="flex justify-between">
-                    <span class="font-medium text-gray-700">جمعه:</span>
-                    <span class="text-red-500">تعطیل</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Quick Contact -->
-              <div
-                class="rounded-xl bg-gradient-to-br from-green-50 to-blue-50 p-8"
-              >
-                <h3 class="mb-6 text-2xl font-bold text-gray-800">تماس سریع</h3>
-                <div class="space-y-4">
-                  <div class="flex items-center space-x-3 space-x-reverse">
-                    <div
-                      class="flex h-10 w-10 items-center justify-center rounded-full bg-green-100"
-                    >
-                      <svg
-                        class="h-5 w-5 text-green-600"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"
-                        />
-                      </svg>
-                    </div>
-                    <div>
-                      <p class="text-sm text-gray-500">تماس فوری</p>
-                      <p class="font-semibold text-gray-800">09123456789</p>
-                    </div>
-                  </div>
-
-                  <div class="flex items-center space-x-3 space-x-reverse">
-                    <div
-                      class="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100"
-                    >
-                      <svg
-                        class="h-5 w-5 text-blue-600"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"
-                        />
-                        <path
-                          d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"
-                        />
-                      </svg>
-                    </div>
-                    <div>
-                      <p class="text-sm text-gray-500">ایمیل سریع</p>
-                      <p class="font-semibold text-gray-800">
-                        support@mohammadelectronic.com
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Services -->
-              <div
-                class="rounded-xl bg-gradient-to-br from-purple-50 to-pink-50 p-8"
-              >
-                <h3 class="mb-6 text-2xl font-bold text-gray-800">خدمات ما</h3>
-                <ul class="space-y-3">
-                  <li class="flex items-center space-x-3 space-x-reverse">
-                    <svg
-                      class="h-5 w-5 text-green-500"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
-                    <span class="text-gray-700">مشاوره تخصصی رایگان</span>
-                  </li>
-                  <li class="flex items-center space-x-3 space-x-reverse">
-                    <svg
-                      class="h-5 w-5 text-green-500"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
-                    <span class="text-gray-700">
-                      ارسال سریع 
-                      <span v-if="settings?.origin_cities?.length">
-                        از {{ settings.origin_cities.join('، ') }}
-                      </span>
-                    </span>
-                  </li>
-                  <li class="flex items-center space-x-3 space-x-reverse">
-                    <svg
-                      class="h-5 w-5 text-green-500"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
-                    <span class="text-gray-700">گارانتی اصالت کالا</span>
-                  </li>
-                  <li class="flex items-center space-x-3 space-x-reverse">
-                    <svg
-                      class="h-5 w-5 text-green-500"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
-                    <span class="text-gray-700">پشتیبانی پس از فروش</span>
-                  </li>
-                  <li v-if="settings?.discount?.value && settings?.conditions?.specific_cities?.length" class="flex items-center space-x-3 space-x-reverse">
-                    <svg
-                      class="h-5 w-5 text-green-500"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
-                    <span class="text-gray-700">
-                      تخفیف ویژه {{ settings.discount.value }}{{ settings.discount.mode === 'percent' ? '%' : ' تومان' }}
-                      برای {{ settings.conditions.specific_cities.join('، ') }}
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Map Section -->
-      <section class="map-section bg-gray-50 py-16">
-        <div class="container mx-auto px-4">
-          <div class="mb-12 text-center">
-            <h2 class="mb-4 text-3xl font-bold text-gray-800">
-              موقعیت فروشگاه
+        <div class="grid grid-cols-1">
+          <!-- Contact Information -->
+          <div class="space-y-6 rounded-lg bg-white p-8 shadow-lg">
+            <h2 class="mb-6 text-2xl font-semibold text-gray-800">
+              اطلاعات تماس
             </h2>
-            <p class="text-lg text-gray-600">
-              فروشگاه محمد الکترونیک 
-              <span v-if="settings?.origin_cities?.length">
-                در {{ settings.origin_cities.join('، ') }}
-              </span>
-              واقع شده است
-            </p>
-          </div>
 
-          <div class="overflow-hidden rounded-2xl shadow-lg">
-            <div class="flex h-96 items-center justify-center bg-gray-300">
-              <div class="text-center text-gray-600">
-                <svg
-                  class="mx-auto mb-4 h-16 w-16"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                <p class="text-lg font-medium">
-                  نقشه در اینجا نمایش داده خواهد شد
-                </p>
-                <p class="text-sm">
-                  <span v-if="settings?.origin_cities?.length">
-                    {{ settings.origin_cities.join('، ') }}، 
-                  </span>
-                  خیابان انقلاب، پلاک ۱۲۳
-                </p>
+            <!-- Loading Skeleton -->
+            <div v-if="isLoading" class="space-y-6">
+              <!-- Address Skeleton -->
+              <div class="flex items-start space-x-4 space-x-reverse">
+                <div class="flex-shrink-0">
+                  <div class="mt-1 h-6 w-6 animate-pulse rounded bg-gray-300"></div>
+                </div>
+                <div class="mr-2 flex-1">
+                  <div class="h-5 w-16 animate-pulse rounded bg-gray-300"></div>
+                  <div class="mt-2 h-4 w-3/4 animate-pulse rounded bg-gray-200"></div>
+                </div>
+              </div>
+
+              <!-- Phone Skeleton -->
+              <div class="flex items-start space-x-4 space-x-reverse">
+                <div class="flex-shrink-0">
+                  <div class="mt-1 h-6 w-6 animate-pulse rounded bg-gray-300"></div>
+                </div>
+                <div class="mr-2 flex-1">
+                  <div class="h-5 w-12 animate-pulse rounded bg-gray-300"></div>
+                  <div class="mt-2 h-4 w-32 animate-pulse rounded bg-gray-200"></div>
+                </div>
+              </div>
+
+              <!-- Email Skeleton -->
+              <div class="flex items-start space-x-4 space-x-reverse">
+                <div class="flex-shrink-0">
+                  <div class="mt-1 h-6 w-6 animate-pulse rounded bg-gray-300"></div>
+                </div>
+                <div class="mr-2 flex-1">
+                  <div class="h-5 w-12 animate-pulse rounded bg-gray-300"></div>
+                  <div class="mt-2 h-4 w-48 animate-pulse rounded bg-gray-200"></div>
+                </div>
+              </div>
+
+              <!-- Social Media Skeleton -->
+              <div class="mt-8">
+                <div class="mb-4 h-5 w-32 animate-pulse rounded bg-gray-300"></div>
+                <div class="flex gap-4 space-x-reverse">
+                  <div class="h-10 w-10 animate-pulse rounded-full bg-gray-300"></div>
+                  <div class="h-10 w-10 animate-pulse rounded-full bg-gray-300"></div>
+                  <div class="h-10 w-10 animate-pulse rounded-full bg-gray-300"></div>
+                  <div class="h-10 w-10 animate-pulse rounded-full bg-gray-300"></div>
+                  <div class="h-10 w-10 animate-pulse rounded-full bg-gray-300"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Actual Content -->
+            <div v-else>
+              <!-- Address -->
+              <div
+                v-if="settings.address"
+                class="flex items-start space-x-4 space-x-reverse"
+              >
+                <div class="flex-shrink-0">
+                  <svg
+                    class="text-primary mt-1 h-6 w-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    ></path>
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                    ></path>
+                  </svg>
+                </div>
+                <div class="mr-2">
+                  <h3 class="font-medium text-gray-800">آدرس</h3>
+                  <p class="mt-1 text-gray-600">{{ settings.address }}</p>
+                </div>
+              </div>
+
+              <!-- Phone -->
+              <div
+                v-if="settings.phone"
+                class="flex items-start space-x-4 space-x-reverse"
+              >
+                <div class="flex-shrink-0">
+                  <svg
+                    class="text-primary mt-1 h-6 w-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                    ></path>
+                  </svg>
+                </div>
+                <div class="mr-2">
+                  <h3 class="font-medium text-gray-800">تلفن</h3>
+                  <a
+                    :href="`tel:${settings.phone}`"
+                    class="text-primary hover:text-primary-800 mt-1 block"
+                  >
+                    {{ settings.phone }}
+                  </a>
+                </div>
+              </div>
+
+              <!-- Email -->
+              <div
+                v-if="settings.email"
+                class="flex items-start space-x-4 space-x-reverse"
+              >
+                <div class="flex-shrink-0">
+                  <svg
+                    class="text-primary mt-1 h-6 w-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    ></path>
+                  </svg>
+                </div>
+                <div class="mr-2">
+                  <h3 class="font-medium text-gray-800">ایمیل</h3>
+                  <a
+                    :href="`mailto:${settings.email}`"
+                    class="text-primary hover:text-primary-800 mt-1 block"
+                  >
+                    {{ settings.email }}
+                  </a>
+                </div>
+              </div>
+
+              <!-- Social Media -->
+              <div class="mt-8">
+                <h3 class="mb-4 font-medium text-gray-800">شبکه‌های اجتماعی</h3>
+                <div class="flex gap-4 space-x-reverse">
+                  <!-- WhatsApp -->
+                  <a
+                    v-if="settings.social_media.whatsapp"
+                    :href="settings.social_media.whatsapp"
+                    target="_blank"
+                    class="flex h-10 w-10 items-center justify-center rounded-full bg-green-500 text-white shadow-md transition-colors hover:bg-green-600 hover:shadow-lg"
+                  >
+                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path
+                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"
+                      />
+                    </svg>
+                  </a>
+
+                  <!-- Instagram -->
+                  <a
+                    v-if="settings.social_media.instagram"
+                    :href="settings.social_media.instagram"
+                    target="_blank"
+                    class="flex h-10 w-10 items-center justify-center rounded-full bg-pink-500 text-white shadow-md transition-colors hover:bg-pink-600 hover:shadow-lg"
+                  >
+                    <Instagram class="h-5 w-5" />
+                  </a>
+
+                  <!-- Telegram -->
+                  <a
+                    v-if="settings.social_media.telegram"
+                    :href="settings.social_media.telegram"
+                    target="_blank"
+                    class="flex h-10 w-10 items-center justify-center rounded-full bg-blue-500 text-white shadow-md transition-colors hover:bg-blue-600 hover:shadow-lg"
+                  >
+                    <Send class="h-5 w-5" />
+                  </a>
+
+                  <!-- YouTube -->
+                  <a
+                    v-if="settings.social_media.youtube"
+                    :href="settings.social_media.youtube"
+                    target="_blank"
+                    class="flex h-10 w-10 items-center justify-center rounded-full bg-red-500 text-white shadow-md transition-colors hover:bg-red-600 hover:shadow-lg"
+                  >
+                    <Youtube class="h-5 w-5" />
+                  </a>
+
+                  <!-- Facebook -->
+                  <a
+                    v-if="settings.social_media.facebook"
+                    :href="settings.social_media.facebook"
+                    target="_blank"
+                    class="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 text-white shadow-md transition-colors hover:bg-blue-700 hover:shadow-lg"
+                  >
+                    <Facebook class="h-5 w-5" />
+                  </a>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   </NuxtLayout>
 </template>
 
 <script setup>
-import settingsApi from '~/api/settings-api';
+import { Facebook, Instagram, Send, Youtube } from 'lucide-vue-next'
+import settingsApi from '~/api/settings-api'
 
-const { data: settings } = await useAsyncData('settings', () =>
-  settingsApi.getSettingById(1)
-)
 useHead({
   title: 'تماس با ما - فروشگاه محمد الکترونیک',
   meta: [
@@ -489,5 +241,34 @@ useHead({
         'برای مشاوره، سفارش و کسب اطلاعات بیشتر درباره محصولات الکترونیکی با فروشگاه محمد الکترونیک تماس بگیرید. ارائه مشاوره رایگان و خدمات پس از فروش.',
     },
   ],
+})
+
+// Loading state
+const isLoading = ref(true)
+
+// Settings data
+const settings = ref({
+  address: '',
+  email: '',
+  phone: '',
+  social_media: {
+    youtube: '',
+    facebook: '',
+    whatsapp: '',
+    instagram: '',
+    telegram: '',
+  },
+})
+
+// Fetch contact data on component mount
+onMounted(async () => {
+  try {
+    const contact = await settingsApi.getContact()
+    settings.value = contact
+  } catch (error) {
+    console.error('Error fetching contact data:', error)
+  } finally {
+    isLoading.value = false
+  }
 })
 </script>

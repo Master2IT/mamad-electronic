@@ -153,7 +153,7 @@
           </div>
 
           <!-- Write Review CTA -->
-          <UCard class="mt-12" :ui="{ body: { background: 'bg-gradient-to-r from-purple-600 to-blue-600', padding: 'p-8' } }">
+          <!-- <UCard class="mt-12" :ui="{ body: { background: 'bg-gradient-to-r from-purple-600 to-blue-600', padding: 'p-8' } }">
             <div class="text-center text-white">
               <h2 class="mb-4 text-2xl font-bold">تجربه خود را با ما به اشتراک بگذارید</h2>
               <p class="mb-6 text-lg opacity-90">
@@ -163,7 +163,7 @@
                 ثبت نظر جدید
               </UButton>
             </div>
-          </UCard>
+          </UCard> -->
         </div>
       </UContainer>
     </div>
