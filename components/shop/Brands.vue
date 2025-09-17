@@ -8,6 +8,22 @@
             </UButton>
         </div>
         <Carousel :items="items" :breakpoints="{
+            1024: {
+                slidesPerView: 6,
+                spaceBetween: 20,
+            },
+            1024: {
+                slidesPerView: 6,
+                spaceBetween: 20,
+            },
+            640: {
+                slidesPerView: 3,
+                spaceBetween: 10,
+            },
+            320: {
+                slidesPerView: 2,
+                spaceBetween: 10,
+            },
             1280: {
                 slidesPerView: 6,
                 spaceBetween: 20,

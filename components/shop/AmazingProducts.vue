@@ -1,20 +1,41 @@
 <template>
-  <div class="bg-primary-700 rounded-lg p-4 my-6 grid grid-cols-4 gap-2 items-center">
-    <div class="flex justify-center items-center gap-10 flex-col relative mt-10">
-      <h2 class="text-4xl text-center text-white mt-5 font-black w-[200px] wrap-normal">تخفیف های شگفت انگیز</h2>
-      <UButtonGroup orientation="horizontal">
-        <UButton v-for="(time, i) in times" :key="i" class="flex flex-col px-5 bg-white hover:bg-white">
-          <p class="text-2xl font-bold text-primary-700 leading-3 mt-2">{{ time.value }}</p>
+  <div class="bg-primary-700 rounded-lg p-4 my-6 grid grid-cols-1 lg:grid-cols-4 gap-4 items-center">
+    <div class="flex justify-center items-center gap-6 lg:gap-10 flex-col relative lg:mt-10 order-2 lg:order-1">
+      <h2 class="text-2xl lg:text-4xl text-center text-white lg:mt-5 font-black w-full lg:w-[200px] wrap-normal">تخفیف های شگفت انگیز</h2>
+      <UButtonGroup orientation="horizontal" class="flex-wrap justify-center">
+        <UButton v-for="(time, i) in times" :key="i" class="flex flex-col px-3 lg:px-5 bg-white hover:bg-white">
+          <p class="text-xl lg:text-2xl font-bold text-primary-700 leading-3 mt-2">{{ time.value }}</p>
           <span class="text-primary-700 text-xs">{{ time.label }}</span>
         </UButton>
       </UButtonGroup>
-      <NuxtLink external :to="`#`" class="text-white flex gap-1 mt-auto self-start mr-10 items-center">
+      <NuxtLink external :to="`#`" class="text-white flex gap-1 lg:mt-auto lg:self-start lg:mr-10 items-center">
         <span>مشاهده همه</span>
         <ChevronLeft :size="18" />
       </NuxtLink>
     </div>
-    <div class="w-full col-span-2 md:col-span-3">
-      <Carousel :items="data?.items">
+    <div class="w-full col-span-1 lg:col-span-3 order-1 lg:order-2">
+      <Carousel :items="data?.items" :breakpoints="{
+        320: {
+          slidesPerView: 1,
+          spaceBetween: 10,
+        },
+        640: {
+          slidesPerView: 2,
+          spaceBetween: 12,
+        },
+        768: {
+          slidesPerView: 2,
+          spaceBetween: 16,
+        },
+        1024: {
+          slidesPerView: 3,
+          spaceBetween: 16,
+        },
+        1280: {
+          slidesPerView: 3,
+          spaceBetween: 20,
+        },
+      }">
         <template #default="{ item }">
           <CommonProductCard :type="1" :product="item" />
         </template>

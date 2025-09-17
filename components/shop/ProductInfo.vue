@@ -1,17 +1,18 @@
 <template>
-  <div class="col-span-2 flex justify-between p-5">
+  <div class="sm:flex col-span-2 sm:justify-between p-5">
     <div>
       <!-- Product title -->
-      <h2 class="mb-4 text-2xl font-bold">{{ product.title_fa }}</h2>
+      <h2 class="mb-4 text-2xl font-bold text-center sm:text-right">{{ product.title_fa }}</h2>
 
       <!-- Product type -->
-      <span class="mb-3 block">{{ product.title_en }}</span>
+      <span class="mb-3 block text-center sm:text-right">{{ product.title_en }}</span>
 
       <!-- User rating -->
-      <div class="my-3 flex items-center gap-2">
+      <div class="my-3 flex items-center gap-2 justify-center sm:justify-start ">
         <span>امتیاز کاربران:</span>
         <div class="flex gap-1">
-          <!-- todo: fix rating -->
+         
+ <!-- todo: fix rating -->
           <NuxtRating
             read-only
             :rating-value="product.ratings"
@@ -22,10 +23,10 @@
         </div>
       </div>
 
-      <USeparator class="w-56" />
+      <USeparator class="sm:w-56" />
 
       <!-- Color selection -->
-      <div class="my-3 flex flex-col gap-2">
+      <div class="my-3 flex flex-col gap-2 justify-center sm:justify-start items-center sm:items-start">
         <div>
           <span class="font-bold">رنگ: </span>
           <span>{{
@@ -74,17 +75,17 @@
         </div>
       </div>
 
-      <USeparator class="w-32" />
+      <USeparator class="sm:w-32" />
 
       <!-- Warranty info -->
-      <div class="my-3 flex items-center gap-2" v-if="guaranty">
+      <div class="my-3 flex items-center gap-2 justify-center sm:justify-start" v-if="guaranty">
         <BadgeCheckIcon class="size-6 text-neutral-700" stroke-width="1.5" />
         <span>{{ guaranty?.attribute_item_title }}</span>
       </div>
     </div>
-    <div>
+    <div >
       <h3 class="mb-2 text-lg font-bold">ویژگی ها</h3>
-      <ul class="w-[280px] rounded-md border" v-if="product.prices.length > 0">
+      <ul class="sm:w-[280px] rounded-md border" v-if="product.prices.length > 0">
         <template v-for="(price, index) in product.prices" :key="index">
           <li class="flex items-center gap-2 p-2">
             <span class="text-sm text-neutral-500">{{ price?.final_price?.title }}</span>

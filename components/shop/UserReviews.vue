@@ -5,7 +5,7 @@
       <h2 class="mb-6 text-right text-xl font-bold text-purple-600 md:text-2xl">نظرات کاربران</h2>
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-3">
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-2 hidden sm:block">
             <UIcon name="i-lucide-layers" class="size-6 !text-[292D32]" />
             <span class="font-bold whitespace-nowrap">مرتب سازی: </span>
           </div>
@@ -15,7 +15,7 @@
             :content="false"
             :items="tabs"
             v-model="sortBy"
-            class="w-full"
+            class="w-full hidden sm:block"
           />
         </div>
         <ShopSubmitReview @submited="refresh" />
@@ -24,58 +24,60 @@
 
     <!-- Review Section - Desktop -->
     <div class="my-4 hidden px-8 md:block">
-      <UCard v-if="!pending" v-for="review in comments" :key="review.id" class="mb-4">
-        <div class="flex items-start justify-between gap-4">
-          <div class="flex items-start gap-4">
-            <div class="flex flex-col">
-              <span class="font-medium text-gray-700">{{
-                `${review.owner.name} ${review.owner.family}` || 'ناشناس'
-              }}</span>
-              <div class="flex gap-1">
-                <UIcon
-                  v-for="star in 5"
-                  :key="star"
-                  name="i-lucide-star"
-                  :class="[
-                    'my-2 size-3.5 text-yellow-400',
-                    { '!fill-yellow-500': star <= review.rating },
-                  ]"
-                />
+      <div v-if="!pending">
+        <UCard v-for="review in comments" :key="review.id" class="mb-4">
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex items-start gap-4">
+              <div class="flex flex-col">
+                <span class="font-medium text-gray-700">{{
+                  `${review.owner.name} ${review.owner.family}` || 'ناشناس'
+                }}</span>
+                <div class="flex gap-1">
+                  <UIcon
+                    v-for="star in 5"
+                    :key="star"
+                    name="i-lucide-star"
+                    :class="[
+                      'my-2 size-3.5 text-yellow-400',
+                      { '!fill-yellow-500': star <= review.rating },
+                    ]"
+                  />
+                </div>
+                <span class="text-sm text-gray-500">{{
+                  moment(review.created).format('jYYYY/jMM/jDD')
+                }}</span>
               </div>
-              <span class="text-sm text-gray-500">{{
-                moment(review.created).format('jYYYY/jMM/jDD')
-              }}</span>
+            </div>
+            <div class="flex items-center gap-8" v-if="hasToken">
+              <span class="text-sm text-gray-600">آیا این نظر مفید بود؟</span>
+              <div class="flex items-center gap-3">
+                <UButton
+                  :loading="loading"
+                  @click="onRateComment(review.id, 'liked')"
+                  variant="ghost"
+                  size="sm"
+                  class="flex items-center gap-1"
+                >
+                  <span>{{ review.like || 0 }}</span>
+                  <UIcon name="i-lucide-thumbs-up" class="size-4" />
+                </UButton>
+                <UButton
+                  :loading="loading"
+                  @click="onRateComment(review.id, 'dislike')"
+                  variant="ghost"
+                  size="sm"
+                  class="flex items-center gap-1"
+                >
+                  <span>{{ review.dislike || 0 }}</span>
+                  <UIcon name="i-lucide-thumbs-down" class="size-4" />
+                </UButton>
+              </div>
+              <UButton v-if="hasToken" color="primary" variant="ghost"> پاسخ </UButton>
             </div>
           </div>
-          <div class="flex items-center gap-8" v-if="hasToken">
-            <span class="text-sm text-gray-600">آیا این نظر مفید بود؟</span>
-            <div class="flex items-center gap-3">
-              <UButton
-                :loading="loading"
-                @click="onRateComment(review.id, 'liked')"
-                variant="ghost"
-                size="sm"
-                class="flex items-center gap-1"
-              >
-                <span>{{ review.like || 0 }}</span>
-                <UIcon name="i-lucide-thumbs-up" class="size-4" />
-              </UButton>
-              <UButton
-                :loading="loading"
-                @click="onRateComment(review.id, 'dislike')"
-                variant="ghost"
-                size="sm"
-                class="flex items-center gap-1"
-              >
-                <span>{{ review.dislike || 0 }}</span>
-                <UIcon name="i-lucide-thumbs-down" class="size-4" />
-              </UButton>
-            </div>
-            <UButton v-if="hasToken" color="primary" variant="ghost"> پاسخ </UButton>
-          </div>
-        </div>
-        <p class="mt-4 text-right text-gray-800">{{ review.body }}</p>
-      </UCard>
+          <p class="mt-4 text-right text-gray-800">{{ review.body }}</p>
+        </UCard>
+      </div>
       <div v-else>
         <USkeleton class="mb-4" v-for="i in 3" :key="i">
           <div class="flex items-start justify-between gap-4 rounded-lg bg-gray-100 p-4">
@@ -153,10 +155,14 @@
 </template>
 
 <script setup lang="ts">
-import type { TabsItem } from '@nuxt/ui'
 import moment from 'moment-jalaali'
 import { getCommentsByProductId, rateComment } from '~/api/product-api'
 import { useAuth } from '~/composables/useAuth'
+
+interface TabsItem {
+  label: string
+  value: string
+}
 
 const loading = ref(false)
 
