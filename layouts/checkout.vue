@@ -44,7 +44,7 @@ watch(path, () => {
       case 'checkout':
         currentStep.value = 2
         break
-      case 'order':
+      case 'callback':
         currentStep.value = 3
         break
       default:
