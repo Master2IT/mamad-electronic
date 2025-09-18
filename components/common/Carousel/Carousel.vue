@@ -20,7 +20,7 @@ const props = defineProps({
             // Mobile
             320: {
                 slidesPerView: 2,
-                spaceBetween: 8,
+                spaceBetween: 10,
             },
             // Tablet
             640: {

@@ -1,5 +1,5 @@
 <template>
-    <div class="grid  gap-2">
+    <div class="w-full">
         <div class="my-10 h-auto">
             <div class="flex items-center justify-between mb-2">
                 <h2 class="text-xl md:text-2xl text-primary-700 font-black">مقالات</h2>
@@ -8,17 +8,15 @@
                     <ChevronLeft class="w-4 h-4" />
                 </UButton>
             </div>
-            <Carousel :items="articles">
-                <template #default="{ item }">
-                    <ShopArticleCard :key="item.id" :article="item" />
-                </template>
-            </Carousel>
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 w-full">
+                <ShopArticleCard v-for="article in articles" :key="article.id" :article="article" />
+            </div>
+            
         </div>
     </div>
 </template>
 <script setup>
 import { ChevronLeft } from 'lucide-vue-next';
-import Carousel from '@/components/common/Carousel/Carousel.vue';
 
 defineProps({
     articles: {

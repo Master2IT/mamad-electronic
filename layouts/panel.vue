@@ -7,7 +7,7 @@
       }">
         <div class="flex items-center gap-4 mb-4 px-4 w-full">
           <UAvatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" size="sm" />
-          <h3 class="text-lg font-bold">{{ user.name }} {{ user.family }}</h3>
+          <h3 class="text-lg font-bold">{{ user?.name }} {{ user?.family }}</h3>
         </div>
         <UNavigationMenu orientation="vertical" :items="items" class="mt-2 w-full" :ui="{
           item: 'mb-3 w-72 hover:bg-primary/10',
@@ -20,10 +20,11 @@
       <slot />
     </div>
     <Footer />
-
   </div>
 </template>
+
 <script setup>
+import { CookieStorage } from '#imports';
 import Footer from "@/components/Footer.vue";
 import Header from "@/components/Header.vue";
 import { ref } from 'vue';
@@ -31,6 +32,13 @@ import { useAuthStore } from '~/stores/auth';
 
 const authStore = useAuthStore()
 const { logout, user } = authStore
+
+
+onBeforeMount(() => {
+  if (!CookieStorage.get('token')) {
+    navigateTo('/')
+  }
+})
 
 
 const items = ref([

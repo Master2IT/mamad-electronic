@@ -1,6 +1,18 @@
 <template>
     <div class="my-10 h-auto">
         <Carousel :items="items" :breakpoints="{
+            1024: {
+                slidesPerView: 6,
+                spaceBetween: 5,
+            },
+            640: {
+                slidesPerView: 3,
+                spaceBetween: 5,
+            },
+            320: {
+                slidesPerView: 2,
+                spaceBetween: 10,
+            },
             1280: {
                 slidesPerView: 6,
                 spaceBetween: 5,

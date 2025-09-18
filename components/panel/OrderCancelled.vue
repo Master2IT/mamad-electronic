@@ -33,7 +33,7 @@ onMounted(async () => {
   try {
     const response = await invoiceApi.getInvoices({
       search: {
-        order_status: 'Cancelled',
+        order_status: 'Decline',
       },
     })
     orders.value = response

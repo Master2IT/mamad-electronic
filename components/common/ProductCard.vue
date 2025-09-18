@@ -1,6 +1,7 @@
 <template>
-  <NuxtLink external :to="`/products/${product?.id}/${product?.slug}`" >
-    <div :class="['relative rounded-md w-full shadow-sm border-0 bg-[#F7F7F7] select-none', { '!h-[300px]': !product.final_price?.discount_price}]">
+  <NuxtLink external :to="`/products/${product?.id}/${product?.slug}`">
+    <div
+      :class="['relative rounded-md w-full shadow-sm border-0 bg-[#F7F7F7] select-none', { '!h-[300px]': !product.final_price?.discount_price }]">
       <div class="relative p-0 flex justify-center items-center">
         <NuxtImg :src="`${BASE_URL}/${product?.banner?.path || product?.file?.path}`" :alt="product.title_fa"
           class="h-[200px] w-[200px] object-contain rounded-md" />
@@ -10,7 +11,12 @@
             'percent' ? '%' : 'تومان' }}
         </span>
         <button class="absolute top-2.5 right-2.5 bg-transparent border-none cursor-pointer" @click="toggleFavorite">
-          <Heart :class="{ 'text-red-500': product.favorite, 'text-gray-300': !product.favorite }" size="24" />
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+              :fill="product.best ? '#ef4444' : 'none'" :stroke="product.best ? '#ef4444' : '#d1d5db'" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
         </button>
       </div>
       <div class="px-5 pb-2">
@@ -39,7 +45,6 @@
 </template>
 
 <script setup>
-import { Heart } from 'lucide-vue-next';
 import { createFavorite } from '~/api/customer-api';
 import Icon from '../common/Icon.vue';
 const BASE_URL = process.env.BASE_URL;
@@ -63,7 +68,7 @@ const toggleFavorite = async (e) => {
   e.preventDefault()
   e.stopPropagation()
   try {
-    await createFavorite('product', props.product.id)
+    await createFavorite('Product', props.product.id)
   } catch (error) {
     console.error('Error toggling favorite:', error)
   }

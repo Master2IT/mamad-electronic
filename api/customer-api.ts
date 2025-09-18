@@ -3,8 +3,7 @@ import { useNuxtApp } from '#app';
 
 export const getFavorite = async () => {
     const { $axios } = useNuxtApp();
-    const res = await $axios.get('/customer/favorites');
-    console.log("res",res.data);
+    const res = await $axios.get('/customer/favorites')
 
     return res.data
 }

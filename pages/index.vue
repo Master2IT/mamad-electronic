@@ -7,17 +7,15 @@
     <ShopCategoriesCard :items="categories" />
 
     <ShopAmazingProducts />
-    <ShopProductsCategory link="/products?sort=newest" title="جدیدترین محصولات" :products="PRODUCTS" type="newest" />
-    <ShopProductsCategory link="/products?sort=chosen" title="پیشنهادات" :products="PRODUCTS" type="chosen" />
+    <ShopProductsCategory link="/products?sort=newest" title="جدیدترین محصولات"  type="newest" />
+    <ShopProductsCategory link="/products?sort=chosen" title="پیشنهادات"  type="chosen" />
     <ShopBrands link="/brands" title="محبوب ترین برند ها" :items="brands" />
     <ShopFAQ link="/faqs" title="سوالات متداول" :items="FAQS" show />
-
     <ShopArticles link="/blogs" :articles="data" />
   </NuxtLayout>
 </template>
 
 <script setup>
-import { FAQS, PRODUCTS } from '@/constant';
 import { getBlogs } from '~/api/blogs-api';
 import { getBrands } from '~/api/brand-api';
 import { getCategories } from '~/api/category-api';
@@ -40,6 +38,7 @@ const { data: categories } = await useAsyncData('categories', async () => {
     image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Arduino_Logo.svg/2560px-Arduino_Logo.png"
   }))
 })
+
 const { data } = await useAsyncData('blogs', async () => {
   const res = await getBlogs()
   return res.items
