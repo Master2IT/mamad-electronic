@@ -1,27 +1,46 @@
 <template>
-    <CommonOrderDetail v-for="item in items" :key="item.id" :order="item" />
-  </template>
-  
-  <script setup>
-  const items = ref([
-    {
-      code: '38663813136',
-      date: '16 فروردین 14:03',
-      amount: '15,123,800',
-      discount: '55,800',
-      deliveryDate: 'پنج شنبه 23 فروردین 5 - 9 عصر',
-      productImage: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg',
-      status: 'delivered' // can be 'processing', 'readyToShip', 'delivered', 'cancelled'
-    },
-    {
-      code: '38663813136',
-      date: '16 فروردین 14:03',
-      amount: '15,123,800',
-      discount: '55,800',
-      deliveryDate: 'پنج شنبه 23 فروردین 5 - 9 عصر',
-      productImage: 'https://tailwindcss.com/plus-assets/img/ecommerce-images/product-page-01-related-product-01.jpg',
-      status: 'delivered'
-    }
-  ]);
-  
-  </script>
+  <CommonOrderDetail
+    v-for="item in orders"
+    :key="item.id"
+    :order="item"
+    :is-loading="isLoading"
+  />
+  <div
+    v-if="!isLoading && orders.length === 0"
+    class="flex flex-col items-center justify-center py-12 text-center"
+  >
+    <UIcon name="i-lucide-package-x" class="mb-4 text-6xl text-gray-400" />
+    <h3 class="mb-2 text-lg font-semibold text-gray-700">
+      هیچ سفارش لغو شده‌ای یافت نشد
+    </h3>
+    <p class="text-gray-500">شما هنوز هیچ سفارش لغو شده‌ای ندارید.</p>
+  </div>
+</template>
+
+<script setup>
+import invoiceApi from '~/api/invoice-api'
+
+const orders = ref([
+  {
+    id: 1,
+    item: {},
+  },
+])
+const isLoading = ref(true)
+
+onMounted(async () => {
+  isLoading.value = true
+  try {
+    const response = await invoiceApi.getInvoices({
+      search: {
+        order_status: 'Cancelled',
+      },
+    })
+    orders.value = response
+  } catch (error) {
+    console.error('Error fetching orders:', error)
+  } finally {
+    isLoading.value = false
+  }
+})
+</script>

@@ -1,9 +1,9 @@
 const paymentApi = {
-  
-    createPayment: async (payment: any) => {
+
+    pay: async (payment: any) => {
         const { $axios } = useNuxtApp()
         const res = await $axios.post('/customer/invoices/pay', payment)
-        return res.data
+        return res.data.data;
     },
 }
 
