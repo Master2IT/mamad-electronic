@@ -141,8 +141,13 @@ class Api {
           // toast.error("درخواست های بیش از حد زیاد ارسال شده است");
           break;
         case 500:
+          ['token', 'user_info', 'permissions'].forEach((item) =>
+            CookieStorage.delete(item)
+          );
+          window.location.href = "/";
+          // toast.error(message || "خطای سرور داخلی");
           return this.retryRequest(err, retryCount, originalRequest);
-
+          
         default:
           if (
             status === 0 &&

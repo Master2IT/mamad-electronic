@@ -28,11 +28,11 @@
           spaceBetween: 16,
         },
         1024: {
-          slidesPerView: 3,
+          slidesPerView: 4,
           spaceBetween: 16,
         },
         1280: {
-          slidesPerView: 3,
+          slidesPerView: 4,
           spaceBetween: 20,
         },
       }">

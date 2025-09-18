@@ -4,12 +4,12 @@
             <h2 class="text-[20px] text-primary-700 font-medium">{{ title }}</h2>
             <NuxtLink external :to="link" class="flex items-center gap-1">
                 <UButton variant="link" class="flex items-center gap-1">
-                مشاهده همه
-                <ChevronLeft class="w-4 h-4" />
-            </UButton>
+                    مشاهده همه
+                    <ChevronLeft class="w-4 h-4" />
+                </UButton>
             </NuxtLink>
         </div>
-        <Carousel :items="products">
+        <Carousel :items="products.items">
             <template #default="{ item }">
                 <CommonProductCard showReview :type="2" :product="item" />
             </template>
@@ -19,12 +19,9 @@
 <script setup>
 import Carousel from '@/components/common/Carousel/Carousel.vue';
 import { ChevronLeft } from 'lucide-vue-next';
-
+import { getProducts } from '~/api/product-api';
 const props = defineProps({
-    products: {
-        type: Array,
-        required: true
-    },
+
     title: {
         type: String,
         required: true
@@ -39,5 +36,5 @@ const props = defineProps({
     }
 })
 
-// const { data } = await useAsyncData('products', () => getProducts({ sort: props.type }))
+const { data: products } = await useAsyncData('products', () => getProducts({ sort: props.type }))
 </script>

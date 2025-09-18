@@ -11,15 +11,10 @@
       <div class="my-3 flex items-center gap-2 justify-center sm:justify-start ">
         <span>امتیاز کاربران:</span>
         <div class="flex gap-1">
-         
- <!-- todo: fix rating -->
-          <NuxtRating
-            read-only
-            :rating-value="product.ratings"
-            inactive-color="white"
-            :rating-size="15"
-            rounded-corners
-          />
+
+          <!-- todo: fix rating -->
+          <NuxtRating read-only :rating-value="product.ratings" inactive-color="white" :rating-size="15"
+            rounded-corners />
         </div>
       </div>
 
@@ -35,38 +30,24 @@
         </div>
         <div class="flex gap-2">
           <div v-for="(price, index) in product.prices" :key="index" class="relative">
-            <button
-              @click="
-                () => {
-                  selectedColorId = price.final_price.color.id
-                  selectedPriceId = price.id
-                  emit('update:selectedColorId', price.final_price.color.id)
-                  emit('update:selectedPriceId', price.id)
-                }
-              "
-              :class="[
-                'flex h-6 w-6 items-center justify-center rounded-sm border border-neutral-500 transition-all hover:opacity-80',
-                selectedColorId === price.final_price.color.id
-                  ? 'ring-primary-500 ring-2 ring-offset-2'
-                  : '',
-              ]"
-              :style="{ background: price.final_price.color.hex }"
-              :aria-label="`انتخاب رنگ ${price.final_price.color.title_fa}`"
-            >
-              <span
-                v-show="selectedColorId === price.final_price.color.id"
-                :class="price.final_price.color.hex === '#ffffff' ? 'text-black' : 'text-white'"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="size-4"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
+            <button @click="
+              () => {
+                selectedColorId = price.final_price.color.id
+                selectedPriceId = price.id
+                emit('update:selectedColorId', price.final_price.color.id)
+                emit('update:selectedPriceId', price.id)
+              }
+            " :class="[
+              'flex h-6 w-6 items-center justify-center rounded-sm border border-neutral-500 transition-all hover:opacity-80',
+              selectedColorId === price.final_price.color.id
+                ? 'ring-primary-500 ring-2 ring-offset-2'
+                : '',
+            ]" :style="{ background: price.final_price.color.hex }"
+              :aria-label="`انتخاب رنگ ${price.final_price.color.title_fa}`">
+              <span v-show="selectedColorId === price.final_price.color.id"
+                :class="price.final_price.color.hex === '#ffffff' ? 'text-black' : 'text-white'">
+                <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <polyline points="20 6 9 17 4 12"></polyline>
                 </svg>
               </span>
@@ -83,7 +64,7 @@
         <span>{{ guaranty?.attribute_item_title }}</span>
       </div>
     </div>
-    <div >
+    <div>
       <h3 class="mb-2 text-lg font-bold">ویژگی ها</h3>
       <ul class="sm:w-[280px] rounded-md border" v-if="product.prices.length > 0">
         <template v-for="(price, index) in product.prices" :key="index">
@@ -91,10 +72,8 @@
             <span class="text-sm text-neutral-500">{{ price?.final_price?.title }}</span>
             <span>{{ price?.final_price?.final_price?.toLocaleString() }}</span>
           </li>
-          <hr
-            class="my-1 w-full border-[1.5px] border-dashed border-neutral-300"
-            v-if="index !== product.prices.length - 1 && product.prices.length > 1"
-          />
+          <hr class="my-1 w-full border-[1.5px] border-dashed border-neutral-300"
+            v-if="index !== product.prices.length - 1 && product.prices.length > 1" />
         </template>
       </ul>
 
@@ -110,7 +89,7 @@
           </span>
         </div>
         <div class="mt-1 flex gap-2">
-          <UButton block size="xl" @click="addProductToBasket" :loading="loading">
+          <UButton block size="xl" class="p-3" @click="addProductToBasket" :loading="loading">
             افزودن به سبد خرید
             <ShoppingCartIcon class="size-4" />
           </UButton>

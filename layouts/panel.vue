@@ -7,7 +7,7 @@
       }">
         <div class="flex items-center gap-4 mb-4 px-4">
           <UAvatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" size="sm" />
-          <h3 class="text-lg font-bold">{{ user.name }} {{ user.family }}</h3>
+          <h3 class="text-lg font-bold">{{ user?.name }} {{ user?.family }}</h3>
         </div>
         <UNavigationMenu orientation="vertical" :items="items" class="mt-2" :ui="{
           item: 'mb-3',
@@ -20,10 +20,11 @@
       <slot />
     </div>
     <Footer />
-
   </div>
 </template>
+
 <script setup>
+import { CookieStorage } from '#imports';
 import Footer from "@/components/Footer.vue";
 import Header from "@/components/Header.vue";
 import { ref } from 'vue';
@@ -33,43 +34,50 @@ const authStore = useAuthStore()
 const { logout, user } = authStore
 
 
+onBeforeMount(() => {
+  if (!CookieStorage.get('token')) {
+    navigateTo('/')
+  }
+})
+
+
 const items = ref([
-[
-  {
-    label: "اطلاعات فردی",
-    to: "/panel/profile",
-    icon: "i-lucide-user",
-  },
-  {
-    label: "پرداخت", 
-    to: "/panel/card",
-    icon: "i-lucide-dollar-sign",
-  },
-  {
-    label: "سفارش ها",
-    to: "/panel/orders", 
-    icon: "i-lucide-shopping-bag",
-  },
-  {
-    label: "لیست های من",
-    to: "/panel/wishlist",
-    icon: "i-lucide-heart",
-  },
-  // {
-  //   label: "کارت های هدیه",
-  //   to: "/panel/gifts",
-  //   icon: "i-lucide-gift",
-  // },
-  {
-    label: "پیغام ها",
-    to: "/panel/notifications",
-    icon: "i-lucide-bell",
-  },
-  {
-    label: "تماس با ما",
-    to: "/panel/contact",
-    icon: "i-lucide-message-circle",
-  },
-]
+  [
+    {
+      label: "اطلاعات فردی",
+      to: "/panel/profile",
+      icon: "i-lucide-user",
+    },
+    {
+      label: "پرداخت",
+      to: "/panel/card",
+      icon: "i-lucide-dollar-sign",
+    },
+    {
+      label: "سفارش ها",
+      to: "/panel/orders",
+      icon: "i-lucide-shopping-bag",
+    },
+    {
+      label: "لیست های من",
+      to: "/panel/wishlist",
+      icon: "i-lucide-heart",
+    },
+    // {
+    //   label: "کارت های هدیه",
+    //   to: "/panel/gifts",
+    //   icon: "i-lucide-gift",
+    // },
+    {
+      label: "پیغام ها",
+      to: "/panel/notifications",
+      icon: "i-lucide-bell",
+    },
+    {
+      label: "تماس با ما",
+      to: "/panel/contact",
+      icon: "i-lucide-message-circle",
+    },
+  ]
 ]);
 </script>
